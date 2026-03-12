@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 
-const STORED_SECTIONS_PATH : String = "res://project_time_traker.json"
+const STORED_SECTIONS_PATH : String = "res://config/project_time_traker.json"
 
 var _dock_instance : Control
 var _timer_afk : Timer
