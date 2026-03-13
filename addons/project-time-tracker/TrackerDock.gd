@@ -182,7 +182,7 @@ func _pause_tracking() -> void:
 
 
 func resume_tracking() -> void:
-	if not _active_tracking:
+	if not _active_tracking and pause_button.visible:
 		_active_tracking = true
 		_tracker_started = Time.get_unix_time_from_system()
 	
