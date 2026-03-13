@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ccryqsjpws1pe" path="res://addons/project-time-tracker/TrackerSection.gd" id="1_qrte8"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_7abe0"]
 
-[sub_resource type="DPITexture" id="DPITexture_uwii8"]
+[sub_resource type="DPITexture" id="DPITexture_7abe0"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -23,7 +23,7 @@ layout_mode = 2
 [node name="Icon" type="TextureRect" parent="Information/IconContainer" unique_id=917653221]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-texture = SubResource("DPITexture_uwii8")
+texture = SubResource("DPITexture_7abe0")
 expand_mode = 1
 
 [node name="NameLabel" type="Label" parent="Information" unique_id=955903737]
@@ -47,11 +47,11 @@ horizontal_alignment = 2
 [node name="EditButton" type="Button" parent="Information" unique_id=1451113176]
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_uwii8")
+icon = SubResource("DPITexture_7abe0")
 flat = true
 
 [node name="ClearButton" type="Button" parent="Information" unique_id=1304414658]
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_uwii8")
+icon = SubResource("DPITexture_7abe0")
 flat = true

@@ -22,6 +22,11 @@ A small editor widget which provides basic functions for tracking your time with
 
 ## Update
 
+### v2.0.8
+- Add project settings to customize json file name
+- Add project settings to customize json file location
+- Fix project settings property info
+
 ### v2.0.7
 - If use_external is not enabled, counters no longer counts when the window is not in focus
 - Fix: [#6](https://github.com/Fifut/godot-time-tracker/issues/6)
