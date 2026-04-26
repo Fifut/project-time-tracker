@@ -200,6 +200,7 @@ func _ready() -> void:
 	
 
 func _exit_tree():
+	_store_sections()
 	remove_control_from_docks(_dock_instance)
 	_dock_instance.queue_free()
 
@@ -292,8 +293,11 @@ func _file_path() -> String:
 	return path
 
 
-func _connected_window_input(event):
+func _connected_window_input(event: InputEvent):
 	if not _window:
+		return
+		
+	if EditorInterface.is_playing_scene():
 		return
 		
 	if _window.title.begins_with("Script Editor"):
