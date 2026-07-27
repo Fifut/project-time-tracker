@@ -56,13 +56,13 @@ var _section_icons : Dictionary = {
 func _ready() -> void:
 	ProjectSettings.settings_changed.connect(
 		func():
-			_show_sections = ProjectSettings.get_setting("project_time_traker/sections/show_sections", true)
-			_show_graphs = ProjectSettings.get_setting("project_time_traker/sections/show_graphs", true)
+			_show_sections = ProjectSettings.get_setting("project_time_tracker/sections/show_sections", true)
+			_show_graphs = ProjectSettings.get_setting("project_time_tracker/sections/show_graphs", true)
 			
 			for section in _tracker_sections:
 				var node = section_list.get_node_or_null(section)
 				if (node):
-					node.section_color = ProjectSettings.get_setting("project_time_traker/sections/colors/" + section, ProjectSettings.get_setting("project_time_traker/sections/colors/other", Color.WHITE))
+					node.section_color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section, ProjectSettings.get_setting("project_time_tracker/sections/colors/other", Color.WHITE))
 	)
 	
 	_update_theme()
@@ -91,7 +91,7 @@ func _process(delta: float) -> void:
 	
 	# _tracker_main_view is empty half the time! WTF???
 	if not _tracker_main_view.is_empty():
-		icon_texture.self_modulate = ProjectSettings.get_setting("project_time_traker/sections/colors/" + _tracker_main_view, ProjectSettings.get_setting("project_time_traker/sections/colors/other", Color.WHITE))
+		icon_texture.self_modulate = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + _tracker_main_view, ProjectSettings.get_setting("project_time_tracker/sections/colors/other", Color.WHITE))
 		
 		if _section_icons.has(_tracker_main_view):
 			icon_texture.texture = get_theme_icon(_section_icons[_tracker_main_view], "EditorIcons")
@@ -145,7 +145,7 @@ func _create_section(section_name: String) -> bool:
 	new_section.section_name = section_name
 	new_section.on_clear_button_pressed.connect(_on_clear_section_requested)
 	new_section.on_edit_button_pressed.connect(_on_edit_section_requested)
-	new_section.section_color = ProjectSettings.get_setting("project_time_traker/sections/colors/" + section_name, ProjectSettings.get_setting("project_time_traker/sections/color/other", Color.WHITE))
+	new_section.section_color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section_name, ProjectSettings.get_setting("project_time_tracker/sections/color/other", Color.WHITE))
 
 	if _section_icons.has(section_name):
 		new_section.section_icon = _section_icons[section_name]
