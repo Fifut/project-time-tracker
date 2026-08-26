@@ -19,6 +19,14 @@ run/main_scene="res://addons/project-time-tracker/TrackerDock.tscn"
 config/features=PackedStringArray("4.7")
 config/icon="res://addons/project-time-tracker/icon.png"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
+
+[project_time_tracker]
+
+sections/use_external=true
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

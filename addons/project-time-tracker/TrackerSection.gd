@@ -18,15 +18,11 @@ signal on_clear_section(section_name)
 	
 @export var enabled: bool = false:
 	set(value):
-		enabled = value
-		if enabled:
-			_time = Time.get_ticks_msec()
+		if value:
+			_started_ticks_msec = Time.get_ticks_msec()
 		else:
-			elapsed_time += _time - Time.get_ticks_msec()
-
-@export var elapsed_time: float = 0.0:
-	get():
-		return elapsed_time + (_time - Time.get_ticks_msec() )
+			_elapsed_time = _get_current_elapsed_time()
+		enabled = value
 
 
 
@@ -54,15 +50,24 @@ signal on_clear_section(section_name)
 # #######################################
 # Private properties
 # #######################################
-var _time: float = 0.0
-
+var _started_ticks_msec: float = 0.0
+var _elapsed_time: float = 0.0
 
 
 func _ready() -> void:
+	# If project parameters have changed maybe they're ours.
+	ProjectSettings.settings_changed.connect(
+		func():
+			icon_texture.modulate = ProjectSettings.get_setting(
+				"project_time_tracker/sections/colors/" + name,
+				ProjectSettings.get_setting("project_time_tracker/sections/colors/other")
+			)
+	)
+	
 	_update_theme()
 	_update_icon()
 	_update_name()
-
+	_update_ui(_elapsed_time)
 
 
 func _process(delta: float) -> void:
@@ -70,7 +75,7 @@ func _process(delta: float) -> void:
 		return
 	
 	if enabled:
-		_update_ui()
+		_update_ui(_get_current_elapsed_time())
 
 
 
@@ -82,10 +87,25 @@ func edit_buttons_visibility(status: bool) -> void:
 	clear_button.visible = status
 
 
+func restore_elapsed_time(time: float) -> void:
+	_elapsed_time = time
+
+	
+func get_elapsed_time() -> float:
+	if enabled:
+		return _get_current_elapsed_time()
+	else:
+		return _elapsed_time
+
+
 
 # #######################################
 # Helpers
 # #######################################
+func _get_current_elapsed_time() -> float:
+	return _elapsed_time + ( (Time.get_ticks_msec() - _started_ticks_msec) / 1000)
+
+
 func _update_theme() -> void:
 	if (!Engine.is_editor_hint || !is_inside_tree()):
 		return
@@ -108,26 +128,24 @@ func _update_name() -> void:
 	
 	name_label.text = name
 	title_label.text = name
-	clear_section_confirm_dialog.dialog_text = "This action will clear" + name + "session from memory.\n Do you want to continue?"
+	clear_section_confirm_dialog.dialog_text = "This action will clear " + name + " session from memory.\n Do you want to continue?"
 
 
-func _update_ui() -> void:
-	var time = elapsed_time + (_time - Time.get_ticks_msec() )
-		
+func _update_ui(time: float) -> void:
 	var days = floori(time) / 60 / 60 / 24
 	elapsed_time_label.text = str(days) + "d - " + Time.get_time_string_from_unix_time(time)
 	
 	var hours = floori(time) / 60 / 60
 	elapsed_hours_label.text = "(" + str(hours) + "h)"
 	
-	
+
 
 # #######################################
 # Signals
 # #######################################
 func _on_edit_button_pressed():
-	var time = Time.get_time_dict_from_unix_time(elapsed_time)
-	days_spin_box.value = floori(elapsed_time) / 60 / 60 / 24
+	var time = Time.get_time_dict_from_unix_time(_get_current_elapsed_time() )
+	days_spin_box.value = floori(_get_current_elapsed_time() ) / 60 / 60 / 24
 	hour_spin_box.value = floori(time["hour"] % 24)
 	minutes_spin_box.value = time["minute"]
 	seconds_spin_box.value = time["second"]
@@ -142,7 +160,7 @@ func _on_edit_section_ok_button_pressed() -> void:
 	time += hour_spin_box.value * 60 * 60
 	time += minutes_spin_box.value * 60
 	time += seconds_spin_box.value
-	elapsed_time = time
+	_elapsed_time = time
 	
 	edit_section_window.hide()
 

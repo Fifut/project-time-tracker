@@ -29,7 +29,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="IconTexture" type="TextureRect" parent="Margin/Layout/Status" unique_id=2081503847]
-self_modulate = Color(0, 0.7490196, 1, 1)
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("DPITexture_3cuot")
@@ -91,6 +90,9 @@ layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("2_0xje5")
 
+[node name="LogLabel" type="Label" parent="Margin/Layout" unique_id=1344365217]
+layout_mode = 2
+
 [node name="ClearAllConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2094966054]
 oversampling_override = 1.0
 initial_position = 2
@@ -104,4 +106,5 @@ dialog_autowrap = true
 [connection signal="pressed" from="Margin/Layout/Status/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="pressed" from="Margin/Layout/Status/ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="toggled" from="Margin/Layout/Status/EditButton" to="." method="_on_edit_button_toggled"]
+[connection signal="child_entered_tree" from="Margin/Layout/SectionList" to="." method="_on_section_list_child_entered_tree"]
 [connection signal="confirmed" from="ClearAllConfirmDialog" to="." method="_on_clear_all_confirm_dialog_confirmed"]

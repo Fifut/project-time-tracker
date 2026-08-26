@@ -14,6 +14,7 @@ extends Control
 @onready var h_separator: HSeparator = $Margin/Layout/HSeparator
 @onready var section_list : Control = $Margin/Layout/SectionList
 @onready var section_graph : Control = $Margin/Layout/SectionGraph
+@onready var log_label: Label = $Margin/Layout/LogLabel
 @onready var clear_all_confirm_dialog : ConfirmationDialog = $ClearAllConfirmDialog
 
 
@@ -31,7 +32,7 @@ const SECTION_ICONS: Dictionary = {
 	"3D": "3D",
 	"Script": "Script",
 	"Game": "Game",
-	"AssetLib": "AssetLib",
+	"Asset Store": "AssetStore",
 	"External": "Window",
 	"AFK": "ViewportSpeed",
 	"default": "Node" 
@@ -42,6 +43,7 @@ var _tracked_section: String = ""
 
 
 func _ready() -> void:
+	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():
 			section_list.visible = ProjectSettings.get_setting("project_time_tracker/sections/show_sections", true)
@@ -50,7 +52,11 @@ func _ready() -> void:
 	)
 	
 	_update_theme()
-	
+
+
+func _process(delta: float) -> void:
+	_update_ui()
+
 
 
 # #######################################
@@ -67,10 +73,14 @@ func _update_theme() -> void:
 
 
 func _update_ui():
+	if section_list.get_child_count() == 0:
+		return
+		
 	var time: float = 0.0
 	for section in section_list.get_children():
-		time += section.elapsed_time
-		
+		if section.name != "AFK":
+			time += section.get_elapsed_time()
+	
 	var dhms = floori(time) / 60 / 60 / 24
 	dhms_value.text = str(dhms) + "d - " + Time.get_time_string_from_unix_time(time)
 	
@@ -90,21 +100,19 @@ func _create_section(section_name: String, time: float = 0.0) -> void:
 	
 	var new_section = section_scene.instantiate()
 	new_section.name = section_name
-	new_section.elapsed_time = time
-	new_section.section_color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section_name, ProjectSettings.get_setting("project_time_tracker/sections/color/other"))
-	new_section.on_clear_section.connect(_on_clear_section_requested)
-	
 	if SECTION_ICONS.has(section_name):
 		new_section.icon = SECTION_ICONS[section_name]
 	else:
 		new_section.icon = SECTION_ICONS["default"]
-		
+	new_section.restore_elapsed_time(time)
+	new_section.on_clear_section.connect(_on_clear_section_requested)
+	
 	section_list.add_child(new_section)	
 
 
 
 # #######################################
-# Tracker functions
+# Public methods
 # #######################################
 func resume_tracking() -> void:
 	pause_button.visible = true
@@ -115,19 +123,22 @@ func resume_tracking() -> void:
 func pause_tracking() -> void:
 	pause_button.visible = false
 	resume_button.visible = true
-	section_list.get_node(_tracked_section).enabled = true
+	section_list.get_node(_tracked_section).enabled = false
 
 
-
-# #######################################
-# Public methods
-# #######################################
 func set_tracked_section(section: String) -> void:
 	if (_tracked_section == section):
 		return
+	
+	if section_list.has_node(_tracked_section):
+		section_list.get_node(_tracked_section).enabled = false
 		
-	_create_section(_tracked_section)
 	_tracked_section = section
+	_create_section(_tracked_section)
+	section_list.get_node(_tracked_section).enabled = true
+	
+	icon_texture.texture = get_theme_icon(SECTION_ICONS[_tracked_section], "EditorIcons")
+	icon_texture.modulate = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + _tracked_section, ProjectSettings.get_setting("project_time_tracker/sections/colors/Other") )
 	
 
 func get_tracked_section() -> String:
@@ -142,9 +153,13 @@ func restore_tracked_sections(sections : Dictionary) -> void:
 func get_tracked_sections() -> Dictionary:
 	var sections: Dictionary = {}
 	for section in section_list.get_children():
-		sections[section.name] = section.elapsed_time
+		sections[section.name] = section.get_elapsed_time()
 		
 	return sections
+
+
+func set_log_text(text: String) -> void:
+	log_label.text = text
 
 
 
@@ -167,7 +182,7 @@ func _on_clear_button_pressed() -> void:
 func _on_edit_button_toggled(toggled_on: bool) -> void:
 	clear_button.visible = toggled_on
 	for section in section_list.get_children():
-		section.edit_buttons_visibility(true)
+		section.edit_buttons_visibility(toggled_on)
 	
 
 func _on_clear_all_confirm_dialog_confirmed() -> void:
@@ -180,3 +195,13 @@ func _on_clear_all_confirm_dialog_confirmed() -> void:
 
 func _on_clear_section_requested(section_name):
 	section_graph.clear()
+
+
+func _on_section_list_child_entered_tree(node: Node) -> void:
+	# Alphabetical sections sorting
+	var children = section_list.get_children()
+	children.sort_custom(
+		func(a, b):
+			return a.name.to_lower() < b.name.to_lower())
+	for i in children.size():
+		section_list.move_child(children[i], i)

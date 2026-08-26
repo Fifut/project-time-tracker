@@ -13,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 script = ExtResource("1_qrte8")
+elapsed_time = -13067189.006
 
 [node name="Information" type="HBoxContainer" parent="." unique_id=1104806800]
 layout_mode = 2
@@ -21,6 +22,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="IconTexture" type="TextureRect" parent="Information/IconContainer" unique_id=917653221]
+modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = SubResource("DPITexture_7abe0")
@@ -30,6 +32,7 @@ expand_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_7abe0")
+text = "TrackerSection"
 
 [node name="ElapsedTimeLabel" type="Label" parent="Information" unique_id=1284424922]
 layout_mode = 2
@@ -81,7 +84,7 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=191849624]
 layout_mode = 2
-text = "Edit time"
+text = "TrackerSection"
 horizontal_alignment = 1
 
 [node name="SpinBoxHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=11730349]
@@ -158,9 +161,8 @@ text = "Cancel"
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(400, 210)
-dialog_text = "This action will clear this session from memory.
-
-Do you want to continue?"
+dialog_text = "This action will clearTrackerSectionsession from memory.
+ Do you want to continue?"
 dialog_autowrap = true
 
 [connection signal="pressed" from="Information/EditButton" to="." method="_on_edit_button_pressed"]
