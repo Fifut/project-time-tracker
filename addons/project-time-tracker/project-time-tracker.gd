@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 
-#const STORED_SECTIONS_PATH : String = "res://project_time_traker.json"
+#const STORED_SECTIONS_PATH : String = "res://project_time_tracker.json"
 
 var _dock_instance : Control
 var _timer_afk : Timer
@@ -12,17 +12,17 @@ var _window : Window = null
 
 
 func _enter_tree():
-	var key = "project_time_traker/general/file/name"
+	var key = "project_time_tracker/general/file/name"
 	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, "project_time_traker")
+		ProjectSettings.set_setting(key, "project_time_tracker")
 	ProjectSettings.add_property_info({
 		"name": key,
 		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_NONE,
 	})
-	ProjectSettings.set_initial_value(key, "project_time_traker")
+	ProjectSettings.set_initial_value(key, "project_time_tracker")
 	
-	key = "project_time_traker/general/file/location"
+	key = "project_time_tracker/general/file/location"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, "Project (res://)")
 	ProjectSettings.add_property_info({
@@ -33,7 +33,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, "Project (res://)")
 	
-	key = "project_time_traker/general/file/custom"
+	key = "project_time_tracker/general/file/custom"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, "")
 	ProjectSettings.add_property_info({
@@ -43,7 +43,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, "")
 	
-	key = "project_time_traker/sections/show_sections"
+	key = "project_time_tracker/sections/show_sections"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, true)
 	ProjectSettings.add_property_info({
@@ -53,7 +53,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, true)
 	
-	key = "project_time_traker/sections/show_graphs"
+	key = "project_time_tracker/sections/show_graphs"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, true)
 	ProjectSettings.add_property_info({
@@ -63,7 +63,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, true)
 		
-	key = "project_time_traker/sections/use_external"
+	key = "project_time_tracker/sections/use_external"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, false)
 	ProjectSettings.add_property_info({
@@ -73,7 +73,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, false)
 	
-	key = "project_time_traker/sections/colors/2D"
+	key = "project_time_tracker/sections/colors/2D"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.DEEP_SKY_BLUE)
 	ProjectSettings.add_property_info({
@@ -83,7 +83,7 @@ func _enter_tree():
 	})	
 	ProjectSettings.set_initial_value(key, Color.DEEP_SKY_BLUE)
 	
-	key = "project_time_traker/sections/colors/3D"
+	key = "project_time_tracker/sections/colors/3D"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.CORAL)
 	ProjectSettings.add_property_info({
@@ -93,7 +93,7 @@ func _enter_tree():
 	})	
 	ProjectSettings.set_initial_value(key, Color.CORAL)
 	
-	key = "project_time_traker/sections/colors/Script"
+	key = "project_time_tracker/sections/colors/Script"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.YELLOW)
 	ProjectSettings.add_property_info({
@@ -103,7 +103,7 @@ func _enter_tree():
 	})	
 	ProjectSettings.set_initial_value(key, Color.YELLOW)
 		
-	key = "project_time_traker/sections/colors/Game"
+	key = "project_time_tracker/sections/colors/Game"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.FIREBRICK)
 	ProjectSettings.add_property_info({
@@ -113,7 +113,7 @@ func _enter_tree():
 	})	
 	ProjectSettings.set_initial_value(key, Color.FIREBRICK)
 	
-	key = "project_time_traker/sections/colors/AssetLib"
+	key = "project_time_tracker/sections/colors/AssetLib"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.MEDIUM_SEA_GREEN)
 	ProjectSettings.add_property_info({
@@ -123,7 +123,7 @@ func _enter_tree():
 	})		
 	ProjectSettings.set_initial_value(key, Color.MEDIUM_SEA_GREEN)
 	
-	key = "project_time_traker/sections/colors/External"
+	key = "project_time_tracker/sections/colors/External"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.MEDIUM_PURPLE)
 	ProjectSettings.add_property_info({
@@ -133,7 +133,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, Color.MEDIUM_PURPLE)
 		
-	key = "project_time_traker/sections/colors/AFK"
+	key = "project_time_tracker/sections/colors/AFK"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.GRAY)
 	ProjectSettings.add_property_info({
@@ -143,7 +143,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, Color.GRAY)
 	
-	key = "project_time_traker/sections/colors/Other"
+	key = "project_time_tracker/sections/colors/Other"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, Color.WHITE)
 	ProjectSettings.add_property_info({
@@ -153,7 +153,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, Color.WHITE)
 		
-	key = "project_time_traker/afk/afk_timer"
+	key = "project_time_tracker/afk/afk_timer"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, 300)
 	ProjectSettings.add_property_info({
@@ -163,7 +163,7 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, 300)
 			
-	key = "project_time_traker/afk/use_afk"
+	key = "project_time_tracker/afk/use_afk"
 	if not ProjectSettings.has_setting(key):
 		ProjectSettings.set_setting(key, true)
 	ProjectSettings.add_property_info({
@@ -174,7 +174,7 @@ func _enter_tree():
 	ProjectSettings.set_initial_value(key, true)
 		
 	_timer_afk = Timer.new()
-	_timer_afk.wait_time = ProjectSettings.get_setting("project_time_traker/afk/afk_timer", 300)
+	_timer_afk.wait_time = ProjectSettings.get_setting("project_time_tracker/afk/afk_timer", 300)
 	_timer_afk.one_shot = true
 	_timer_afk.timeout.connect(_on_timer_afk_timeout)
 	add_child(_timer_afk)	
@@ -192,7 +192,7 @@ func _enter_tree():
 func _ready() -> void:
 	ProjectSettings.settings_changed.connect(
 	func():
-		_timer_afk.wait_time = ProjectSettings.get_setting("project_time_traker/afk/afk_timer", 300)
+		_timer_afk.wait_time = ProjectSettings.get_setting("project_time_tracker/afk/afk_timer", 300)
 		_set_afk_timer(true)
 	)
 	
@@ -268,7 +268,7 @@ func _on_main_screen_changed(main_screen: String) -> void:
 
 
 func _set_afk_timer(status: bool):
-	if status and ProjectSettings.get_setting("project_time_traker/afk/use_afk", true):
+	if status and ProjectSettings.get_setting("project_time_tracker/afk/use_afk", true):
 		_timer_afk.start()
 	else:
 		_timer_afk.stop()
@@ -280,15 +280,15 @@ func _on_timer_afk_timeout() -> void:
 
 func _file_path() -> String:
 	var path: String
-	match ProjectSettings.get_setting("project_time_traker/general/file/location", "Project (res://)"):
+	match ProjectSettings.get_setting("project_time_tracker/general/file/location", "Project (res://)"):
 		"Project (res://),":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"
 		"Custom":
-			path = ProjectSettings.get_setting("project_time_traker/general/file/custom", "") + "/"
+			path = ProjectSettings.get_setting("project_time_tracker/general/file/custom", "") + "/"
 			
-	path += ProjectSettings.get_setting("project_time_traker/general/file/name", "project_time_traker")
+	path += ProjectSettings.get_setting("project_time_tracker/general/file/name", "project_time_tracker")
 	path += ".json"
 	return path
 
@@ -319,7 +319,7 @@ func _process(delta):
 
 		_window = Window.get_focused_window()
 		if not _window:
-			if ProjectSettings.get_setting("project_time_traker/sections/use_external", true):
+			if ProjectSettings.get_setting("project_time_tracker/sections/use_external", true):
 				_dock_instance.set_main_view("External")
 			else:
 				_dock_instance.pause_tracking()

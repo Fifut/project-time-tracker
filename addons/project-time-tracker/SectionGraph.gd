@@ -26,7 +26,7 @@ func _update_sections() -> void:
 		else:
 			var new_section = preload("res://addons/project-time-tracker/TrackerSectionColor.tscn").instantiate()
 			new_section.name = section
-			new_section.color = ProjectSettings.get_setting("project_time_traker/sections/colors/" + section, ProjectSettings.get_setting("project_time_traker/sections/colors/other", Color.WHITE))
+			new_section.color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section, ProjectSettings.get_setting("project_time_tracker/sections/colors/other", Color.WHITE))
 			new_section.size_flags_stretch_ratio = floor(sections[section]) / floor(sections["Editor"])
 			add_child(new_section)
 
