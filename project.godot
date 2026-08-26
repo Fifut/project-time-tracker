@@ -16,12 +16,8 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Project Time Tracker"
 run/main_scene="res://addons/project-time-tracker/TrackerDock.tscn"
-config/features=PackedStringArray("4.6")
+config/features=PackedStringArray("4.7")
 config/icon="res://addons/project-time-tracker/icon.png"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
 
 [rendering]
 

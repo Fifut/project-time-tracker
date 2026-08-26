@@ -22,6 +22,10 @@ A small editor widget which provides basic functions for tracking your time with
 
 ## Update
 
+### v3.0.0
+- Refactor
+
+
 ### v2.0.8
 - Add project settings to customize json file name
 - Add project settings to customize json file location
