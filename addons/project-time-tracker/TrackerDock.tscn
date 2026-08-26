@@ -91,7 +91,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("2_0xje5")
 
-[node name="ClearConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2094966054]
+[node name="ClearAllConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2094966054]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(400, 210)
@@ -100,113 +100,8 @@ dialog_text = "This action will clear all recorded sections from memory.
 Do you want to continue?"
 dialog_autowrap = true
 
-[node name="ClearSectionConfirmDialog" type="ConfirmationDialog" parent="." unique_id=1970480146]
-oversampling_override = 1.0
-initial_position = 2
-size = Vector2i(400, 210)
-dialog_text = "This action will clear all recorded sessions from memory.
-
-Do you want to continue?"
-dialog_autowrap = true
-
-[node name="EditSectionWindow" type="Window" parent="." unique_id=1086264937]
-oversampling_override = 1.0
-title = "Project Time Tracker"
-initial_position = 2
-size = Vector2i(700, 200)
-visible = false
-exclusive = true
-unresizable = true
-always_on_top = true
-popup_window = true
-
-[node name="PanelContainer" type="PanelContainer" parent="EditSectionWindow" unique_id=560684577]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="EditSectionWindow/PanelContainer" unique_id=63329989]
-layout_mode = 2
-theme_override_constants/separation = 30
-alignment = 1
-
-[node name="TitleLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=1537731356]
-layout_mode = 2
-text = "Edit time"
-horizontal_alignment = 1
-
-[node name="SpinBoxHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=1003946276]
-layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="DaysHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1752169955]
-layout_mode = 2
-
-[node name="DaysLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer" unique_id=1021584117]
-layout_mode = 2
-text = "Days"
-
-[node name="DaysSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer" unique_id=794020663]
-layout_mode = 2
-max_value = 999999.0
-alignment = 2
-
-[node name="HoursHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=169072545]
-layout_mode = 2
-
-[node name="HoursLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer" unique_id=1472622073]
-layout_mode = 2
-text = "Hours"
-
-[node name="HourSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer" unique_id=1658791722]
-layout_mode = 2
-max_value = 999999.0
-alignment = 2
-
-[node name="MinutesHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1741910270]
-layout_mode = 2
-
-[node name="MinutesLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer" unique_id=1269744109]
-layout_mode = 2
-text = "Minutes"
-
-[node name="MinutesSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer" unique_id=1149957365]
-layout_mode = 2
-max_value = 59.0
-alignment = 2
-
-[node name="SecondsHBoxContainer2" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=865303692]
-layout_mode = 2
-
-[node name="SecondsLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2" unique_id=1608661624]
-layout_mode = 2
-text = "Seconds"
-
-[node name="SecondsSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2" unique_id=485534275]
-layout_mode = 2
-max_value = 59.0
-alignment = 2
-
-[node name="ButtonsHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=786085148]
-layout_mode = 2
-theme_override_constants/separation = 60
-alignment = 1
-
-[node name="OKButton" type="Button" parent="EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer" unique_id=1952345818]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "OK"
-
-[node name="CancelButton" type="Button" parent="EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer" unique_id=435253502]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Cancel"
-
-[node name="TimerUpdate" type="Timer" parent="." unique_id=678128204]
-autostart = true
-ignore_time_scale = true
+[connection signal="pressed" from="Margin/Layout/Status/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/Status/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/Status/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="toggled" from="Margin/Layout/Status/EditButton" to="." method="_on_edit_button_toggled"]
+[connection signal="confirmed" from="ClearAllConfirmDialog" to="." method="_on_clear_all_confirm_dialog_confirmed"]

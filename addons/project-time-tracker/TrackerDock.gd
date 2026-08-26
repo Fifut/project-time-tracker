@@ -1,8 +1,9 @@
 @tool
 extends Control
 
-
+# #######################################
 # Node references
+# #######################################
 @onready var icon_texture: TextureRect = $Margin/Layout/Status/IconTexture
 @onready var dhms_value: Label = $Margin/Layout/Status/DHMSValue
 @onready var hours_value: Label = $Margin/Layout/Status/HoursValue
@@ -13,31 +14,19 @@ extends Control
 @onready var h_separator: HSeparator = $Margin/Layout/HSeparator
 @onready var section_list : Control = $Margin/Layout/SectionList
 @onready var section_graph : Control = $Margin/Layout/SectionGraph
-@onready var clear_confirm_dialog : ConfirmationDialog = $ClearConfirmDialog
-@onready var clear_section_confirm_dialog : ConfirmationDialog = $ClearSectionConfirmDialog
-@onready var edit_section_window: Window = $EditSectionWindow
-@onready var timer_update : Timer = $TimerUpdate
-
-@onready var title_label: Label = $EditSectionWindow/PanelContainer/VBoxContainer/TitleLabel
-@onready var days_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer/DaysSpinBox
-@onready var hour_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer/HourSpinBox
-@onready var minutes_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer/MinutesSpinBox
-@onready var seconds_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2/SecondsSpinBox
-@onready var ok_button: Button = $EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer/OKButton
-@onready var cancel_button: Button = $EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer/CancelButton
+@onready var clear_all_confirm_dialog : ConfirmationDialog = $ClearAllConfirmDialog
 
 
+# #######################################
+# Scene references
+# #######################################
+@onready var section_scene = preload("res://addons/project-time-tracker/TrackerSection.tscn")
+
+
+# #######################################
 # Private properties
-var _active_tracking : bool = false
-var _tracker_started : float = 0.0
-var _tracker_main_view : String = ""
-var _tracker_sections : Dictionary = {}
-var _section_to_remove : String = ""
-var _show_sections : bool = true
-var _show_graphs : bool = true
-
-
-var _section_icons : Dictionary = {
+# #######################################
+const SECTION_ICONS: Dictionary = {
 	"2D": "2D",
 	"3D": "3D",
 	"Script": "Script",
@@ -45,81 +34,28 @@ var _section_icons : Dictionary = {
 	"AssetLib": "AssetLib",
 	"External": "Window",
 	"AFK": "ViewportSpeed",
-	"default": "Node"
+	"default": "Node" 
 }
 
+var _tracked_section: String = ""
 
-# Scene references
-@onready var section_scene = preload("res://addons/project-time-tracker/TrackerSection.tscn")
 
 
 func _ready() -> void:
 	ProjectSettings.settings_changed.connect(
 		func():
-			_show_sections = ProjectSettings.get_setting("project_time_tracker/sections/show_sections", true)
-			_show_graphs = ProjectSettings.get_setting("project_time_tracker/sections/show_graphs", true)
-			
-			for section in _tracker_sections:
-				var node = section_list.get_node_or_null(section)
-				if (node):
-					node.section_color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section, ProjectSettings.get_setting("project_time_tracker/sections/colors/other", Color.WHITE))
+			section_list.visible = ProjectSettings.get_setting("project_time_tracker/sections/show_sections", true)
+			section_graph.visible = ProjectSettings.get_setting("project_time_tracker/sections/show_graphs", true)
+			h_separator.visible = section_list.visible or section_graph.visible
 	)
 	
 	_update_theme()
 	
-	pause_button.pressed.connect(_pause_tracking)
-	resume_button.pressed.connect(_resume_tracking)
-	clear_button.pressed.connect(_on_clear_records_requested)
-	edit_button.toggled.connect(_on_edit_requested)
-	clear_confirm_dialog.confirmed.connect(_on_clear_records_confirmed)
-	clear_section_confirm_dialog.confirmed.connect(_on_clear_section_confirmed)
-	timer_update.timeout.connect(_on_timer_update_timeout)
-	ok_button.pressed.connect(_on_ok_requested)
-	cancel_button.pressed.connect(_on_cancel_requested)
-	
-	_tracker_started = Time.get_unix_time_from_system()
-	
-	_set_active_tracking(true)
-	
-	timer_update.start()
 
 
-func _process(delta: float) -> void:
-	section_list.visible = _show_sections
-	section_graph.visible = _show_graphs
-	h_separator.visible = (_show_sections or _show_graphs)
-	
-	# _tracker_main_view is empty half the time! WTF???
-	if not _tracker_main_view.is_empty():
-		icon_texture.self_modulate = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + _tracker_main_view, ProjectSettings.get_setting("project_time_tracker/sections/colors/other", Color.WHITE))
-		
-		if _section_icons.has(_tracker_main_view):
-			icon_texture.texture = get_theme_icon(_section_icons[_tracker_main_view], "EditorIcons")
-		else:
-			icon_texture.texture = get_theme_icon(_section_icons["default"], "EditorIcons")
-		
-	if (!_active_tracking):
-		return
-	
-	var time_elapsed = 0.0
-	for section in _tracker_sections:
-		if section != "Editor" and section != "AFK":
-			time_elapsed += _tracker_sections[section]
-	
-	_tracker_sections["Editor"] = time_elapsed
-	_update_values()
-
-
+# #######################################
 # Helpers
-func _update_values():
-	var dhms = floori(_tracker_sections["Editor"]) / 60 / 60 / 24
-	dhms_value.text = str(dhms) + "d - " + Time.get_time_string_from_unix_time(_tracker_sections["Editor"])
-	
-	var hours = floori(_tracker_sections["Editor"]) / 60 / 60
-	hours_value.text = "(" + str(hours) + "h)"
-	
-
-
+# #######################################
 func _update_theme() -> void:
 	if (!Engine.is_editor_hint || !is_inside_tree()):
 		return
@@ -127,194 +63,120 @@ func _update_theme() -> void:
 	pause_button.icon = get_theme_icon("Pause", "EditorIcons")
 	resume_button.icon = get_theme_icon("Play", "EditorIcons")
 	clear_button.icon = get_theme_icon("Remove", "EditorIcons")
-	edit_button.icon = get_theme_icon("Modifiers", "EditorIcons") 
+	edit_button.icon = get_theme_icon("Modifiers", "EditorIcons")
 
 
-func _create_section(section_name: String) -> bool:
+func _update_ui():
+	var time: float = 0.0
+	for section in section_list.get_children():
+		time += section.elapsed_time
+		
+	var dhms = floori(time) / 60 / 60 / 24
+	dhms_value.text = str(dhms) + "d - " + Time.get_time_string_from_unix_time(time)
+	
+	var hours = floori(time) / 60 / 60
+	hours_value.text = "(" + str(hours) + "h)"
+	
+
+func _create_section(section_name: String, time: float = 0.0) -> void:
 	if (!Engine.is_editor_hint || !is_inside_tree()):
-		return false
+		return
 	
 	if (section_name.is_empty()):
-		return false
+		return
 	
-	if section_list.get_node_or_null(section_name):
-		return true
+	if section_list.has_node(section_name):
+		return
 	
 	var new_section = section_scene.instantiate()
 	new_section.name = section_name
-	new_section.section_name = section_name
-	new_section.on_clear_button_pressed.connect(_on_clear_section_requested)
-	new_section.on_edit_button_pressed.connect(_on_edit_section_requested)
-	new_section.section_color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section_name, ProjectSettings.get_setting("project_time_tracker/sections/color/other", Color.WHITE))
-
-	if _section_icons.has(section_name):
-		new_section.section_icon = _section_icons[section_name]
+	new_section.elapsed_time = time
+	new_section.section_color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section_name, ProjectSettings.get_setting("project_time_tracker/sections/color/other"))
+	new_section.on_clear_section.connect(_on_clear_section_requested)
+	
+	if SECTION_ICONS.has(section_name):
+		new_section.icon = SECTION_ICONS[section_name]
 	else:
-		new_section.section_icon = _section_icons["default"]
+		new_section.icon = SECTION_ICONS["default"]
 		
-	section_list.add_child(new_section)
-	
-	_tracker_sections[section_name] = 0
-		
-	return true
+	section_list.add_child(new_section)	
 
 
-func _update_sections() -> void:
-	if (!Engine.is_editor_hint || !is_inside_tree()):
-		return
 
-	for section in _tracker_sections:
-		var node = section_list.get_node_or_null(section)
-		if (node):
-			node.elapsed_time = _tracker_sections[section]
-	
-	section_graph.sections = _tracker_sections
-
-
+# #######################################
 # Tracker functions
-func _resume_tracking() -> void:
-	_set_active_tracking(true)
-	_tracker_started = Time.get_unix_time_from_system()
-
-func _pause_tracking() -> void:
-	_set_active_tracking(false)
-	_disable_tracking()
-
-
+# #######################################
 func resume_tracking() -> void:
-	if not _active_tracking and pause_button.visible:
-		_active_tracking = true
-		_tracker_started = Time.get_unix_time_from_system()
-	
+	pause_button.visible = true
+	resume_button.visible = false
+	section_list.get_node(_tracked_section).enabled = true
+
+
 func pause_tracking() -> void:
-	if _active_tracking:
-		_active_tracking = false
-		_disable_tracking()
+	pause_button.visible = false
+	resume_button.visible = true
+	section_list.get_node(_tracked_section).enabled = true
 
 
-func _disable_tracking() -> void:
-	if (_create_section(_tracker_main_view)):
-		var elapsed_time = Time.get_unix_time_from_system() - _tracker_started
-		_tracker_sections[_tracker_main_view] += elapsed_time	
-		_update_values()
 
-
-# Properties
-func set_main_view(view_name: String) -> void:
-	if (_tracker_main_view == view_name):
+# #######################################
+# Public methods
+# #######################################
+func set_tracked_section(section: String) -> void:
+	if (_tracked_section == section):
 		return
 		
-	#Save only for an minimum elasped time
-	var elapsed_time = Time.get_unix_time_from_system() - _tracker_started
-
-	if (_active_tracking and elapsed_time >= 1 and _create_section(_tracker_main_view)):
-		_tracker_sections[_tracker_main_view] += elapsed_time
-		_tracker_started = Time.get_unix_time_from_system()
+	_create_section(_tracked_section)
+	_tracked_section = section
 	
-	_tracker_main_view = view_name
 
-func get_main_view() -> String:
-	return _tracker_main_view
-
-
-func _set_active_tracking(tracking: bool) -> void:
-	_active_tracking = tracking
-	
-	if (_active_tracking):
-		pause_button.visible = true
-		resume_button.visible = false
-	else:
-		pause_button.visible = false
-		resume_button.visible = true
+func get_tracked_section() -> String:
+	return _tracked_section
 
 
 func restore_tracked_sections(sections : Dictionary) -> void:
 	for section in sections:
-		if (section != "Editor"):
-			_create_section(section)
-		_tracker_sections[section] = sections[section]
-	_update_sections()
+		_create_section(section, sections[section])
 
 
 func get_tracked_sections() -> Dictionary:
-	return _tracker_sections
+	var sections: Dictionary = {}
+	for section in section_list.get_children():
+		sections[section.name] = section.elapsed_time
+		
+	return sections
 
 
-# Event handlers
-func _on_clear_records_requested() -> void:
-	clear_confirm_dialog.popup_centered(clear_confirm_dialog.size)
+
+# #######################################
+# Signals
+# #######################################
+func _on_resume_button_pressed() -> void:
+	resume_tracking()
 
 
-func _on_clear_records_confirmed() -> void:
-	_tracker_sections.clear()
-	for child_node in section_list.get_children():
-		section_list.remove_child(child_node)
-		child_node.queue_free()
-	edit_button.button_pressed = false
-	section_graph.clear()
+func _on_pause_button_pressed() -> void:
+	pause_tracking()
 
 
-func _on_edit_requested(toggled_on: bool) -> void:
+func _on_clear_button_pressed() -> void:
+	clear_button.button_pressed = false
+	clear_all_confirm_dialog.popup_centered(clear_all_confirm_dialog.size)
+
+		
+func _on_edit_button_toggled(toggled_on: bool) -> void:
 	clear_button.visible = toggled_on
-	for child_node in section_list.get_children():
-		child_node.clear_button_visibility(toggled_on)
+	for section in section_list.get_children():
+		section.edit_buttons_visibility(true)
+	
 
-
-func _on_timer_update_timeout():
-	if (_active_tracking and _create_section(_tracker_main_view)):
-		var elapsed_time = Time.get_unix_time_from_system() - _tracker_started
-		_tracker_sections[_tracker_main_view] += elapsed_time
-		_tracker_started = Time.get_unix_time_from_system()
-		_update_sections()
+func _on_clear_all_confirm_dialog_confirmed() -> void:
+	clear_button.button_pressed = false
+	for section in section_list.get_children():
+		section_list.remove_child(section)
+		section.queue_free()
+	section_graph.clear()
 
 
 func _on_clear_section_requested(section_name):
-	_section_to_remove = section_name
-	clear_section_confirm_dialog.dialog_text = "This action will remove " + section_name + " section from memory.\n\nDo you want to continue?"
-	clear_section_confirm_dialog.popup_centered(clear_section_confirm_dialog.size)
-
-
-func _on_clear_section_confirmed():
-	_tracker_sections.erase(_section_to_remove)
-	
-	if (_tracker_main_view == _section_to_remove):
-		_tracker_started = Time.get_unix_time_from_system()
-
-	var child_node = section_list.get_node(_section_to_remove)
-	section_list.remove_child(child_node)
-	child_node.queue_free()
-	
-	edit_button.button_pressed = false
-	_section_to_remove = ""
 	section_graph.clear()
-	_update_sections()
-
-
-func _on_edit_section_requested(section_name):
-	var time = Time.get_time_dict_from_unix_time(_tracker_sections[section_name])
-	
-	title_label.text = section_name
-	days_spin_box.value = floori(_tracker_sections[section_name]) / 60 / 60 / 24
-	hour_spin_box.value = floori(time["hour"] % 24)
-	minutes_spin_box.value = time["minute"]
-	seconds_spin_box.value = time["second"]
-	
-	edit_section_window.show()
-	
-
-func _on_ok_requested():
-	var time = 0.0
-	time += days_spin_box.value * 24 * 60 * 60
-	time += hour_spin_box.value * 60 * 60
-	time += minutes_spin_box.value * 60
-	time += seconds_spin_box.value
-	_tracker_sections[title_label.text] = time
-	
-	edit_button.button_pressed = false
-	edit_section_window.hide()
-	
-	
-func _on_cancel_requested():
-	edit_button.button_pressed = false
-	edit_section_window.hide()
-	
