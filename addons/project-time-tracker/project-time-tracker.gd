@@ -4,189 +4,24 @@ extends EditorPlugin
 
 var _dock_instance: Control
 var _event_manager: Node
+var _settings_manager: Node
 var _timer_afk: Timer
 
 var _main_screen_buttons: Array[Button] = []
 
 
 func _enter_tree():
-	var key = "project_time_tracker/general/file/name"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, "project_time_tracker")
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, "project_time_tracker")
-	
-	key = "project_time_tracker/general/file/location"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, "Project (res://)")
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_ENUM,
-		"hint_string": "Project (res://),User data (user://),Custom"
-	})
-	ProjectSettings.set_initial_value(key, "Project (res://)")
-	
-	key = "project_time_tracker/general/file/custom"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, "")
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_GLOBAL_DIR,
-	})
-	ProjectSettings.set_initial_value(key, "")
-	
-	key = "project_time_tracker/sections/show_sections"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, true)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, true)
-	
-	key = "project_time_tracker/sections/show_graphs"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, true)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, true)
-		
-	key = "project_time_tracker/sections/use_external"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, false)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, false)
-	
-	key = "project_time_tracker/sections/colors/2D"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.DEEP_SKY_BLUE)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, Color.DEEP_SKY_BLUE)
-	
-	key = "project_time_tracker/sections/colors/3D"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.CORAL)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, Color.CORAL)
-	
-	key = "project_time_tracker/sections/colors/Script"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.YELLOW)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, Color.YELLOW)
-		
-	key = "project_time_tracker/sections/colors/Game"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.FIREBRICK)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, Color.FIREBRICK)
-	
-	key = "project_time_tracker/sections/colors/Asset Store"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.MEDIUM_SEA_GREEN)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})		
-	ProjectSettings.set_initial_value(key, Color.MEDIUM_SEA_GREEN)
-	
-	key = "project_time_tracker/sections/colors/External"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.MEDIUM_PURPLE)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, Color.MEDIUM_PURPLE)
-		
-	key = "project_time_tracker/sections/colors/AFK"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.SLATE_GRAY)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, Color.SLATE_GRAY)
-	
-		
-	key = "project_time_tracker/sections/colors/Documentation"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.LIGHT_PINK)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, Color.LIGHT_PINK)
-	
-	key = "project_time_tracker/sections/colors/Other"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.WHITE)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, Color.WHITE)
-		
-	key = "project_time_tracker/afk/afk_timer"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, 300)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, 300)
-			
-	key = "project_time_tracker/afk/use_afk"
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, true)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, true)
+	_settings_manager = preload("res://addons/project-time-tracker/settings_manager.gd").new()
+	add_child(_settings_manager)	
 	
 	_event_manager = preload("res://addons/project-time-tracker/events_manager.gd").new()
 	add_child(_event_manager)	
 	
 	_timer_afk = Timer.new()
-	_timer_afk.wait_time = ProjectSettings.get_setting("project_time_tracker/afk/afk_timer", 300)
+	_timer_afk.wait_time = ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.AFK_TIMER,
+		ProjectTimeTrackerSettingsManager.AFK_TIMER_DEFAULT
+		)
 	_timer_afk.one_shot = true
 	add_child(_timer_afk)	
 	
@@ -210,7 +45,10 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 	func():
-		_timer_afk.wait_time = ProjectSettings.get_setting("project_time_tracker/afk/afk_timer", 300)
+		_timer_afk.wait_time = ProjectSettings.get_setting(
+			ProjectTimeTrackerSettingsManager.AFK_TIMER,
+			ProjectTimeTrackerSettingsManager.AFK_TIMER_DEFAULT
+			)
 	)
 	
 	# Signal from 2D, 3D, Script, Game, etc. workspace
@@ -234,7 +72,10 @@ func _ready() -> void:
 			# Maybe an external editor
 			elif window_name == "External":
 				_timer_afk.stop()
-				if ProjectSettings.get_setting("project_time_tracker/sections/use_external", false):
+				if ProjectSettings.get_setting(
+					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL,
+					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL_DEFAULT
+					):
 					_dock_instance.set_tracked_section("External")
 				else:
 					_dock_instance.pause_tracking()
@@ -267,8 +108,16 @@ func _ready() -> void:
 	# Signal from AFK timer
 	_timer_afk.timeout.connect(
 		func():
-			if ProjectSettings.get_setting("project_time_tracker/afk/use_afk", true):
-				_dock_instance.subtract_to_current_section(ProjectSettings.get_setting("project_time_tracker/afk/afk_timer", 300) )
+			if ProjectSettings.get_setting(
+				ProjectTimeTrackerSettingsManager.AFK_USE_AFK,
+				ProjectTimeTrackerSettingsManager.AFK_USE_AFK_DEFAULT
+				):
+				_dock_instance.subtract_to_current_section(
+					ProjectSettings.get_setting(
+						ProjectTimeTrackerSettingsManager.AFK_TIMER,
+						ProjectTimeTrackerSettingsManager.AFK_TIMER_DEFAULT
+						)
+					)
 				_dock_instance.set_tracked_section("AFK")
 	)
 	
@@ -343,15 +192,24 @@ func _store_sections() -> void:
 		
 func _file_path() -> String:
 	var path: String
-	match ProjectSettings.get_setting("project_time_tracker/general/file/location", "Project (res://)"):
+	match ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.SAVE_FILE_LOCATION,
+		ProjectTimeTrackerSettingsManager.SAVE_FILE_LOCATION_DEFAULT
+		):
 		"Project (res://),":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"
 		"Custom":
-			path = ProjectSettings.get_setting("project_time_tracker/general/file/custom", "") + "/"
+			path = ProjectSettings.get_setting(
+				ProjectTimeTrackerSettingsManager.SAVE_FILE_CUSTOM_LOCATION,
+				ProjectTimeTrackerSettingsManager.SAVE_FILE_CUSTOM_LOCATION_DEFAULT
+				) + "/"
 			
-	path += ProjectSettings.get_setting("project_time_tracker/general/file/name", "project_time_tracker")
+	path += ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.SAVE_FILE_NAME,
+		ProjectTimeTrackerSettingsManager.SAVE_FILE_NAME_DEFAULT
+		)
 	path += ".json"
 	return path
 

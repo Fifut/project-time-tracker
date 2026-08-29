@@ -47,8 +47,16 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():
-			section_list.visible = ProjectSettings.get_setting("project_time_tracker/sections/show_sections", true)
-			section_graph.visible = ProjectSettings.get_setting("project_time_tracker/sections/show_graphs", true)
+			section_list.visible = ProjectSettings.get_setting(
+				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_SECTIONS,
+				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_SECTIONS_DEFAULT
+				)
+				
+			section_graph.visible = ProjectSettings.get_setting(
+				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_GRAPHS,
+				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_GRAPHS_DEFAULT
+				)
+				
 			h_separator.visible = section_list.visible or section_graph.visible
 	)
 	
@@ -181,7 +189,13 @@ func set_tracked_section(section: String) -> void:
 	section_list.get_node(_tracked_section).enabled = true
 	
 	icon_texture.texture = get_theme_icon(SECTION_ICONS[_tracked_section], "EditorIcons")
-	icon_texture.modulate = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + _tracked_section, ProjectSettings.get_setting("project_time_tracker/sections/colors/Other") )
+	icon_texture.modulate = ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + _tracked_section,
+		ProjectSettings.get_setting(
+			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER,
+			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER_DEFAULT
+			)
+		)
 	
 
 func get_tracked_section() -> String:
