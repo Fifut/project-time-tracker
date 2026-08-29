@@ -33,7 +33,7 @@ func _enter_tree():
 	
 
 func _exit_tree():
-	_store_sections()	# https://github.com/godotengine/godot/issues/118929
+	_save_external_data()	# https://github.com/godotengine/godot/issues/118929
 	remove_control_from_docks(_dock_instance)
 	_dock_instance.queue_free()
 
@@ -135,6 +135,12 @@ func _make_visible(visible):
 
 func _save_external_data():
 	_store_sections()
+	
+	if ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_ENABLED,
+		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_ENABLED_DEFAULT
+		):
+		_store_log_journal()
 
 
 func _get_plugin_icon():
@@ -146,7 +152,7 @@ func _get_plugin_icon():
 # Private methods
 # #######################################
 func _load_sections() -> void:
-	var path = _file_path()
+	var path = _save_file_path()
 	
 	if (!FileAccess.file_exists(path)):
 		return
@@ -169,12 +175,11 @@ func _load_sections() -> void:
 	_dock_instance.restore_tracked_sections(parse_result)
 
 
-
 func _store_sections() -> void:
 	var tracked_sections = _dock_instance.get_tracked_sections()
 	var stored_string = JSON.stringify(tracked_sections, "  ")
 	
-	var path = _file_path()
+	var path = _save_file_path()
 	
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	var error = FileAccess.get_open_error()
@@ -189,8 +194,41 @@ func _store_sections() -> void:
 	
 	file.close()
 
+
+func _store_log_journal() -> void:
+	var tracked_sections: Dictionary = _dock_instance.get_tracked_sections()
+
+	var log: String = Time.get_date_string_from_system()
+	for section in tracked_sections:
+		log += " - " + section + ": " + Time.get_time_string_from_unix_time(tracked_sections[section])
+	
+	var path = _log_journal_file_path()
+	var lines: PackedStringArray = []
+
+	#  If the file exists, reads all entries in the log
+	if FileAccess.file_exists(path):
+		var file = FileAccess.open(path, FileAccess.READ)
+		lines = file.get_as_text().split("\n")
+		file.close()
 		
-func _file_path() -> String:
+		# Deletes the last line of the file if is ""
+		if lines.size() > 0 and lines[-1] == "":
+			lines.remove_at(lines.size() - 1)
+	
+	# Replaces the log entry if the date already exists, or adds it if it does not
+	if lines.size() > 0 and lines[-1].begins_with(Time.get_date_string_from_system() ):
+		lines[-1] = log
+	else:
+		lines.append(log)
+
+	# Writes all log entries
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	for line in lines:
+		file.store_line(line)
+	file.close()
+
+	
+func _save_file_path() -> String:
 	var path: String
 	match ProjectSettings.get_setting(
 		ProjectTimeTrackerSettingsManager.SAVE_FILE_LOCATION,
@@ -211,6 +249,30 @@ func _file_path() -> String:
 		ProjectTimeTrackerSettingsManager.SAVE_FILE_NAME_DEFAULT
 		)
 	path += ".json"
+	return path
+
+
+func _log_journal_file_path() -> String:
+	var path: String
+	match ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_LOCATION,
+		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_LOCATION_DEFAULT
+		):
+		"Project (res://),":
+			path = "res://"
+		"User data (user://)":
+			path = "user://"
+		"Custom":
+			path = ProjectSettings.get_setting(
+				ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_CUSTOM_LOCATION,
+				ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT
+				) + "/"
+			
+	path += ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_NAME,
+		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_NAME_DEFAULT
+		)
+	path += ".txt"
 	return path
 
 

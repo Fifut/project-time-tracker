@@ -3,9 +3,14 @@ class_name ProjectTimeTrackerSettingsManager extends Node
 # #######################################
 # Settings keys
 # #######################################
-const SAVE_FILE_NAME: String = "project_time_tracker/general/save_file/name"
-const SAVE_FILE_LOCATION: String = "project_time_tracker/general/save_file/location"
-const SAVE_FILE_CUSTOM_LOCATION: String = "project_time_tracker/general/save_file/custom_location"
+const SAVE_FILE_NAME: String = "project_time_tracker/general/save_file/file_name"
+const SAVE_FILE_LOCATION: String = "project_time_tracker/general/save_file/file_location"
+const SAVE_FILE_CUSTOM_LOCATION: String = "project_time_tracker/general/save_file/file_custom_location"
+
+const LOG_JOURNAL_FILE_NAME: String = "project_time_tracker/general/log_journal/file_name"
+const LOG_JOURNAL_FILE_LOCATION: String = "project_time_tracker/general/log_journal/file_location"
+const LOG_JOURNAL_FILE_CUSTOM_LOCATION: String = "project_time_tracker/general/log_journal/file_custom_location"
+const LOG_JOURNAL_ENABLED: String = "project_time_tracker/general/log_journal/enabled"
 
 const SECTIONS_SHOW_SECTIONS: String = "project_time_tracker/sections/sections/show_sections"
 const SECTIONS_SHOW_GRAPHS: String = "project_time_tracker/sections/sections/show_graphs"
@@ -31,6 +36,11 @@ const AFK_USE_AFK: String = "project_time_tracker/afk/use_afk"
 const SAVE_FILE_NAME_DEFAULT: String = "project_time_tracker"
 const SAVE_FILE_LOCATION_DEFAULT: String = "Project (res://)"
 const SAVE_FILE_CUSTOM_LOCATION_DEFAULT: String = ""
+
+const LOG_JOURNAL_FILE_NAME_DEFAULT: String = "log_journal"
+const LOG_JOURNAL_FILE_LOCATION_DEFAULT: String = "Project (res://)"
+const LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT: String = ""
+const LOG_JOURNAL_ENABLED_DEFAULT: bool = false
 
 const SECTIONS_SHOW_SECTIONS_DEFAULT: bool = true
 const SECTIONS_SHOW_GRAPHS_DEFAULT: bool = true
@@ -86,6 +96,50 @@ func _enter_tree():
 		"hint": PROPERTY_HINT_GLOBAL_DIR,
 	})
 	ProjectSettings.set_initial_value(key, SAVE_FILE_CUSTOM_LOCATION_DEFAULT)
+	
+	# #######################################
+	# Log journal file
+	# #######################################
+	key = LOG_JOURNAL_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, LOG_JOURNAL_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, LOG_JOURNAL_ENABLED_DEFAULT)
+	
+	key = LOG_JOURNAL_FILE_NAME
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, LOG_JOURNAL_FILE_NAME_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, LOG_JOURNAL_FILE_NAME_DEFAULT)
+	
+	key = LOG_JOURNAL_FILE_LOCATION
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, LOG_JOURNAL_FILE_LOCATION_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_ENUM,
+		"hint_string": "Project (res://),User data (user://),Custom"
+	})
+	ProjectSettings.set_initial_value(key, LOG_JOURNAL_FILE_LOCATION_DEFAULT)
+	
+	key = LOG_JOURNAL_FILE_CUSTOM_LOCATION
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_GLOBAL_DIR,
+	})
+	ProjectSettings.set_initial_value(key, LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT)
 	
 	# #######################################
 	# Sections

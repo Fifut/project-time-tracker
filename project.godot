@@ -25,7 +25,7 @@ enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
 
 [project_time_tracker]
 
-sections/use_external=true
+general/log_journal/enabled=true
 
 [rendering]
 

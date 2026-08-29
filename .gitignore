@@ -24,3 +24,4 @@ __MACOSX
 
 #project ignores
 project_time_tracker.json
+log_journal.txt
