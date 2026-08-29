@@ -133,13 +133,24 @@ func _enter_tree():
 		
 	key = "project_time_tracker/sections/colors/AFK"
 	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, Color.GRAY)
+		ProjectSettings.set_setting(key, Color.SLATE_GRAY)
 	ProjectSettings.add_property_info({
 		"name": key,
 		"type": TYPE_COLOR,
 		"hint": PROPERTY_HINT_NONE,
 	})
-	ProjectSettings.set_initial_value(key, Color.GRAY)
+	ProjectSettings.set_initial_value(key, Color.SLATE_GRAY)
+	
+		
+	key = "project_time_tracker/sections/colors/Documentation"
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, Color.LIGHT_PINK)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_COLOR,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, Color.LIGHT_PINK)
 	
 	key = "project_time_tracker/sections/colors/Other"
 	if not ProjectSettings.has_setting(key):
@@ -205,52 +216,59 @@ func _ready() -> void:
 	# Signal from 2D, 3D, Script, Game, etc. workspace
 	main_screen_changed.connect(
 		func(screen_name):
-			_timer_afk.start()
 			_dock_instance.set_tracked_section(screen_name)
 	)
 	
 	# Signal from Godot focused windows
 	_event_manager.on_focused_window.connect(
 		func(window_name):
-			_timer_afk.start()
-			_dock_instance.set_log_text(window_name)
 			
 			# Main Godot window
 			if window_name == ProjectSettings.get_setting("application/config/name"):
-					_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
+				_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
 				
 			# Floating script editor
 			elif window_name.begins_with("Script Editor"):
 				_dock_instance.set_tracked_section("Script")
 			
 			# Maybe an external editor
-			elif window_name == "External" and ProjectSettings.get_setting("project_time_tracker/sections/use_external", false):
-				_dock_instance.set_tracked_section("External")
+			elif window_name == "External":
+				_timer_afk.stop()
+				if ProjectSettings.get_setting("project_time_tracker/sections/use_external", false):
+					_dock_instance.set_tracked_section("External")
+				else:
+					_dock_instance.pause_tracking()
 	)
 	
 	# Signal from any input in any Godot windows
 	_event_manager.on_input_event.connect(
 		func():
+			# In case of input come after "AFK"
+			if _dock_instance.get_tracked_section() == "AFK":
+				_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
+			
+			# In case of input come after "External"
 			_timer_afk.start()
+			_dock_instance.resume_tracking()
 	)
 	
 	# Signal from project or scene running
 	_event_manager.on_playing_scene.connect(
 		func():
-			_timer_afk.start()
 			_dock_instance.set_tracked_section("Game")
 	)
 	
 	# Signal from project or scene stopping
 	_event_manager.on_stopping_scene.connect(
 		func():
-			_timer_afk.start()
+			pass
 	)
 	
 	# Signal from AFK timer
 	_timer_afk.timeout.connect(
 		func():
 			if ProjectSettings.get_setting("project_time_tracker/afk/use_afk", true):
+				_dock_instance.subtract_to_current_section(ProjectSettings.get_setting("project_time_tracker/afk/afk_timer", 300) )
 				_dock_instance.set_tracked_section("AFK")
 	)
 	

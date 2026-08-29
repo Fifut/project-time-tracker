@@ -85,12 +85,13 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="SectionGraph" type="HBoxContainer" parent="Margin/Layout" unique_id=2028078613]
-custom_minimum_size = Vector2(0, 15)
+custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("2_0xje5")
 
 [node name="LogLabel" type="Label" parent="Margin/Layout" unique_id=1344365217]
+visible = false
 layout_mode = 2
 
 [node name="ClearAllConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2094966054]

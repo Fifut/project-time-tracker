@@ -14,20 +14,16 @@ func _update_sections() -> void:
 	
 	var total = 0.0
 	for section in sections:
-		if (section != "Editor"):
-			total += sections[section]
+		total += sections[section]
 	
-	for section in sections:
-		if (section == "Editor"):
-			continue
-		
+	for section in sections:	
 		if (get_node_or_null(section)):
 			get_node(section).size_flags_stretch_ratio = sections[section] / total
 		else:
 			var new_section = preload("res://addons/project-time-tracker/TrackerSectionColor.tscn").instantiate()
 			new_section.name = section
 			new_section.color = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + section, ProjectSettings.get_setting("project_time_tracker/sections/colors/other", Color.WHITE))
-			new_section.size_flags_stretch_ratio = floor(sections[section]) / floor(sections["Editor"])
+			new_section.size_flags_stretch_ratio = floor(sections[section]) / floor(total)
 			add_child(new_section)
 
 

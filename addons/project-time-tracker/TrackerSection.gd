@@ -60,7 +60,7 @@ func _ready() -> void:
 		func():
 			icon_texture.modulate = ProjectSettings.get_setting(
 				"project_time_tracker/sections/colors/" + name,
-				ProjectSettings.get_setting("project_time_tracker/sections/colors/other")
+				ProjectSettings.get_setting("project_time_tracker/sections/colors/Other", Color.WHITE)
 			)
 	)
 	
@@ -98,6 +98,11 @@ func get_elapsed_time() -> float:
 		return _elapsed_time
 
 
+func subtract_time(time: float) -> void:
+	_started_ticks_msec += time * 1000
+	_update_ui(_get_current_elapsed_time())
+
+
 
 # #######################################
 # Helpers
@@ -119,7 +124,7 @@ func _update_icon() -> void:
 		return
 	
 	icon_texture.texture = get_theme_icon(icon, "EditorIcons")
-	icon_texture.modulate = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + name, ProjectSettings.get_setting("project_time_tracker/sections/colors/other") )
+	icon_texture.modulate = ProjectSettings.get_setting("project_time_tracker/sections/colors/" + name, ProjectSettings.get_setting("project_time_tracker/sections/colors/Other", Color.WHITE) )
 
 
 func _update_name() -> void:

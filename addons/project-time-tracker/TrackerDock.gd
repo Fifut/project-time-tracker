@@ -35,6 +35,7 @@ const SECTION_ICONS: Dictionary = {
 	"Asset Store": "AssetStore",
 	"External": "Window",
 	"AFK": "ViewportSpeed",
+	"Documentation" : "Help",
 	"default": "Node" 
 }
 
@@ -56,8 +57,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_update_ui()
-
-
+	_update_graph()
+	_update_script_editor()
+	
+	
 
 # #######################################
 # Helpers
@@ -86,7 +89,22 @@ func _update_ui():
 	
 	var hours = floori(time) / 60 / 60
 	hours_value.text = "(" + str(hours) + "h)"
-	
+
+
+func _update_graph():
+	var sections: Dictionary = {}
+	for section in section_list.get_children():
+		sections[str(section.name)] = section.get_elapsed_time()
+	section_graph.sections = sections
+
+
+func _update_script_editor():
+	if _tracked_section == "Script" or _tracked_section == "Documentation":
+		if _is_documentation():
+			set_tracked_section("Documentation")
+		else:
+			set_tracked_section("Script")
+
 
 func _create_section(section_name: String, time: float = 0.0) -> void:
 	if (!Engine.is_editor_hint || !is_inside_tree()):
@@ -110,25 +128,50 @@ func _create_section(section_name: String, time: float = 0.0) -> void:
 	section_list.add_child(new_section)	
 
 
+func _is_documentation() -> bool:
+	var script_editor := EditorInterface.get_script_editor()
+	var current_tab = _find_current_selected_tab(script_editor)
+	if current_tab:
+		return current_tab.get_class() == "EditorHelp"
+	return false
+
+func _find_current_selected_tab(node: Node) -> Control:
+	for child in node.get_children():
+		if child is TabContainer:
+			var idx = child.current_tab
+			if idx >= 0 and idx < child.get_tab_count():
+				return child.get_tab_control(idx)
+		var result = _find_current_selected_tab(child)
+		if result:
+			return result
+	return null
+
+
 
 # #######################################
 # Public methods
 # #######################################
 func resume_tracking() -> void:
-	pause_button.visible = true
-	resume_button.visible = false
-	section_list.get_node(_tracked_section).enabled = true
+	if resume_button.visible:
+		pause_button.visible = true
+		resume_button.visible = false
+		section_list.get_node(_tracked_section).enabled = true
 
 
 func pause_tracking() -> void:
-	pause_button.visible = false
-	resume_button.visible = true
-	section_list.get_node(_tracked_section).enabled = false
+	if pause_button.visible:
+		pause_button.visible = false
+		resume_button.visible = true
+		section_list.get_node(_tracked_section).enabled = false
 
 
 func set_tracked_section(section: String) -> void:
 	if (_tracked_section == section):
 		return
+		
+	if section == "Script":
+		if _is_documentation():
+			section = "Documentation"
 	
 	if section_list.has_node(_tracked_section):
 		section_list.get_node(_tracked_section).enabled = false
@@ -156,6 +199,10 @@ func get_tracked_sections() -> Dictionary:
 		sections[section.name] = section.get_elapsed_time()
 		
 	return sections
+
+
+func subtract_to_current_section(time: float) -> void:
+	section_list.get_node(_tracked_section).subtract_time(time)
 
 
 func set_log_text(text: String) -> void:
