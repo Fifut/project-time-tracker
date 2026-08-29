@@ -37,7 +37,7 @@ A small editor widget which provides basic functions for tracking your time with
 - Improving the readability of percentage values
 - "Game" no longer has priority over other windows [#9](https://github.com/Fifut/godot-time-tracker/issues/9)
 - The "3D" workspace is no longer forced at startup [#10](https://github.com/Fifut/godot-time-tracker/issues/10)
-- Add a journal: Track the time spent each day
+- Add a journal: Track the time spent each day [#12](https://github.com/Fifut/godot-time-tracker/issues/12)
 
 
 ### v2.0.8
