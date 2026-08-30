@@ -163,30 +163,36 @@ func resume_tracking() -> void:
 	if resume_button.visible:
 		pause_button.visible = true
 		resume_button.visible = false
-		section_list.get_node(_tracked_section).enabled = true
+		if section_list.has_node(_tracked_section):
+			section_list.get_node(_tracked_section).enabled = true
 
 
 func pause_tracking() -> void:
 	if pause_button.visible:
 		pause_button.visible = false
 		resume_button.visible = true
-		section_list.get_node(_tracked_section).enabled = false
+		if section_list.has_node(_tracked_section):
+			section_list.get_node(_tracked_section).enabled = false
 
 
-func set_tracked_section(section: String) -> void:
+func set_tracked_section(section: String, virtual: bool = false) -> void:
 	if (_tracked_section == section):
 		return
-		
-	if section == "Script":
-		if _is_documentation():
-			section = "Documentation"
 	
-	if section_list.has_node(_tracked_section):
-		section_list.get_node(_tracked_section).enabled = false
+	
+	# Virtual section show icon only
+	if not virtual:
+		if section == "Script":
+			if _is_documentation():
+				section = "Documentation"
 		
+		if section_list.has_node(_tracked_section):
+			section_list.get_node(_tracked_section).enabled = false
+			
+		_create_section(section)
+		section_list.get_node(section).enabled = true
+	
 	_tracked_section = section
-	_create_section(_tracked_section)
-	section_list.get_node(_tracked_section).enabled = true
 	
 	icon_texture.texture = get_theme_icon(SECTION_ICONS[_tracked_section], "EditorIcons")
 	icon_texture.modulate = ProjectSettings.get_setting(

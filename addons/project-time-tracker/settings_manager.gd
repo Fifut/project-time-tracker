@@ -12,6 +12,8 @@ const LOG_JOURNAL_FILE_LOCATION: String = "project_time_tracker/general/log_jour
 const LOG_JOURNAL_FILE_CUSTOM_LOCATION: String = "project_time_tracker/general/log_journal/file_custom_location"
 const LOG_JOURNAL_ENABLED: String = "project_time_tracker/general/log_journal/enabled"
 
+const DEBUG_ENABLED: String = "project_time_tracker/general/debug/print_debug"
+
 const SECTIONS_SHOW_SECTIONS: String = "project_time_tracker/sections/sections/show_sections"
 const SECTIONS_SHOW_GRAPHS: String = "project_time_tracker/sections/sections/show_graphs"
 const SECTIONS_USE_EXTERNAL: String = "project_time_tracker/sections/sections/use_external"
@@ -41,6 +43,8 @@ const LOG_JOURNAL_FILE_NAME_DEFAULT: String = "log_journal"
 const LOG_JOURNAL_FILE_LOCATION_DEFAULT: String = "Project (res://)"
 const LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT: String = ""
 const LOG_JOURNAL_ENABLED_DEFAULT: bool = false
+
+const DEBUG_ENABLED_DEFAULT: bool = false
 
 const SECTIONS_SHOW_SECTIONS_DEFAULT: bool = true
 const SECTIONS_SHOW_GRAPHS_DEFAULT: bool = true
@@ -140,6 +144,19 @@ func _enter_tree():
 		"hint": PROPERTY_HINT_GLOBAL_DIR,
 	})
 	ProjectSettings.set_initial_value(key, LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT)
+	
+	# #######################################
+	# Debug
+	# #######################################
+	key = DEBUG_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, DEBUG_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, DEBUG_ENABLED_DEFAULT)
 	
 	# #######################################
 	# Sections

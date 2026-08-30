@@ -26,6 +26,8 @@ enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
 [project_time_tracker]
 
 general/log_journal/enabled=true
+general/debug/print_debug=true
+afk/afk_timer=60
 
 [rendering]
 

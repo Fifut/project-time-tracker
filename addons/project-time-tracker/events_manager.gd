@@ -1,11 +1,11 @@
 extends Node
 
 signal on_focused_window(window_name: String)
-signal on_input_event()
+signal on_input_event(window_name: String)
 signal on_playing_scene()
 signal on_stopping_scene()
 
-var _focused_window: String = ""
+var _focused_window: bool = true
 var _is_playing_scene: bool = false
 
 
@@ -25,22 +25,32 @@ func _process(delta: float) -> void:
 	var window = Window.get_focused_window()
 	
 	if window:
-		if not window.window_input.is_connected(_windows_event):
-			window.window_input.connect(_windows_event)
+		if not window.window_input.is_connected(_window_event):
+			window.window_input.connect(_window_event.bind(window.title) )
 			
-		if window.title != _focused_window:
-			_focused_window = window.title					
-			on_focused_window.emit(_focused_window)
-			
-	else:
-		if _focused_window != "External":
-			_focused_window = "External"
-			on_focused_window.emit(_focused_window)
-		
+		if not window.focus_entered.is_connected(_window_focus):
+			window.focus_entered.connect(_window_focus.bind(window.title) )
+	
+	if window and not _focused_window:
+		_focused_window = true
+		on_focused_window.emit(window.title)
+						
+	elif not window and _focused_window:
+		_focused_window = false
+		on_focused_window.emit("External")
+				
 	
 	
 # #######################################
 # Signals
 # #######################################
-func _windows_event(event):
-	on_input_event.emit()
+func _window_focus(windows_title):
+	on_focused_window.emit(windows_title)
+		
+		
+func _window_event(event, windows_title):
+	# Mouse motion filter
+	if event is InputEventMouseMotion:
+		return
+		
+	on_focused_window.emit(windows_title)

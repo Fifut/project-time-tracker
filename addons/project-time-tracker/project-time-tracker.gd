@@ -2,15 +2,23 @@
 extends EditorPlugin
 
 
-var _dock_instance: Control
-var _event_manager: Node
 var _settings_manager: Node
+var _event_manager: Node
+
+var _dock_instance: Control
 var _timer_afk: Timer
 
 var _main_screen_buttons: Array[Button] = []
+var _is_playing_scene: bool = false
+var _debug: bool = false
 
 
 func _enter_tree():
+	_debug = ProjectSettings.get_setting(
+		ProjectTimeTrackerSettingsManager.DEBUG_ENABLED,
+		ProjectTimeTrackerSettingsManager.DEBUG_ENABLED_DEFAULT
+		)
+		
 	_settings_manager = preload("res://addons/project-time-tracker/settings_manager.gd").new()
 	add_child(_settings_manager)	
 	
@@ -54,36 +62,51 @@ func _ready() -> void:
 	# Signal from 2D, 3D, Script, Game, etc. workspace
 	main_screen_changed.connect(
 		func(screen_name):
+			if _debug : print("Project time tracker:"," main_screen_changed ", screen_name)
 			_dock_instance.set_tracked_section(screen_name)
 	)
 	
 	# Signal from Godot focused windows
 	_event_manager.on_focused_window.connect(
 		func(window_name):
+			if _debug : print("Project time tracker:"," on_focused_window ", window_name)
 			
 			# Main Godot window
 			if window_name == ProjectSettings.get_setting("application/config/name"):
 				_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
+				_dock_instance.resume_tracking()
+				_timer_afk.start()
 				
 			# Floating script editor
 			elif window_name.begins_with("Script Editor"):
 				_dock_instance.set_tracked_section("Script")
+				_dock_instance.resume_tracking()
+				_timer_afk.start()
 			
+			# The floating game window is outside the Godot windows scope
+			elif window_name == "External" and _is_playing_scene:
+				_dock_instance.set_tracked_section("Game")
+				_dock_instance.resume_tracking()
+				_timer_afk.start()
+
 			# Maybe an external editor
-			elif window_name == "External":
+			elif window_name == "External" and not _is_playing_scene:
 				_timer_afk.stop()
 				if ProjectSettings.get_setting(
 					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL,
 					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL_DEFAULT
 					):
-					_dock_instance.set_tracked_section("External")
+					_dock_instance.set_tracked_section("External", false)
 				else:
+					_dock_instance.set_tracked_section("External", true)
 					_dock_instance.pause_tracking()
 	)
 	
 	# Signal from any input in any Godot windows
 	_event_manager.on_input_event.connect(
-		func():
+		func(window_name):
+			if _debug : print("Project time tracker:"," on_input_event ", window_name)
+			
 			# In case of input come after "AFK"
 			if _dock_instance.get_tracked_section() == "AFK":
 				_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
@@ -96,18 +119,23 @@ func _ready() -> void:
 	# Signal from project or scene running
 	_event_manager.on_playing_scene.connect(
 		func():
+			if _debug : print("Project time tracker:"," on_playing_scene ")
 			_dock_instance.set_tracked_section("Game")
+			_is_playing_scene = true
 	)
 	
 	# Signal from project or scene stopping
 	_event_manager.on_stopping_scene.connect(
 		func():
-			pass
+			if _debug : print("Project time tracker:"," on_stopping_scene ")
+			_is_playing_scene = false
 	)
 	
 	# Signal from AFK timer
 	_timer_afk.timeout.connect(
 		func():
+			if _debug : print("Project time tracker:"," timeout ")
+			
 			if ProjectSettings.get_setting(
 				ProjectTimeTrackerSettingsManager.AFK_USE_AFK,
 				ProjectTimeTrackerSettingsManager.AFK_USE_AFK_DEFAULT
@@ -152,6 +180,8 @@ func _get_plugin_icon():
 # Private methods
 # #######################################
 func _load_sections() -> void:
+	if _debug : print("Project time tracker:"," _load_sections()")
+	
 	var path = _save_file_path()
 	
 	if (!FileAccess.file_exists(path)):
@@ -176,6 +206,8 @@ func _load_sections() -> void:
 
 
 func _store_sections() -> void:
+	if _debug : print("Project time tracker:"," _store_sections()")
+		
 	var tracked_sections = _dock_instance.get_tracked_sections()
 	var stored_string = JSON.stringify(tracked_sections, "  ")
 	
@@ -196,6 +228,8 @@ func _store_sections() -> void:
 
 
 func _store_log_journal() -> void:
+	if _debug : print("Project time tracker:"," _store_log_journal()")
+	
 	var tracked_sections: Dictionary = _dock_instance.get_tracked_sections()
 
 	var log: String = Time.get_date_string_from_system()
@@ -249,6 +283,8 @@ func _save_file_path() -> String:
 		ProjectTimeTrackerSettingsManager.SAVE_FILE_NAME_DEFAULT
 		)
 	path += ".json"
+	
+	if _debug : print("Project time tracker:"," _save_file_path() ", path)
 	return path
 
 
@@ -273,6 +309,8 @@ func _log_journal_file_path() -> String:
 		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_NAME_DEFAULT
 		)
 	path += ".txt"
+	
+	if _debug : print("Project time tracker:"," _log_journal_file_path() ", path)
 	return path
 
 
