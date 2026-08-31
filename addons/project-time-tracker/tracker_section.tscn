@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://rmi3joaeeoc"]
 
-[ext_resource type="Script" uid="uid://ccryqsjpws1pe" path="res://addons/project-time-tracker/TrackerSection.gd" id="1_qrte8"]
+[ext_resource type="Script" uid="uid://ccryqsjpws1pe" path="res://addons/project-time-tracker/tracker_section.gd" id="1_qrte8"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_7abe0"]
 
 [sub_resource type="DPITexture" id="DPITexture_7abe0"]
@@ -8,7 +8,6 @@ _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\">
 "
 
 [node name="TrackerSection" type="VBoxContainer" unique_id=15461270]
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3

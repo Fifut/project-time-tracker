@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bi6q1vpo6pn0i"]
 
-[ext_resource type="Script" uid="uid://pgmahsxkjd11" path="res://addons/project-time-tracker/TrackerSectionColor.gd" id="1_t3kj1"]
+[ext_resource type="Script" uid="uid://pgmahsxkjd11" path="res://addons/project-time-tracker/tracker_section_color.gd" id="1_t3kj1"]
 
 [node name="TrackerSectionColor" type="ColorRect" unique_id=2130283897]
 anchors_preset = 15
@@ -9,7 +9,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-color = Color(0, 0, 0, 1)
 script = ExtResource("1_t3kj1")
 
 [node name="Percent" type="Label" parent="." unique_id=206690048]

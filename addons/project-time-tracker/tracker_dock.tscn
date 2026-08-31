@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bnpcoyrwqfprq"]
 
-[ext_resource type="Script" uid="uid://brkr6mirv6lcu" path="res://addons/project-time-tracker/TrackerDock.gd" id="1_7v1fu"]
-[ext_resource type="Script" uid="uid://b4k026cqprqn" path="res://addons/project-time-tracker/SectionGraph.gd" id="2_0xje5"]
+[ext_resource type="Script" uid="uid://brkr6mirv6lcu" path="res://addons/project-time-tracker/tracker_dock.gd" id="1_7v1fu"]
+[ext_resource type="Script" uid="uid://b4k026cqprqn" path="res://addons/project-time-tracker/section_graph.gd" id="2_0xje5"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_uwii8"]
 
 [sub_resource type="DPITexture" id="DPITexture_3cuot"]
