@@ -1,7 +1,6 @@
 extends Node
 
 signal on_focused_window(window_name: String)
-signal on_input_event(window_name: String)
 signal on_playing_scene()
 signal on_stopping_scene()
 
@@ -49,6 +48,7 @@ func _window_focus(windows_title):
 		
 		
 func _window_event(event, windows_title):
+	
 	# Mouse motion filter
 	if event is InputEventMouseMotion:
 		return

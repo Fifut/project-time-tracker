@@ -102,19 +102,19 @@ func _ready() -> void:
 					_dock_instance.pause_tracking()
 	)
 	
-	# Signal from any input in any Godot windows
-	_event_manager.on_input_event.connect(
-		func(window_name):
-			if _debug : print("Project time tracker:"," on_input_event ", window_name)
-			
-			# In case of input come after "AFK"
-			if _dock_instance.get_tracked_section() == "AFK":
-				_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
-			
-			# In case of input come after "External"
-			_timer_afk.start()
-			_dock_instance.resume_tracking()
-	)
+	## Signal from any input in any Godot windows
+	#_event_manager.on_input_event.connect(
+		#func(window_name):
+			#if _debug : print("Project time tracker:"," on_input_event ", window_name)
+			#
+			## In case of input come after "AFK"
+			#if _dock_instance.get_tracked_section() == "AFK":
+				#_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
+			#
+			## In case of input come after "External"
+			#_timer_afk.start()
+			#_dock_instance.resume_tracking()
+	#)
 	
 	# Signal from project or scene running
 	_event_manager.on_playing_scene.connect(
