@@ -242,7 +242,6 @@ func _on_pause_button_pressed() -> void:
 
 
 func _on_clear_button_pressed() -> void:
-	clear_button.button_pressed = false
 	clear_all_confirm_dialog.popup_centered(clear_all_confirm_dialog.size)
 
 		
@@ -253,7 +252,8 @@ func _on_edit_button_toggled(toggled_on: bool) -> void:
 	
 
 func _on_clear_all_confirm_dialog_confirmed() -> void:
-	clear_button.button_pressed = false
+	clear_button.hide()
+	edit_button.button_pressed = false
 	for section in section_list.get_children():
 		section_list.remove_child(section)
 		section.queue_free()
@@ -261,6 +261,8 @@ func _on_clear_all_confirm_dialog_confirmed() -> void:
 
 
 func _on_clear_section_requested(section_name):
+	clear_button.hide()
+	edit_button.button_pressed = false
 	section_graph.clear()
 
 
