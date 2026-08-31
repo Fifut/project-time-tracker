@@ -73,6 +73,24 @@ func _process(delta: float) -> void:
 # #######################################
 # Helpers
 # #######################################
+func _resume_tracking() -> void:
+	if resume_button.visible:
+		pause_button.visible = true
+		resume_button.visible = false
+		
+		if section_list.has_node(_tracked_section):
+			section_list.get_node(_tracked_section).enabled = true
+
+
+func _pause_tracking() -> void:
+	if pause_button.visible:
+		pause_button.visible = false
+		resume_button.visible = true
+		
+		if section_list.has_node(_tracked_section):
+			section_list.get_node(_tracked_section).enabled = false
+			
+			
 func _update_theme() -> void:
 	if (!Engine.is_editor_hint || !is_inside_tree()):
 		return
@@ -84,10 +102,8 @@ func _update_theme() -> void:
 
 
 func _update_ui():
-	if section_list.get_child_count() == 0:
-		return
-		
 	var time: float = 0.0
+	
 	for section in section_list.get_children():
 		if section.name != "AFK":
 			time += section.get_elapsed_time()
@@ -159,50 +175,46 @@ func _find_current_selected_tab(node: Node) -> Control:
 # #######################################
 # Public methods
 # #######################################
-func resume_tracking() -> void:
-	if resume_button.visible:
-		pause_button.visible = true
-		resume_button.visible = false
-		if section_list.has_node(_tracked_section):
-			section_list.get_node(_tracked_section).enabled = true
-
-
-func pause_tracking() -> void:
-	if pause_button.visible:
-		pause_button.visible = false
-		resume_button.visible = true
-		if section_list.has_node(_tracked_section):
-			section_list.get_node(_tracked_section).enabled = false
-
-
 func set_tracked_section(section: String, virtual: bool = false) -> void:
-	if (_tracked_section == section):
+	if _tracked_section == section:
 		return
 	
-	
-	# Virtual section show icon only
-	if not virtual:
-		if section == "Script":
-			if _is_documentation():
-				section = "Documentation"
-		
-		if section_list.has_node(_tracked_section):
-			section_list.get_node(_tracked_section).enabled = false
-			
-		_create_section(section)
-		section_list.get_node(section).enabled = true
-	
-	_tracked_section = section
-	
-	icon_texture.texture = get_theme_icon(SECTION_ICONS[_tracked_section], "EditorIcons")
+	# If script maybe it's documentation
+	if section == "Script":
+		if _is_documentation():
+			section = "Documentation"
+
+	# Display section icon
+	icon_texture.texture = get_theme_icon(SECTION_ICONS[section], "EditorIcons")
 	icon_texture.modulate = ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + _tracked_section,
+		ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + section,
 		ProjectSettings.get_setting(
 			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER,
 			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER_DEFAULT
 			)
 		)
 	
+
+	
+	# Disable previous section
+	if section_list.has_node(_tracked_section):
+		section_list.get_node(_tracked_section).enabled = false
+	
+	# Memo new section
+	_tracked_section = section
+	
+	# If tracking is suspended
+	if resume_button.visible:
+		_tracked_section = section
+		return
+		
+	# Add / enabled new section if not virtual
+	if not virtual :
+		_create_section(section)
+		
+		# Enabled new section
+		section_list.get_node(section).enabled = true
+		
 
 func get_tracked_section() -> String:
 	return _tracked_section
@@ -234,11 +246,11 @@ func set_log_text(text: String) -> void:
 # Signals
 # #######################################
 func _on_resume_button_pressed() -> void:
-	resume_tracking()
+	_resume_tracking()
 
 
 func _on_pause_button_pressed() -> void:
-	pause_tracking()
+	_pause_tracking()
 
 
 func _on_clear_button_pressed() -> void:

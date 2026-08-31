@@ -63,6 +63,7 @@ func _ready() -> void:
 	main_screen_changed.connect(
 		func(screen_name):
 			if _debug : print("Project time tracker:"," main_screen_changed ", screen_name)
+			
 			_dock_instance.set_tracked_section(screen_name)
 	)
 	
@@ -74,24 +75,20 @@ func _ready() -> void:
 			# Main Godot window
 			if window_name == ProjectSettings.get_setting("application/config/name"):
 				_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
-				_dock_instance.resume_tracking()
 				_timer_afk.start()
 				
 			# Floating script editor
 			elif window_name.begins_with("Script Editor"):
 				_dock_instance.set_tracked_section("Script")
-				_dock_instance.resume_tracking()
 				_timer_afk.start()
 			
 			# The floating game window is outside the Godot windows scope
 			elif window_name == "External" and _is_playing_scene:
 				_dock_instance.set_tracked_section("Game")
-				_dock_instance.resume_tracking()
-				_timer_afk.start()
+				_timer_afk.stop()
 
 			# Maybe an external editor
 			elif window_name == "External" and not _is_playing_scene:
-				_timer_afk.stop()
 				if ProjectSettings.get_setting(
 					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL,
 					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL_DEFAULT
@@ -99,27 +96,14 @@ func _ready() -> void:
 					_dock_instance.set_tracked_section("External", false)
 				else:
 					_dock_instance.set_tracked_section("External", true)
-					_dock_instance.pause_tracking()
+				_timer_afk.stop()
 	)
-	
-	## Signal from any input in any Godot windows
-	#_event_manager.on_input_event.connect(
-		#func(window_name):
-			#if _debug : print("Project time tracker:"," on_input_event ", window_name)
-			#
-			## In case of input come after "AFK"
-			#if _dock_instance.get_tracked_section() == "AFK":
-				#_dock_instance.set_tracked_section(_get_main_screen_button_is_pressed() )
-			#
-			## In case of input come after "External"
-			#_timer_afk.start()
-			#_dock_instance.resume_tracking()
-	#)
 	
 	# Signal from project or scene running
 	_event_manager.on_playing_scene.connect(
 		func():
 			if _debug : print("Project time tracker:"," on_playing_scene ")
+			
 			_dock_instance.set_tracked_section("Game")
 			_is_playing_scene = true
 	)
@@ -128,6 +112,7 @@ func _ready() -> void:
 	_event_manager.on_stopping_scene.connect(
 		func():
 			if _debug : print("Project time tracker:"," on_stopping_scene ")
+			
 			_is_playing_scene = false
 	)
 	

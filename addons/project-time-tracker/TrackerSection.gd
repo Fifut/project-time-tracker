@@ -18,10 +18,15 @@ signal on_clear_section(section_name)
 	
 @export var enabled: bool = false:
 	set(value):
+		
+		# If enabled, memo actual ticks
 		if value:
 			_started_ticks_msec = Time.get_ticks_msec()
-		else:
-			_elapsed_time = _get_current_elapsed_time()
+			
+		# If not yet disabled, calculate and save elapsed time
+		elif not value and enabled:
+			_elapsed_time = _get_current_elapsed_time()	
+
 		enabled = value
 
 
