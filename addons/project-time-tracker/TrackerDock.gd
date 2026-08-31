@@ -119,7 +119,9 @@ func _update_graph():
 	var sections: Dictionary = {}
 	for section in section_list.get_children():
 		sections[str(section.name)] = section.get_elapsed_time()
-	section_graph.sections = sections
+	
+	if not sections.is_empty():
+		section_graph.sections = sections
 
 
 func _update_script_editor():

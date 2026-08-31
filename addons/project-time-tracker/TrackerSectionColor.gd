@@ -2,6 +2,21 @@
 extends ColorRect
 
 
+func _ready() -> void:
+	
+	# If project parameters have changed maybe they're ours.
+	ProjectSettings.settings_changed.connect(
+	func():
+		color = ProjectSettings.get_setting(
+			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + name,
+			ProjectSettings.get_setting(
+				ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER,
+				ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER_DEFAULT
+				)
+			)
+		)
+
+
 func _process(delta: float) -> void:
 	if (!Engine.is_editor_hint || !is_inside_tree()):
 		return

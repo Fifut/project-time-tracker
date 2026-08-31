@@ -13,10 +13,17 @@ func _update_sections() -> void:
 		return
 	
 	var total = 0.0
+	var section_count = 0
 	for section in sections:
+		if section == "AFK":
+			continue
+		section_count += 1
 		total += sections[section]
 	
-	for section in sections:	
+	for section in sections:
+		if section == "AFK":
+			continue	
+			
 		if (get_node_or_null(section)):
 			get_node(section).size_flags_stretch_ratio = sections[section] / total
 		else:
