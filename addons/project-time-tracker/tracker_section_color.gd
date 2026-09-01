@@ -6,15 +6,9 @@ func _ready() -> void:
 	
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
-	func():
-		color = ProjectSettings.get_setting(
-			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + name,
-			ProjectSettings.get_setting(
-				ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER,
-				ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER_DEFAULT
-				)
-			)
-		)
+		func():
+			color = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name)
+	)
 
 
 func _process(delta: float) -> void:

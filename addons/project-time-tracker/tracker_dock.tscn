@@ -8,7 +8,7 @@
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
-[sub_resource type="DPITexture" id="DPITexture_uwii8"]
+[sub_resource type="DPITexture" id="DPITexture_ha0to"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -53,26 +53,26 @@ visible = false
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_uwii8")
-icon = SubResource("DPITexture_uwii8")
+icon = SubResource("DPITexture_ha0to")
 icon_alignment = 1
 
 [node name="PauseButton" type="Button" parent="Margin/Layout/Status" unique_id=2078160439]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_uwii8")
-icon = SubResource("DPITexture_uwii8")
+icon = SubResource("DPITexture_ha0to")
 icon_alignment = 1
 
 [node name="ClearButton" type="Button" parent="Margin/Layout/Status" unique_id=1572265573]
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_uwii8")
+icon = SubResource("DPITexture_ha0to")
 flat = true
 
 [node name="EditButton" type="Button" parent="Margin/Layout/Status" unique_id=212571990]
 layout_mode = 2
 toggle_mode = true
-icon = SubResource("DPITexture_uwii8")
+icon = SubResource("DPITexture_ha0to")
 flat = true
 
 [node name="HSeparator" type="HSeparator" parent="Margin/Layout" unique_id=508973525]

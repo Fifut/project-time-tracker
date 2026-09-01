@@ -41,6 +41,7 @@ layout_mode = 2
 
 [node name="IconTexture" type="TextureRect" parent="TrackerSection/IconContainer" unique_id=917653221]
 unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = SubResource("DPITexture_syjou")

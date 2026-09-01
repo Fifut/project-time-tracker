@@ -47,16 +47,8 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():
-			section_list.visible = ProjectSettings.get_setting(
-				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_SECTIONS,
-				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_SECTIONS_DEFAULT
-				)
-				
-			section_graph.visible = ProjectSettings.get_setting(
-				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_GRAPHS,
-				ProjectTimeTrackerSettingsManager.SECTIONS_SHOW_GRAPHS_DEFAULT
-				)
-				
+			section_list.visible = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_SHOW_SECTIONS)
+			section_graph.visible = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_SHOW_GRAPHS)
 			h_separator.visible = section_list.visible or section_graph.visible
 	)
 	
@@ -188,13 +180,7 @@ func set_tracked_section(section: String, virtual: bool = false) -> void:
 
 	# Display section icon
 	icon_texture.texture = get_theme_icon(SECTION_ICONS[section], "EditorIcons")
-	icon_texture.modulate = ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + section,
-		ProjectSettings.get_setting(
-			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER,
-			ProjectTimeTrackerSettingsManager.SECTIONS_COLOR_OTHER_DEFAULT
-			)
-		)
+	icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + section)
 	
 
 	

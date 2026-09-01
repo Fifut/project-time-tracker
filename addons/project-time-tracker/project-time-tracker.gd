@@ -14,22 +14,16 @@ var _debug: bool = false
 
 
 func _enter_tree():
-	_debug = ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.DEBUG_ENABLED,
-		ProjectTimeTrackerSettingsManager.DEBUG_ENABLED_DEFAULT
-		)
-		
 	_settings_manager = preload("res://addons/project-time-tracker/settings_manager.gd").new()
 	add_child(_settings_manager)	
+	
+	_debug = ProjectSettings.get_setting(PTTSettingsManager.DEBUG_ENABLED)
 	
 	_event_manager = preload("res://addons/project-time-tracker/events_manager.gd").new()
 	add_child(_event_manager)	
 	
 	_timer_afk = Timer.new()
-	_timer_afk.wait_time = ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.AFK_TIMER,
-		ProjectTimeTrackerSettingsManager.AFK_TIMER_DEFAULT
-		)
+	_timer_afk.wait_time = ProjectSettings.get_setting(PTTSettingsManager.AFK_TIMER)
 	_timer_afk.one_shot = true
 	add_child(_timer_afk)	
 	
@@ -53,10 +47,7 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 	func():
-		_timer_afk.wait_time = ProjectSettings.get_setting(
-			ProjectTimeTrackerSettingsManager.AFK_TIMER,
-			ProjectTimeTrackerSettingsManager.AFK_TIMER_DEFAULT
-			)
+		_timer_afk.wait_time = ProjectSettings.get_setting(PTTSettingsManager.AFK_TIMER)
 	)
 	
 	# Signal from 2D, 3D, Script, Game, etc. workspace
@@ -89,10 +80,7 @@ func _ready() -> void:
 
 			# Maybe an external editor
 			elif window_name == "External" and not _is_playing_scene:
-				if ProjectSettings.get_setting(
-					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL,
-					ProjectTimeTrackerSettingsManager.SECTIONS_USE_EXTERNAL_DEFAULT
-					):
+				if ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_USE_EXTERNAL):
 					_dock_instance.set_tracked_section("External", false)
 				else:
 					_dock_instance.set_tracked_section("External", true)
@@ -121,16 +109,8 @@ func _ready() -> void:
 		func():
 			if _debug : print("Project time tracker:"," timeout ")
 			
-			if ProjectSettings.get_setting(
-				ProjectTimeTrackerSettingsManager.AFK_USE_AFK,
-				ProjectTimeTrackerSettingsManager.AFK_USE_AFK_DEFAULT
-				):
-				_dock_instance.subtract_to_current_section(
-					ProjectSettings.get_setting(
-						ProjectTimeTrackerSettingsManager.AFK_TIMER,
-						ProjectTimeTrackerSettingsManager.AFK_TIMER_DEFAULT
-						)
-					)
+			if ProjectSettings.get_setting(PTTSettingsManager.AFK_USE_AFK):
+				_dock_instance.subtract_to_current_section(ProjectSettings.get_setting(PTTSettingsManager.AFK_TIMER))
 				_dock_instance.set_tracked_section("AFK")
 	)
 	
@@ -149,10 +129,7 @@ func _make_visible(visible):
 func _save_external_data():
 	_store_sections()
 	
-	if ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_ENABLED,
-		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_ENABLED_DEFAULT
-		):
+	if ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_ENABLED):
 		_store_log_journal()
 
 
@@ -249,24 +226,15 @@ func _store_log_journal() -> void:
 	
 func _save_file_path() -> String:
 	var path: String
-	match ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.SAVE_FILE_LOCATION,
-		ProjectTimeTrackerSettingsManager.SAVE_FILE_LOCATION_DEFAULT
-		):
+	match ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_LOCATION):
 		"Project (res://),":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"
 		"Custom":
-			path = ProjectSettings.get_setting(
-				ProjectTimeTrackerSettingsManager.SAVE_FILE_CUSTOM_LOCATION,
-				ProjectTimeTrackerSettingsManager.SAVE_FILE_CUSTOM_LOCATION_DEFAULT
-				) + "/"
+			path = ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_CUSTOM_LOCATION) + "/"
 			
-	path += ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.SAVE_FILE_NAME,
-		ProjectTimeTrackerSettingsManager.SAVE_FILE_NAME_DEFAULT
-		)
+	path += ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_NAME)
 	path += ".json"
 	
 	if _debug : print("Project time tracker:"," _save_file_path() ", path)
@@ -275,24 +243,15 @@ func _save_file_path() -> String:
 
 func _log_journal_file_path() -> String:
 	var path: String
-	match ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_LOCATION,
-		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_LOCATION_DEFAULT
-		):
+	match ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_LOCATION):
 		"Project (res://),":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"
 		"Custom":
-			path = ProjectSettings.get_setting(
-				ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_CUSTOM_LOCATION,
-				ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT
-				) + "/"
+			path = ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_CUSTOM_LOCATION) + "/"
 			
-	path += ProjectSettings.get_setting(
-		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_NAME,
-		ProjectTimeTrackerSettingsManager.LOG_JOURNAL_FILE_NAME_DEFAULT
-		)
+	path += ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_NAME)
 	path += ".txt"
 	
 	if _debug : print("Project time tracker:"," _log_journal_file_path() ", path)
