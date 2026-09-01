@@ -33,7 +33,7 @@ func _enter_tree():
 	_timer_afk.one_shot = true
 	add_child(_timer_afk)	
 	
-	_dock_instance = preload("res://addons/project-time-tracker/TrackerDock.tscn").instantiate()
+	_dock_instance = preload("res://addons/project-time-tracker/tracker_dock.tscn").instantiate()
 	_dock_instance.name = "Project Time Tracker"
 	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_BR, _dock_instance)
 	

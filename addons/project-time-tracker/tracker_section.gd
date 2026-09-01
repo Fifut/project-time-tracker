@@ -1,5 +1,5 @@
 @tool
-extends VBoxContainer
+extends Control
 
 # #######################################
 # Signals
@@ -34,19 +34,20 @@ signal on_clear_section(section_name)
 # #######################################
 # Node references
 # #######################################
-@onready var icon_texture : TextureRect = $Information/IconContainer/IconTexture
-@onready var name_label : Label = $Information/NameLabel
-@onready var elapsed_time_label : Label = $Information/ElapsedTimeLabel
-@onready var elapsed_hours_label: Label = $Information/ElapsedHoursLabel
-@onready var edit_button: Button = $Information/EditButton
-@onready var clear_button : Button = $Information/ClearButton
+@onready var background_color: ColorRect = %BackgroundColor
+@onready var icon_texture: TextureRect = %IconTexture
+@onready var name_label: Label = %NameLabel
+@onready var elapsed_time_label: Label = %ElapsedTimeLabel
+@onready var elapsed_hours_label: Label = %ElapsedHoursLabel
+@onready var edit_button: Button = %EditButton
+@onready var clear_button: Button = %ClearButton
 
-@onready var edit_section_window: Window = $EditSectionWindow
-@onready var title_label: Label = $EditSectionWindow/PanelContainer/VBoxContainer/TitleLabel
-@onready var days_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer/DaysSpinBox
-@onready var hour_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer/HourSpinBox
-@onready var minutes_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer/MinutesSpinBox
-@onready var seconds_spin_box: SpinBox = $EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2/SecondsSpinBox
+@onready var edit_section_window: Window = %EditSectionWindow
+@onready var title_label: Label = %TitleLabel
+@onready var days_spin_box: SpinBox = %DaysSpinBox
+@onready var hour_spin_box: SpinBox = %HourSpinBox
+@onready var minutes_spin_box: SpinBox = %MinutesSpinBox
+@onready var seconds_spin_box: SpinBox = %SecondsSpinBox
 
 @onready var clear_section_confirm_dialog: ConfirmationDialog = $ClearSectionConfirmDialog
 
@@ -83,7 +84,10 @@ func _process(delta: float) -> void:
 		return
 	
 	if enabled:
+		background_color.color.a = 0.075
 		_update_ui(_get_current_elapsed_time())
+	else:
+		background_color.color.a = 0.0
 
 
 

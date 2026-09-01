@@ -1,62 +1,89 @@
 [gd_scene format=3 uid="uid://rmi3joaeeoc"]
 
-[ext_resource type="Script" uid="uid://ccryqsjpws1pe" path="res://addons/project-time-tracker/tracker_section.gd" id="1_qrte8"]
+[ext_resource type="Script" uid="uid://ccryqsjpws1pe" path="res://addons/project-time-tracker/tracker_section.gd" id="1_syjou"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_7abe0"]
 
-[sub_resource type="DPITexture" id="DPITexture_7abe0"]
+[sub_resource type="DPITexture" id="DPITexture_syjou"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
-[node name="TrackerSection" type="VBoxContainer" unique_id=15461270]
+[node name="TrackerSection" type="Control" unique_id=1936297948]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_syjou")
+
+[node name="BackgroundColor" type="ColorRect" parent="." unique_id=1723899579]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
-script = ExtResource("1_qrte8")
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
 
-[node name="Information" type="HBoxContainer" parent="." unique_id=1104806800]
+[node name="TrackerSection" type="HBoxContainer" parent="." unique_id=1104806800]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IconContainer" type="CenterContainer" parent="TrackerSection" unique_id=176454312]
 layout_mode = 2
 
-[node name="IconContainer" type="CenterContainer" parent="Information" unique_id=176454312]
-layout_mode = 2
-
-[node name="IconTexture" type="TextureRect" parent="Information/IconContainer" unique_id=917653221]
+[node name="IconTexture" type="TextureRect" parent="TrackerSection/IconContainer" unique_id=917653221]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-texture = SubResource("DPITexture_7abe0")
+texture = SubResource("DPITexture_syjou")
 expand_mode = 1
 
-[node name="NameLabel" type="Label" parent="Information" unique_id=955903737]
+[node name="NameLabel" type="Label" parent="TrackerSection" unique_id=955903737]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_7abe0")
 text = "TrackerSection"
 
-[node name="ElapsedTimeLabel" type="Label" parent="Information" unique_id=1284424922]
+[node name="ElapsedTimeLabel" type="Label" parent="TrackerSection" unique_id=1284424922]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_7abe0")
 text = "0d - 00:00:00"
 horizontal_alignment = 2
 
-[node name="ElapsedHoursLabel" type="Label" parent="Information" unique_id=951601128]
+[node name="ElapsedHoursLabel" type="Label" parent="TrackerSection" unique_id=951601128]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_7abe0")
 text = "(0h)"
 horizontal_alignment = 2
 
-[node name="EditButton" type="Button" parent="Information" unique_id=1451113176]
+[node name="EditButton" type="Button" parent="TrackerSection" unique_id=1451113176]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_7abe0")
+icon = SubResource("DPITexture_syjou")
 flat = true
 
-[node name="ClearButton" type="Button" parent="Information" unique_id=1304414658]
+[node name="ClearButton" type="Button" parent="TrackerSection" unique_id=1304414658]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_7abe0")
+icon = SubResource("DPITexture_syjou")
 flat = true
 
 [node name="EditSectionWindow" type="Window" parent="." unique_id=109804704]
+unique_name_in_owner = true
 oversampling_override = 1.0
 title = "Project Time Tracker"
 initial_position = 2
@@ -80,6 +107,7 @@ theme_override_constants/separation = 30
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=191849624]
+unique_name_in_owner = true
 layout_mode = 2
 text = "TrackerSection"
 horizontal_alignment = 1
@@ -97,6 +125,7 @@ layout_mode = 2
 text = "Days"
 
 [node name="DaysSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer" unique_id=676753090]
+unique_name_in_owner = true
 layout_mode = 2
 max_value = 999999.0
 alignment = 2
@@ -109,6 +138,7 @@ layout_mode = 2
 text = "Hours"
 
 [node name="HourSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer" unique_id=102352091]
+unique_name_in_owner = true
 layout_mode = 2
 max_value = 999999.0
 alignment = 2
@@ -121,6 +151,7 @@ layout_mode = 2
 text = "Minutes"
 
 [node name="MinutesSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer" unique_id=331118167]
+unique_name_in_owner = true
 layout_mode = 2
 max_value = 59.0
 alignment = 2
@@ -133,6 +164,7 @@ layout_mode = 2
 text = "Seconds"
 
 [node name="SecondsSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2" unique_id=671218619]
+unique_name_in_owner = true
 layout_mode = 2
 max_value = 59.0
 alignment = 2
@@ -155,15 +187,10 @@ size_flags_horizontal = 4
 text = "Cancel"
 
 [node name="ClearSectionConfirmDialog" type="ConfirmationDialog" parent="." unique_id=1528317254]
+unique_name_in_owner = true
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(400, 210)
 dialog_text = "This action will clear TrackerSection session from memory.
  Do you want to continue?"
 dialog_autowrap = true
-
-[connection signal="pressed" from="Information/EditButton" to="." method="_on_edit_button_pressed"]
-[connection signal="pressed" from="Information/ClearButton" to="." method="_on_clear_button_pressed"]
-[connection signal="pressed" from="EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer/OKButton" to="." method="_on_edit_section_ok_button_pressed"]
-[connection signal="pressed" from="EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer/CancelButton" to="." method="_on_edit_section_cancel_button_pressed"]
-[connection signal="confirmed" from="ClearSectionConfirmDialog" to="." method="_on_clear_section_confirm_dialog_confirmed"]

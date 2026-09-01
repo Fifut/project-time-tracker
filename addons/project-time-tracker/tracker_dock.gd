@@ -21,7 +21,7 @@ extends Control
 # #######################################
 # Scene references
 # #######################################
-@onready var section_scene = preload("res://addons/project-time-tracker/TrackerSection.tscn")
+@onready var section_scene = preload("res://addons/project-time-tracker/tracker_section.tscn")
 
 
 # #######################################

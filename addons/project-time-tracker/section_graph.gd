@@ -27,7 +27,7 @@ func _update_sections() -> void:
 		if (get_node_or_null(section)):
 			get_node(section).size_flags_stretch_ratio = sections[section] / total
 		else:
-			var new_section = preload("res://addons/project-time-tracker/TrackerSectionColor.tscn").instantiate()
+			var new_section = preload("res://addons/project-time-tracker/tracker_section_color.tscn").instantiate()
 			new_section.name = section
 			new_section.color = ProjectSettings.get_setting(
 				ProjectTimeTrackerSettingsManager.SECTIONS_COLOR + section,

@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Project Time Tracker"
-run/main_scene="res://addons/project-time-tracker/TrackerDock.tscn"
+run/main_scene="res://addons/project-time-tracker/tracker_dock.tscn"
 config/features=PackedStringArray("4.7")
 config/icon="res://addons/project-time-tracker/icon.png"
 
@@ -26,8 +26,6 @@ enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
 [project_time_tracker]
 
 general/log_journal/enabled=true
-general/debug/print_debug=true
-afk/afk_timer=60
 
 [rendering]
 
