@@ -61,6 +61,10 @@ var _elapsed_time: float = 0.0
 
 
 func _ready() -> void:
+	# Unexpected _ready call with default name !?!
+	if name == "TrackerSection":
+		return
+	
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():

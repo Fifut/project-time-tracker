@@ -80,10 +80,7 @@ func _ready() -> void:
 
 			# Maybe an external editor
 			elif window_name == "External" and not _is_playing_scene:
-				if ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_USE_EXTERNAL):
-					_dock_instance.set_tracked_section("External", false)
-				else:
-					_dock_instance.set_tracked_section("External", true)
+				_dock_instance.set_tracked_section("External")
 				_timer_afk.stop()
 	)
 	

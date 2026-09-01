@@ -47,8 +47,8 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():
-			section_list.visible = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_SHOW_SECTIONS)
-			section_graph.visible = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_SHOW_GRAPHS)
+			section_list.visible = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_UI_SHOW_SECTIONS)
+			section_graph.visible = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_UI_SHOW_GRAPHS)
 			h_separator.visible = section_list.visible or section_graph.visible
 	)
 	
@@ -133,7 +133,7 @@ func _create_section(section_name: String, time: float = 0.0) -> void:
 	
 	if section_list.has_node(section_name):
 		return
-	
+		
 	var new_section = section_scene.instantiate()
 	new_section.name = section_name
 	if SECTION_ICONS.has(section_name):
@@ -169,7 +169,7 @@ func _find_current_selected_tab(node: Node) -> Control:
 # #######################################
 # Public methods
 # #######################################
-func set_tracked_section(section: String, virtual: bool = false) -> void:
+func set_tracked_section(section: String) -> void:
 	if _tracked_section == section:
 		return
 	
@@ -181,8 +181,6 @@ func set_tracked_section(section: String, virtual: bool = false) -> void:
 	# Display section icon
 	icon_texture.texture = get_theme_icon(SECTION_ICONS[section], "EditorIcons")
 	icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + section)
-	
-
 	
 	# Disable previous section
 	if section_list.has_node(_tracked_section):
@@ -196,8 +194,20 @@ func set_tracked_section(section: String, virtual: bool = false) -> void:
 		_tracked_section = section
 		return
 		
-	# Add / enabled new section if not virtual
-	if not virtual :
+	# Create project settings for this section if not exist (maybe an other add-on)
+	var key = PTTSettingsManager.SECTIONS_ENABLED + section 
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, true)
+		ProjectSettings.add_property_info({
+			"name": key,
+			"type": TYPE_BOOL,
+			"hint": PROPERTY_HINT_NONE,
+		})
+		ProjectSettings.set_initial_value(key, true)
+		ProjectSettings.set_as_internal(key, true)
+	
+	# Add / enabled new section if enabled
+	if ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_ENABLED + section.to_lower().replace(" ", "_")) :
 		_create_section(section)
 		
 		# Enabled new section

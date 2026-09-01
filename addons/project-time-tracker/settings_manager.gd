@@ -14,9 +14,19 @@ const LOG_JOURNAL_ENABLED: String = "project_time_tracker/general/log_journal/en
 
 const DEBUG_ENABLED: String = "project_time_tracker/general/debug/print_debug"
 
-const SECTIONS_SHOW_SECTIONS: String = "project_time_tracker/sections/sections/show_sections"
-const SECTIONS_SHOW_GRAPHS: String = "project_time_tracker/sections/sections/show_graphs"
-const SECTIONS_USE_EXTERNAL: String = "project_time_tracker/sections/sections/use_external"
+const SECTIONS_UI_SHOW_SECTIONS: String = "project_time_tracker/sections/ui/show_sections"
+const SECTIONS_UI_SHOW_GRAPHS: String = "project_time_tracker/sections/ui/show_graphs"
+
+const SECTIONS_2D_ENABLED: String = "project_time_tracker/sections/enabled/2d"
+const SECTIONS_3D_ENABLED: String = "project_time_tracker/sections/enabled/3d"
+const SECTIONS_SCRIPT_ENABLED: String = "project_time_tracker/sections/enabled/script"
+const SECTIONS_GAME_ENABLED: String = "project_time_tracker/sections/enabled/game"
+const SECTIONS_ASSET_STORE_ENABLED: String = "project_time_tracker/sections/enabled/asset_store"
+const SECTIONS_EXTERNAL_ENABLED: String = "project_time_tracker/sections/enabled/external"
+const SECTIONS_AFK_ENABLED: String = "project_time_tracker/sections/enabled/afk"
+const SECTIONS_DOCUMENTATION_ENABLED: String = "project_time_tracker/sections/enabled/documentation"
+const SECTIONS_OTHER_ENABLED: String = "project_time_tracker/sections/enabled/other"
+const SECTIONS_ENABLED: String = "project_time_tracker/sections/enabled/"
 
 const SECTIONS_COLOR: String = "project_time_tracker/sections/colors/"
 const SECTIONS_COLOR_2D: String = "project_time_tracker/sections/colors/2D"
@@ -46,9 +56,18 @@ const _LOG_JOURNAL_ENABLED_DEFAULT: bool = false
 
 const _DEBUG_ENABLED_DEFAULT: bool = false
 
-const _SECTIONS_SHOW_SECTIONS_DEFAULT: bool = true
-const _SECTIONS_SHOW_GRAPHS_DEFAULT: bool = true
-const _SECTIONS_USE_EXTERNAL_DEFAULT: bool = false
+const _SECTIONS_UI_SHOW_SECTIONS_DEFAULT: bool = true
+const _SECTIONS_UI_SHOW_GRAPHS_DEFAULT: bool = true
+
+const _SECTIONS_2D_ENABLED_DEFAULT: bool = true
+const _SECTIONS_3D_ENABLED_DEFAULT: bool = true
+const _SECTIONS_SCRIPT_ENABLED_DEFAULT: bool = true
+const _SECTIONS_GAME_ENABLED_DEFAULT: bool = true
+const _SECTIONS_ASSET_STORE_ENABLED_DEFAULT: bool = true
+const _SECTIONS_EXTERNAL_ENABLED_DEFAULT: bool = false
+const _SECTIONS_AFK_ENABLED_DEFAULT: bool = true
+const _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT: bool = true
+const _SECTIONS_OTHER_ENABLED_DEFAULT: bool = true
 
 const _SECTIONS_COLOR_2D_DEFAULT: Color = Color.DEEP_SKY_BLUE
 const _SECTIONS_COLOR_3D_DEFAULT: Color = Color.CORAL
@@ -161,35 +180,116 @@ func _enter_tree():
 	# #######################################
 	# Sections
 	# #######################################
-	key = SECTIONS_SHOW_SECTIONS
+	key = SECTIONS_UI_SHOW_SECTIONS
 	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_SHOW_SECTIONS_DEFAULT)
+		ProjectSettings.set_setting(key, _SECTIONS_UI_SHOW_SECTIONS_DEFAULT)
 	ProjectSettings.add_property_info({
 		"name": key,
 		"type": TYPE_BOOL,
 		"hint": PROPERTY_HINT_NONE,
 	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_SHOW_SECTIONS_DEFAULT)
+	ProjectSettings.set_initial_value(key, _SECTIONS_UI_SHOW_SECTIONS_DEFAULT)
 	
-	key = SECTIONS_SHOW_GRAPHS
+	key = SECTIONS_UI_SHOW_GRAPHS
 	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_SHOW_GRAPHS_DEFAULT)
+		ProjectSettings.set_setting(key, _SECTIONS_UI_SHOW_GRAPHS_DEFAULT)
 	ProjectSettings.add_property_info({
 		"name": key,
 		"type": TYPE_BOOL,
 		"hint": PROPERTY_HINT_NONE,
 	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_SHOW_GRAPHS_DEFAULT)
+	ProjectSettings.set_initial_value(key, _SECTIONS_UI_SHOW_GRAPHS_DEFAULT)
 		
-	key = SECTIONS_USE_EXTERNAL
+	key = SECTIONS_2D_ENABLED
 	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_USE_EXTERNAL_DEFAULT)
+		ProjectSettings.set_setting(key, _SECTIONS_2D_ENABLED_DEFAULT)
 	ProjectSettings.add_property_info({
 		"name": key,
 		"type": TYPE_BOOL,
 		"hint": PROPERTY_HINT_NONE,
 	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_USE_EXTERNAL_DEFAULT)
+	ProjectSettings.set_initial_value(key, _SECTIONS_2D_ENABLED_DEFAULT)
+	
+	key = SECTIONS_3D_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_3D_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_3D_ENABLED_DEFAULT)
+	
+	key = SECTIONS_SCRIPT_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_SCRIPT_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_SCRIPT_ENABLED_DEFAULT)
+
+	key = SECTIONS_GAME_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_GAME_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_GAME_ENABLED_DEFAULT)
+
+	key = SECTIONS_ASSET_STORE_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_ASSET_STORE_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_ASSET_STORE_ENABLED_DEFAULT)
+
+	key = SECTIONS_EXTERNAL_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_EXTERNAL_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_EXTERNAL_ENABLED_DEFAULT)
+
+	key = SECTIONS_AFK_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_AFK_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_AFK_ENABLED_DEFAULT)	
+		
+	key = SECTIONS_DOCUMENTATION_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT)	
+	
+	key = SECTIONS_OTHER_ENABLED
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, _SECTIONS_OTHER_ENABLED_DEFAULT)
+	ProjectSettings.add_property_info({
+		"name": key,
+		"type": TYPE_BOOL,
+		"hint": PROPERTY_HINT_NONE,
+	})
+	ProjectSettings.set_initial_value(key, _SECTIONS_OTHER_ENABLED_DEFAULT)	
+	
 	
 	# #######################################
 	# Colors
@@ -284,6 +384,7 @@ func _enter_tree():
 		"hint": PROPERTY_HINT_NONE,
 	})
 	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_OTHER_DEFAULT)
+		
 		
 	# #######################################
 	# AFK

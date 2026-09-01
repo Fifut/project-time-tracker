@@ -23,10 +23,6 @@ config/icon="res://addons/project-time-tracker/icon.png"
 
 enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
 
-[project_time_tracker]
-
-general/log_journal/enabled=true
-
 [rendering]
 
 environment/default_environment="res://default_env.tres"
