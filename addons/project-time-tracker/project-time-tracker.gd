@@ -153,13 +153,19 @@ func _load_sections() -> void:
 		return
 	
 	var json = JSON.new()
-	var parse_result = json.parse_string(file.get_as_text())
+	var parse_result:Dictionary = json.parse_string(file.get_as_text())
 	var parse_error = json.get_error_message()
 	file.close()
 	
 	if (parse_error != ""):
 		printerr("Project Time Tracker : Failed to parse tracked sections (Error " + parse_error + ")")
 		return
+	
+	# Update v2 -> v3
+	parse_result.erase("Editor")
+	if parse_result.has("AssetLib"):
+		parse_result["Asset Store"] = parse_result["AssetLib"]
+		parse_result.erase("AssetLib")
 		
 	_dock_instance.restore_tracked_sections(parse_result)
 

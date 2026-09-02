@@ -142,6 +142,27 @@ func _create_section(section_name: String, time: float = 0.0) -> void:
 	new_section.restore_elapsed_time(time)
 	new_section.on_clear_section.connect(_on_clear_section_requested)
 	
+	# Create project settings for this section if not exist (maybe an other add-on)
+	var key = PTTSettingsManager.SECTIONS_ENABLED + section_name 
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, true)
+		ProjectSettings.add_property_info({
+			"name": key,
+			"type": TYPE_BOOL,
+			"hint": PROPERTY_HINT_NONE,
+			})
+		ProjectSettings.set_initial_value(key, true)
+	
+	key = PTTSettingsManager.SECTIONS_COLOR + section_name
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, Color.WHITE)
+		ProjectSettings.add_property_info({
+			"name": key,
+			"type": TYPE_COLOR,
+			"hint": PROPERTY_HINT_NONE,
+			})
+		ProjectSettings.set_initial_value(key, Color.WHITE)
+	
 	section_list.add_child(new_section)	
 
 
