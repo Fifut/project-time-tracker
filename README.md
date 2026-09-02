@@ -23,11 +23,14 @@ A small editor widget which provides basic functions for tracking your time with
 ## Update
 
 > [!IMPORTANT]
-> Update 2.0.X -> 3.0.0
+> ### Update v2.0.X -> v3.0.0
+> 
+> **Please backup your project_time_tracker.json file before update**
+> 
 > - Due to a typo, if you use the default save filename, you must rename the file from “project_time_traker.json” to “project_time_tracker.json.
 > - Some settings have been changed. Please check them.
 
-### v3.0.0 -> Work in progress !!!
+### v3.0.0-rc1
 
 - Godot 4.7
 - Big refactor : Most of the code has been rewritten to better align with the purpose of this add-on compared to what was originally planned in the base project, and to make it easier to understand, thereby facilitating contributions to the project.
@@ -36,7 +39,7 @@ A small editor widget which provides basic functions for tracking your time with
 - Replacing AssetLib with Asset Store
 - When AFK is triggered, his time is deducted
 - Active section is highlighted
-- Each sections can be excluded in project settings (remplace "use external")
+- Each sections can be excluded in project settings
 - Time measurement is now more accurate
 - Improving the readability of percentage values
 - "Game" no longer has priority over other windows [#9](https://github.com/Fifut/godot-time-tracker/issues/9)
