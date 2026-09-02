@@ -17,15 +17,14 @@ const DEBUG_ENABLED: String = "project_time_tracker/general/debug/print_debug"
 const SECTIONS_UI_SHOW_SECTIONS: String = "project_time_tracker/sections/ui/show_sections"
 const SECTIONS_UI_SHOW_GRAPHS: String = "project_time_tracker/sections/ui/show_graphs"
 
-const SECTIONS_2D_ENABLED: String = "project_time_tracker/sections/enabled/2d"
-const SECTIONS_3D_ENABLED: String = "project_time_tracker/sections/enabled/3d"
-const SECTIONS_SCRIPT_ENABLED: String = "project_time_tracker/sections/enabled/script"
-const SECTIONS_GAME_ENABLED: String = "project_time_tracker/sections/enabled/game"
-const SECTIONS_ASSET_STORE_ENABLED: String = "project_time_tracker/sections/enabled/asset_store"
-const SECTIONS_EXTERNAL_ENABLED: String = "project_time_tracker/sections/enabled/external"
-const SECTIONS_AFK_ENABLED: String = "project_time_tracker/sections/enabled/afk"
-const SECTIONS_DOCUMENTATION_ENABLED: String = "project_time_tracker/sections/enabled/documentation"
-const SECTIONS_OTHER_ENABLED: String = "project_time_tracker/sections/enabled/other"
+const SECTIONS_2D_ENABLED: String = "project_time_tracker/sections/enabled/2D"
+const SECTIONS_3D_ENABLED: String = "project_time_tracker/sections/enabled/3D"
+const SECTIONS_SCRIPT_ENABLED: String = "project_time_tracker/sections/enabled/Script"
+const SECTIONS_GAME_ENABLED: String = "project_time_tracker/sections/enabled/Game"
+const SECTIONS_ASSET_STORE_ENABLED: String = "project_time_tracker/sections/enabled/Asset Store"
+const SECTIONS_EXTERNAL_ENABLED: String = "project_time_tracker/sections/enabled/External"
+const SECTIONS_AFK_ENABLED: String = "project_time_tracker/sections/enabled/AFK"
+const SECTIONS_DOCUMENTATION_ENABLED: String = "project_time_tracker/sections/enabled/Documentation"
 const SECTIONS_ENABLED: String = "project_time_tracker/sections/enabled/"
 
 const SECTIONS_COLOR: String = "project_time_tracker/sections/colors/"
@@ -37,7 +36,6 @@ const SECTIONS_COLOR_ASSET_STORE: String = "project_time_tracker/sections/colors
 const SECTIONS_COLOR_EXTERNAL: String = "project_time_tracker/sections/colors/External"
 const SECTIONS_COLOR_AFK: String = "project_time_tracker/sections/colors/AFK"
 const SECTIONS_COLOR_DOCUMENTATION: String = "project_time_tracker/sections/colors/Documentation"
-const SECTIONS_COLOR_OTHER: String = "project_time_tracker/sections/colors/Other"
 
 const AFK_TIMER: String = "project_time_tracker/afk/afk_timer"
 const AFK_USE_AFK: String = "project_time_tracker/afk/use_afk"
@@ -67,7 +65,6 @@ const _SECTIONS_ASSET_STORE_ENABLED_DEFAULT: bool = true
 const _SECTIONS_EXTERNAL_ENABLED_DEFAULT: bool = false
 const _SECTIONS_AFK_ENABLED_DEFAULT: bool = true
 const _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT: bool = true
-const _SECTIONS_OTHER_ENABLED_DEFAULT: bool = true
 
 const _SECTIONS_COLOR_2D_DEFAULT: Color = Color.DEEP_SKY_BLUE
 const _SECTIONS_COLOR_3D_DEFAULT: Color = Color.CORAL
@@ -77,7 +74,6 @@ const _SECTIONS_COLOR_ASSET_STORE_DEFAULT: Color = Color.MEDIUM_SEA_GREEN
 const _SECTIONS_COLOR_EXTERNAL_DEFAULT: Color = Color.MEDIUM_PURPLE
 const _SECTIONS_COLOR_AFK_DEFAULT: Color = Color.SLATE_GRAY
 const _SECTIONS_COLOR_DOCUMENTATION_DEFAULT: Color = Color.LIGHT_PINK
-const _SECTIONS_COLOR_OTHER_DEFAULT: Color = Color.WHITE
 
 const _AFK_TIMER_DEFAULT: float = 300.0
 const _AFK_USE_AFK_DEFAULT: bool = true
@@ -280,16 +276,6 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT)	
 	
-	key = SECTIONS_OTHER_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_OTHER_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_OTHER_ENABLED_DEFAULT)	
-	
 	
 	# #######################################
 	# Colors
@@ -375,16 +361,6 @@ func _enter_tree():
 	})
 	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_DOCUMENTATION_DEFAULT)
 	
-	key = SECTIONS_COLOR_OTHER
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_OTHER_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_OTHER_DEFAULT)
-		
 		
 	# #######################################
 	# AFK

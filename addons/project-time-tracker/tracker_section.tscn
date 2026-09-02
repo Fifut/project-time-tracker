@@ -52,6 +52,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_7abe0")
 text = "TrackerSection"
+text_overrun_behavior = 5
 
 [node name="ElapsedTimeLabel" type="Label" parent="TrackerSection" unique_id=1284424922]
 unique_name_in_owner = true

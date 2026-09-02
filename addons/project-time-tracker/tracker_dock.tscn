@@ -107,5 +107,4 @@ dialog_autowrap = true
 [connection signal="pressed" from="Margin/Layout/Status/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="pressed" from="Margin/Layout/Status/ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="toggled" from="Margin/Layout/Status/EditButton" to="." method="_on_edit_button_toggled"]
-[connection signal="child_entered_tree" from="Margin/Layout/SectionList" to="." method="_on_section_list_child_entered_tree"]
 [connection signal="confirmed" from="ClearAllConfirmDialog" to="." method="_on_clear_all_confirm_dialog_confirmed"]

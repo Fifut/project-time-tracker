@@ -29,7 +29,7 @@ func _enter_tree():
 	
 	_dock_instance = preload("res://addons/project-time-tracker/tracker_dock.tscn").instantiate()
 	_dock_instance.name = "Project Time Tracker"
-	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_BR, _dock_instance)
+	add_control_to_dock(EditorPlugin.DOCK_SLOT_RIGHT_BL, _dock_instance)
 	
 	_load_sections()
 	

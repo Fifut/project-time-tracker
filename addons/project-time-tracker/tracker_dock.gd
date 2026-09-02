@@ -35,8 +35,7 @@ const SECTION_ICONS: Dictionary = {
 	"Asset Store": "AssetStore",
 	"External": "Window",
 	"AFK": "ViewportSpeed",
-	"Documentation" : "Help",
-	"default": "Node" 
+	"Documentation" : "Help"
 }
 
 var _tracked_section: String = ""
@@ -139,7 +138,7 @@ func _create_section(section_name: String, time: float = 0.0) -> void:
 	if SECTION_ICONS.has(section_name):
 		new_section.icon = SECTION_ICONS[section_name]
 	else:
-		new_section.icon = SECTION_ICONS["default"]
+		new_section.icon = "Node"
 	new_section.restore_elapsed_time(time)
 	new_section.on_clear_section.connect(_on_clear_section_requested)
 	
@@ -165,6 +164,16 @@ func _find_current_selected_tab(node: Node) -> Control:
 	return null
 
 
+func _sort_sections() -> void:
+	# Alphabetical sections sorting
+	var children = section_list.get_children()
+	children.sort_custom(
+		func(a, b):
+			return a.name.to_lower() < b.name.to_lower())
+	for i in children.size():
+		section_list.move_child(children[i], i)
+
+
 
 # #######################################
 # Public methods
@@ -179,8 +188,12 @@ func set_tracked_section(section: String) -> void:
 			section = "Documentation"
 
 	# Display section icon
-	icon_texture.texture = get_theme_icon(SECTION_ICONS[section], "EditorIcons")
-	icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + section)
+	if SECTION_ICONS.has(section):
+		icon_texture.texture = get_theme_icon(SECTION_ICONS[section], "EditorIcons")
+		icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + section)
+	else:
+		icon_texture.texture = get_theme_icon("Node", "EditorIcons")
+		icon_texture.modulate = Color.WHITE
 	
 	# Disable previous section
 	if section_list.has_node(_tracked_section):
@@ -202,13 +215,24 @@ func set_tracked_section(section: String) -> void:
 			"name": key,
 			"type": TYPE_BOOL,
 			"hint": PROPERTY_HINT_NONE,
-		})
+			})
 		ProjectSettings.set_initial_value(key, true)
-		ProjectSettings.set_as_internal(key, true)
 	
+	key = PTTSettingsManager.SECTIONS_COLOR + section
+	if not ProjectSettings.has_setting(key):
+		ProjectSettings.set_setting(key, Color.WHITE)
+		ProjectSettings.add_property_info({
+			"name": key,
+			"type": TYPE_COLOR,
+			"hint": PROPERTY_HINT_NONE,
+			})
+		ProjectSettings.set_initial_value(key, Color.WHITE)
+	
+
 	# Add / enabled new section if enabled
-	if ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_ENABLED + section.to_lower().replace(" ", "_")) :
+	if ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_ENABLED + section) :
 		_create_section(section)
+		_sort_sections()
 		
 		# Enabled new section
 		section_list.get_node(section).enabled = true
@@ -221,6 +245,7 @@ func get_tracked_section() -> String:
 func restore_tracked_sections(sections : Dictionary) -> void:
 	for section in sections:
 		_create_section(section, sections[section])
+	_sort_sections()
 
 
 func get_tracked_sections() -> Dictionary:
@@ -274,13 +299,3 @@ func _on_clear_section_requested(section_name):
 	clear_button.hide()
 	edit_button.button_pressed = false
 	section_graph.clear()
-
-
-func _on_section_list_child_entered_tree(node: Node) -> void:
-	# Alphabetical sections sorting
-	var children = section_list.get_children()
-	children.sort_custom(
-		func(a, b):
-			return a.name.to_lower() < b.name.to_lower())
-	for i in children.size():
-		section_list.move_child(children[i], i)
