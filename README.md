@@ -42,6 +42,7 @@ A small editor widget which provides basic functions for tracking your time with
 - Each sections can be excluded in project settings
 - Time measurement is now more accurate
 - Improving the readability of percentage values
+- Mouse movement is no longer taken into account when selecting a section or when AFK
 - "Game" no longer has priority over other windows [#9](https://github.com/Fifut/godot-time-tracker/issues/9)
 - The "3D" workspace is no longer forced at startup [#10](https://github.com/Fifut/godot-time-tracker/issues/10)
 - Add a journal: Track the time spent each day [#12](https://github.com/Fifut/godot-time-tracker/issues/12)
