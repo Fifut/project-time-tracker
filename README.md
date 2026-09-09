@@ -30,7 +30,7 @@ A small editor widget which provides basic functions for tracking your time with
 > - Due to a typo, if you use the default save filename, you must rename the file from “project_time_traker.json” to “project_time_tracker.json.
 > - Some settings have been changed. Please check them.
 
-### v3.0.0-rc1
+### v3.0.0
 
 - Godot 4.7
 - Big refactor : Most of the code has been rewritten to better align with the purpose of this add-on compared to what was originally planned in the base project, and to make it easier to understand, thereby facilitating contributions to the project.
