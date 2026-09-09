@@ -278,7 +278,8 @@ func get_tracked_sections() -> Dictionary:
 
 
 func subtract_to_current_section(time: float) -> void:
-	section_list.get_node(_tracked_section).subtract_time(time)
+	if section_list.has_node(_tracked_section):
+		section_list.get_node(_tracked_section).subtract_time(time)
 
 
 func set_log_text(text: String) -> void:

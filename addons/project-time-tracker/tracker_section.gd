@@ -175,6 +175,7 @@ func _on_edit_section_ok_button_pressed() -> void:
 	time += minutes_spin_box.value * 60
 	time += seconds_spin_box.value
 	_elapsed_time = time
+	_started_ticks_msec = Time.get_ticks_msec()
 	
 	edit_section_window.hide()
 

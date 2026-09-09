@@ -1,6 +1,7 @@
 @tool
 extends ColorRect
 
+@onready var percent_label: Label = %Percent
 
 func _ready() -> void:
 	
@@ -18,8 +19,8 @@ func _process(delta: float) -> void:
 	var percent = floori(size_flags_stretch_ratio * 100)
 	
 	if percent >= 10:
-		$Percent.text = str(percent) + "%"
+		percent_label.text = str(percent) + "%"
 	elif percent >= 5:
-		$Percent.text = str(percent)
+		percent_label.text = str(percent)
 	else:
-		$Percent.text = ""
+		percent_label.text = ""

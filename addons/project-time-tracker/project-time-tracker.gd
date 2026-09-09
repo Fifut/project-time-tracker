@@ -47,6 +47,7 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 	func():
+		_debug = ProjectSettings.get_setting(PTTSettingsManager.DEBUG_ENABLED)
 		_timer_afk.wait_time = ProjectSettings.get_setting(PTTSettingsManager.AFK_TIMER)
 	)
 	
@@ -230,7 +231,7 @@ func _store_log_journal() -> void:
 func _save_file_path() -> String:
 	var path: String
 	match ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_LOCATION):
-		"Project (res://),":
+		"Project (res://)":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"
@@ -247,7 +248,7 @@ func _save_file_path() -> String:
 func _log_journal_file_path() -> String:
 	var path: String
 	match ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_LOCATION):
-		"Project (res://),":
+		"Project (res://)":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"

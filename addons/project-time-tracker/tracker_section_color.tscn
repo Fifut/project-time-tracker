@@ -12,6 +12,7 @@ size_flags_horizontal = 3
 script = ExtResource("1_t3kj1")
 
 [node name="Percent" type="Label" parent="." unique_id=206690048]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

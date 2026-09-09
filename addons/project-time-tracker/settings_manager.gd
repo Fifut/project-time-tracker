@@ -78,309 +78,77 @@ const _SECTIONS_COLOR_DOCUMENTATION_DEFAULT: Color = Color.LIGHT_PINK
 const _AFK_TIMER_DEFAULT: float = 300.0
 const _AFK_USE_AFK_DEFAULT: bool = true
 
+const _FILE_LOCATION_HINT_STRING: String = "Project (res://),User data (user://),Custom"
 
 
-func _enter_tree():
-	
+func _enter_tree() -> void:
 	# #######################################
 	# Save file
 	# #######################################
-	var key = SAVE_FILE_NAME
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SAVE_FILE_NAME_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SAVE_FILE_NAME_DEFAULT)
-	
-	key = SAVE_FILE_LOCATION
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SAVE_FILE_LOCATION_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_ENUM,
-		"hint_string": "Project (res://),User data (user://),Custom"
-	})
-	ProjectSettings.set_initial_value(key, _SAVE_FILE_LOCATION_DEFAULT)
-	
-	key = SAVE_FILE_CUSTOM_LOCATION
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SAVE_FILE_CUSTOM_LOCATION_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_GLOBAL_DIR,
-	})
-	ProjectSettings.set_initial_value(key, _SAVE_FILE_CUSTOM_LOCATION_DEFAULT)
-	
+	_register_setting(SAVE_FILE_NAME, _SAVE_FILE_NAME_DEFAULT, TYPE_STRING)
+	_register_setting(SAVE_FILE_LOCATION, _SAVE_FILE_LOCATION_DEFAULT, TYPE_STRING, PROPERTY_HINT_ENUM, _FILE_LOCATION_HINT_STRING)
+	_register_setting(SAVE_FILE_CUSTOM_LOCATION, _SAVE_FILE_CUSTOM_LOCATION_DEFAULT, TYPE_STRING, PROPERTY_HINT_GLOBAL_DIR)
+
 	# #######################################
 	# Log journal file
 	# #######################################
-	key = LOG_JOURNAL_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _LOG_JOURNAL_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _LOG_JOURNAL_ENABLED_DEFAULT)
-	
-	key = LOG_JOURNAL_FILE_NAME
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _LOG_JOURNAL_FILE_NAME_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _LOG_JOURNAL_FILE_NAME_DEFAULT)
-	
-	key = LOG_JOURNAL_FILE_LOCATION
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _LOG_JOURNAL_FILE_LOCATION_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_ENUM,
-		"hint_string": "Project (res://),User data (user://),Custom"
-	})
-	ProjectSettings.set_initial_value(key, _LOG_JOURNAL_FILE_LOCATION_DEFAULT)
-	
-	key = LOG_JOURNAL_FILE_CUSTOM_LOCATION
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_GLOBAL_DIR,
-	})
-	ProjectSettings.set_initial_value(key, _LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT)
-	
+	_register_setting(LOG_JOURNAL_ENABLED, _LOG_JOURNAL_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(LOG_JOURNAL_FILE_NAME, _LOG_JOURNAL_FILE_NAME_DEFAULT, TYPE_STRING)
+	_register_setting(LOG_JOURNAL_FILE_LOCATION, _LOG_JOURNAL_FILE_LOCATION_DEFAULT, TYPE_STRING, PROPERTY_HINT_ENUM, _FILE_LOCATION_HINT_STRING)
+	_register_setting(LOG_JOURNAL_FILE_CUSTOM_LOCATION, _LOG_JOURNAL_FILE_CUSTOM_LOCATION_DEFAULT, TYPE_STRING, PROPERTY_HINT_GLOBAL_DIR)
+
 	# #######################################
 	# Debug
 	# #######################################
-	key = DEBUG_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _DEBUG_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _DEBUG_ENABLED_DEFAULT)
-	
+	_register_setting(DEBUG_ENABLED, _DEBUG_ENABLED_DEFAULT, TYPE_BOOL)
+
 	# #######################################
 	# Sections
 	# #######################################
-	key = SECTIONS_UI_SHOW_SECTIONS
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_UI_SHOW_SECTIONS_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_UI_SHOW_SECTIONS_DEFAULT)
-	
-	key = SECTIONS_UI_SHOW_GRAPHS
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_UI_SHOW_GRAPHS_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_UI_SHOW_GRAPHS_DEFAULT)
-		
-	key = SECTIONS_2D_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_2D_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_2D_ENABLED_DEFAULT)
-	
-	key = SECTIONS_3D_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_3D_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_3D_ENABLED_DEFAULT)
-	
-	key = SECTIONS_SCRIPT_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_SCRIPT_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_SCRIPT_ENABLED_DEFAULT)
+	_register_setting(SECTIONS_UI_SHOW_SECTIONS, _SECTIONS_UI_SHOW_SECTIONS_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_UI_SHOW_GRAPHS, _SECTIONS_UI_SHOW_GRAPHS_DEFAULT, TYPE_BOOL)
 
-	key = SECTIONS_GAME_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_GAME_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_GAME_ENABLED_DEFAULT)
+	_register_setting(SECTIONS_2D_ENABLED, _SECTIONS_2D_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_3D_ENABLED, _SECTIONS_3D_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_SCRIPT_ENABLED, _SECTIONS_SCRIPT_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_GAME_ENABLED, _SECTIONS_GAME_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_ASSET_STORE_ENABLED, _SECTIONS_ASSET_STORE_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_EXTERNAL_ENABLED, _SECTIONS_EXTERNAL_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_AFK_ENABLED, _SECTIONS_AFK_ENABLED_DEFAULT, TYPE_BOOL)
+	_register_setting(SECTIONS_DOCUMENTATION_ENABLED, _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT, TYPE_BOOL)
 
-	key = SECTIONS_ASSET_STORE_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_ASSET_STORE_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_ASSET_STORE_ENABLED_DEFAULT)
-
-	key = SECTIONS_EXTERNAL_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_EXTERNAL_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_EXTERNAL_ENABLED_DEFAULT)
-
-	key = SECTIONS_AFK_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_AFK_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_AFK_ENABLED_DEFAULT)	
-		
-	key = SECTIONS_DOCUMENTATION_ENABLED
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_DOCUMENTATION_ENABLED_DEFAULT)	
-	
-	
 	# #######################################
 	# Colors
 	# #######################################
-	key = SECTIONS_COLOR_2D
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_2D_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_2D_DEFAULT)
-	
-	key = SECTIONS_COLOR_3D
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_3D_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_3D_DEFAULT)
-	
-	key = SECTIONS_COLOR_SCRIPT
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_SCRIPT_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_SCRIPT_DEFAULT)
-		
-	key = SECTIONS_COLOR_GAME
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_GAME_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})	
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_GAME_DEFAULT)
-	
-	key = SECTIONS_COLOR_ASSET_STORE
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_ASSET_STORE_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})		
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_ASSET_STORE_DEFAULT)
-	
-	key = SECTIONS_COLOR_EXTERNAL
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_EXTERNAL_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_EXTERNAL_DEFAULT)
-		
-	key = SECTIONS_COLOR_AFK
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_AFK_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_AFK_DEFAULT)
-	
-		
-	key = SECTIONS_COLOR_DOCUMENTATION
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _SECTIONS_COLOR_DOCUMENTATION_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_COLOR,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _SECTIONS_COLOR_DOCUMENTATION_DEFAULT)
-	
-		
+	_register_setting(SECTIONS_COLOR_2D, _SECTIONS_COLOR_2D_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_3D, _SECTIONS_COLOR_3D_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_SCRIPT, _SECTIONS_COLOR_SCRIPT_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_GAME, _SECTIONS_COLOR_GAME_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_ASSET_STORE, _SECTIONS_COLOR_ASSET_STORE_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_EXTERNAL, _SECTIONS_COLOR_EXTERNAL_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_AFK, _SECTIONS_COLOR_AFK_DEFAULT, TYPE_COLOR)
+	_register_setting(SECTIONS_COLOR_DOCUMENTATION, _SECTIONS_COLOR_DOCUMENTATION_DEFAULT, TYPE_COLOR)
+
 	# #######################################
 	# AFK
 	# #######################################
-	key = AFK_TIMER
+	_register_setting(AFK_TIMER, _AFK_TIMER_DEFAULT, TYPE_INT)
+	_register_setting(AFK_USE_AFK, _AFK_USE_AFK_DEFAULT, TYPE_BOOL)
+
+
+
+# #######################################
+# Helpers
+# #######################################
+func _register_setting(key: String, default_value, type: int, hint: int = PROPERTY_HINT_NONE, hint_string: String = "") -> void:
 	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _AFK_TIMER_DEFAULT)
+		ProjectSettings.set_setting(key, default_value)
+
 	ProjectSettings.add_property_info({
 		"name": key,
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_NONE,
+		"type": type,
+		"hint": hint,
+		"hint_string": hint_string,
 	})
-	ProjectSettings.set_initial_value(key, _AFK_TIMER_DEFAULT)
-			
-	key = AFK_USE_AFK
-	if not ProjectSettings.has_setting(key):
-		ProjectSettings.set_setting(key, _AFK_USE_AFK_DEFAULT)
-	ProjectSettings.add_property_info({
-		"name": key,
-		"type": TYPE_BOOL,
-		"hint": PROPERTY_HINT_NONE,
-	})
-	ProjectSettings.set_initial_value(key, _AFK_USE_AFK_DEFAULT)
+
+	ProjectSettings.set_initial_value(key, default_value)

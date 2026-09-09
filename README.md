@@ -23,7 +23,7 @@ A small editor widget which provides basic functions for tracking your time with
 ## Update
 
 > [!IMPORTANT]
-> ### Update v2.0.X -> v3.0.0-rc1
+> ### Update v2.0.X -> v3.0.0
 > 
 > **Please backup your project_time_tracker.json file before update**
 > 

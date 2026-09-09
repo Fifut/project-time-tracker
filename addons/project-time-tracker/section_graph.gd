@@ -20,12 +20,15 @@ func _update_sections() -> void:
 		section_count += 1
 		total += sections[section]
 	
+	if total <= 0.0:
+		return
+		
 	for section in sections:
 		if section == "AFK":
 			continue	
 			
 		if (get_node_or_null(section)):
-			get_node(section).size_flags_stretch_ratio = sections[section] / total
+			get_node(section).size_flags_stretch_ratio = floor(sections[section]) / floor(total)
 		else:
 			var new_section = preload("res://addons/project-time-tracker/tracker_section_color.tscn").instantiate()
 			new_section.name = section
