@@ -10,12 +10,14 @@ extends Control
 @onready var resume_button : Button = $Margin/Layout/Status/ResumeButton
 @onready var pause_button : Button = $Margin/Layout/Status/PauseButton
 @onready var clear_button : Button = $Margin/Layout/Status/ClearButton
+@onready var calendar_button: Button = $Margin/Layout/Status/CalendarButton
 @onready var edit_button: Button = $Margin/Layout/Status/EditButton
 @onready var h_separator: HSeparator = $Margin/Layout/HSeparator
 @onready var section_list : Control = $Margin/Layout/SectionList
 @onready var section_graph : Control = $Margin/Layout/SectionGraph
 @onready var log_label: Label = $Margin/Layout/LogLabel
 @onready var clear_all_confirm_dialog : ConfirmationDialog = $ClearAllConfirmDialog
+@onready var calendar_window: Window = $CalendarWindow
 
 
 # #######################################
@@ -89,6 +91,7 @@ func _update_theme() -> void:
 	pause_button.icon = get_theme_icon("Pause", "EditorIcons")
 	resume_button.icon = get_theme_icon("Play", "EditorIcons")
 	clear_button.icon = get_theme_icon("Remove", "EditorIcons")
+	calendar_button.icon = get_theme_icon("Grid", "EditorIcons")
 	edit_button.icon = get_theme_icon("Modifiers", "EditorIcons")
 
 
@@ -297,11 +300,15 @@ func _on_resume_button_pressed() -> void:
 func _on_pause_button_pressed() -> void:
 	_pause_tracking()
 
+		
+func _on_calendar_button_toggled(toggled_on: bool) -> void:
+	calendar_window.show()
+	
 
 func _on_clear_button_pressed() -> void:
 	clear_all_confirm_dialog.popup_centered(clear_all_confirm_dialog.size)
 
-		
+
 func _on_edit_button_toggled(toggled_on: bool) -> void:
 	clear_button.visible = toggled_on
 	for section in section_list.get_children():

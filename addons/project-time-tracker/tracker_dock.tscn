@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://brkr6mirv6lcu" path="res://addons/project-time-tracker/tracker_dock.gd" id="1_7v1fu"]
 [ext_resource type="Script" uid="uid://b4k026cqprqn" path="res://addons/project-time-tracker/section_graph.gd" id="2_0xje5"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_uwii8"]
+[ext_resource type="PackedScene" uid="uid://ci6snvwnkwvrt" path="res://addons/project-time-tracker/tracker_calendar.tscn" id="4_tglpr"]
 
 [sub_resource type="DPITexture" id="DPITexture_3cuot"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
@@ -63,6 +64,11 @@ theme_override_fonts/font = ExtResource("2_uwii8")
 icon = SubResource("DPITexture_ha0to")
 icon_alignment = 1
 
+[node name="CalendarButton" type="Button" parent="Margin/Layout/Status" unique_id=2024511426]
+layout_mode = 2
+icon = SubResource("DPITexture_ha0to")
+flat = true
+
 [node name="ClearButton" type="Button" parent="Margin/Layout/Status" unique_id=1572265573]
 visible = false
 layout_mode = 2
@@ -103,8 +109,11 @@ dialog_text = "This action will clear all recorded sections from memory.
 Do you want to continue?"
 dialog_autowrap = true
 
+[node name="TrackerCalendar" parent="." unique_id=271998635 instance=ExtResource("4_tglpr")]
+
 [connection signal="pressed" from="Margin/Layout/Status/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Margin/Layout/Status/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="toggled" from="Margin/Layout/Status/CalendarButton" to="." method="_on_calendar_button_toggled"]
 [connection signal="pressed" from="Margin/Layout/Status/ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="toggled" from="Margin/Layout/Status/EditButton" to="." method="_on_edit_button_toggled"]
 [connection signal="confirmed" from="ClearAllConfirmDialog" to="." method="_on_clear_all_confirm_dialog_confirmed"]
