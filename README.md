@@ -23,12 +23,18 @@ A small editor widget which provides basic functions for tracking your time with
 ## Update
 
 > [!IMPORTANT]
-> ### Update v2.0.X -> v3.0.0
+> ### Update v2.X.X -> v3.X.X
 > 
 > **Please backup your project_time_tracker.json file before update**
 > 
 > - Due to a typo, if you use the default save filename, you must rename the file from “project_time_traker.json” to “project_time_tracker.json.
 > - Some settings have been changed. Please check them.
+
+
+### v3.0.1 -> WORK IN PROGRESS
+
+- Fix [#9](https://github.com/Fifut/godot-time-tracker/issues/13)
+
 
 ### v3.0.0
 
