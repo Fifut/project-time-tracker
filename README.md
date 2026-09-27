@@ -31,7 +31,7 @@ A small editor widget which provides basic functions for tracking your time with
 > - Some settings have been changed. Please check them.
 
 
-### v3.0.1 -> WORK IN PROGRESS
+### v3.0.1
 
 - Fix [#9](https://github.com/Fifut/godot-time-tracker/issues/13)
 
