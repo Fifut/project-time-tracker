@@ -23,14 +23,20 @@ A small editor widget which provides basic functions for tracking your time with
 ## Update
 
 > [!IMPORTANT]
-> ### Update v2.0.X -> v3.0.0
+> ### Update v2.X.X -> v3.X.X
 > 
 > **Please backup your project_time_tracker.json file before update**
 > 
 > - Due to a typo, if you use the default save filename, you must rename the file from “project_time_traker.json” to “project_time_tracker.json.
 > - Some settings have been changed. Please check them.
 
-### v3.0.0-rc1
+
+### v3.0.1 -> WORK IN PROGRESS
+
+- Fix [#9](https://github.com/Fifut/godot-time-tracker/issues/13)
+
+
+### v3.0.0
 
 - Godot 4.7
 - Big refactor : Most of the code has been rewritten to better align with the purpose of this add-on compared to what was originally planned in the base project, and to make it easier to understand, thereby facilitating contributions to the project.

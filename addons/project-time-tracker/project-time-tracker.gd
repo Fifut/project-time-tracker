@@ -41,14 +41,12 @@ func _exit_tree():
 
 
 func _ready() -> void:
-	# Get main screen buttons (2D, 3D, Script, etc;)
-	_get_main_screen_buttons()
-	
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 	func():
 		_debug = ProjectSettings.get_setting(PTTSettingsManager.DEBUG_ENABLED)
 		_timer_afk.wait_time = ProjectSettings.get_setting(PTTSettingsManager.AFK_TIMER)
+		_main_screen_buttons.clear()
 	)
 	
 	# Signal from 2D, 3D, Script, Game, etc. workspace
@@ -264,9 +262,14 @@ func _log_journal_file_path() -> String:
 
 # Which button on the main screen (2D, 3D, script, etc.) is being pressed
 func _get_main_screen_button_is_pressed() -> String:
+	# Get main screen buttons the first time or if settings has changed (new addon added)
+	if _main_screen_buttons.is_empty():
+		_get_main_screen_buttons()
+	
 	for button in _main_screen_buttons:
 		if button.button_pressed:
 			return button.name
+	
 	return ""
 
 
