@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="16"
+   viewBox="48 -912 768 768"
+   width="16"
+   fill="#e3e3e3"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="timer.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="104.83333"
+     inkscape:cx="8.5516693"
+     inkscape:cy="7.9220986"
+     inkscape:window-width="3840"
+     inkscape:window-height="2089"
+     inkscape:window-x="1432"
+     inkscape:window-y="140"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 327.27273,-803.55774 v -61.09091 h 203.63636 v 61.09091 z m 71.27272,366.54545 h 61.09091 v -203.63636 h -61.09091 z m -80.53818,221.87031 q -51.68969,-22.48485 -90.35515,-61.15879 -38.67394,-38.66546 -61.15879,-90.35515 Q 144,-418.34562 144,-477.73956 q 0,-59.39394 22.49333,-111.08364 22.48485,-51.68969 61.15879,-90.35515 38.66546,-38.67394 90.35515,-61.15878 51.6897,-22.49334 110.71031,-22.49334 49.44969,0 94.91151,16.54546 45.46182,16.54545 84.49212,46.24242 l 44.12121,-43.27273 42.42425,42.42425 -43.27273,44.12121 q 29.69697,38.18182 46.24242,83.83879 16.54546,45.65697 16.54546,95.3103 0,59.27515 -22.49334,110.96485 -22.48484,51.68969 -61.15878,90.35515 -38.66546,38.67394 -90.35515,61.15879 -51.6897,22.49333 -111.08364,22.49333 -59.39394,0 -111.08364,-22.49333 z m 269.75031,-103.93091 q 65.33333,-65.33334 65.33333,-158.66667 0,-93.33333 -65.33333,-158.66667 -65.33334,-65.33333 -158.66667,-65.33333 -93.33333,0 -158.66667,65.33333 -65.33333,65.33334 -65.33333,158.66667 0,93.33333 65.33333,158.66667 65.33334,65.33333 158.66667,65.33333 93.33333,0 158.66667,-65.33333 z M 429.09091,-477.73956 Z"
+     id="path1"
+     style="stroke-width:0.848485;fill:#ffffff" />
+</svg>

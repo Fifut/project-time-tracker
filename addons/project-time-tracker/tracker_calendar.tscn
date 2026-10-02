@@ -291,22 +291,27 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="BackStartButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=455495925]
+unique_name_in_owner = true
 layout_mode = 2
 icon = SubResource("DPITexture_60a21")
 
 [node name="BackButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=1146306381]
+unique_name_in_owner = true
 layout_mode = 2
 icon = SubResource("DPITexture_60a21")
 
 [node name="DateButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=1599181239]
+unique_name_in_owner = true
 layout_mode = 2
 text = "01.01.1970"
 
 [node name="ForwardButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=598186334]
+unique_name_in_owner = true
 layout_mode = 2
 icon = SubResource("DPITexture_60a21")
 
 [node name="ForwardEndButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=112465638]
+unique_name_in_owner = true
 layout_mode = 2
 icon = SubResource("DPITexture_60a21")
 

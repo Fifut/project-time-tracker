@@ -12,6 +12,9 @@ var _main_screen_buttons: Array[Button] = []
 var _is_playing_scene: bool = false
 var _debug: bool = false
 
+var _sections: Dictionary = {}
+var _today: String = ""
+
 
 func _enter_tree():
 	_settings_manager = preload("res://addons/project-time-tracker/settings_manager.gd").new()
@@ -152,7 +155,7 @@ func _load_sections() -> void:
 		return
 	
 	var json = JSON.new()
-	var parse_result:Dictionary = json.parse_string(file.get_as_text())
+	_sections = json.parse_string(file.get_as_text())
 	var parse_error = json.get_error_message()
 	file.close()
 	
@@ -160,21 +163,34 @@ func _load_sections() -> void:
 		printerr("Project Time Tracker : Failed to parse tracked sections (Error " + parse_error + ")")
 		return
 	
-	# Update v2 -> v3
-	parse_result.erase("Editor")
-	if parse_result.has("AssetLib"):
-		parse_result["Asset Store"] = parse_result["AssetLib"]
-		parse_result.erase("AssetLib")
-		
-	_dock_instance.restore_tracked_sections(parse_result)
+	# Update v2.X.X -> v3.0.X
+	_sections.erase("Editor")
+	if _sections.has("AssetLib"):
+		_sections["Asset Store"] = _sections["AssetLib"]
+		_sections.erase("AssetLib")
+	
+	# Update v3.0.X -> v3.1.X
+	if not _sections.has("Global"):
+		_dock_instance.restore_tracked_sections({"Global": _sections})
+		return
+	
+	_today = Time.get_date_string_from_system()
+	# Same day
+	if _sections.has(_today):
+		_dock_instance.restore_tracked_sections(_sections["Global"], _sections[_today])
+	# New day
+	else:
+		_dock_instance.restore_tracked_sections(_sections["Global"])
 
 
 func _store_sections() -> void:
 	if _debug : print("Project time tracker:"," _store_sections()")
 		
 	var tracked_sections = _dock_instance.get_tracked_sections()
-	var stored_string = JSON.stringify(tracked_sections, "  ")
+	_sections["Global"] = tracked_sections["Global"]
+	_sections[_today] = tracked_sections["Today"]
 	
+	var stored_string = JSON.stringify(_sections, "  ")
 	var path = _save_file_path()
 	
 	var file = FileAccess.open(path, FileAccess.WRITE)
@@ -194,9 +210,9 @@ func _store_sections() -> void:
 func _store_log_journal() -> void:
 	if _debug : print("Project time tracker:"," _store_log_journal()")
 	
-	var tracked_sections: Dictionary = _dock_instance.get_tracked_sections()
+	var tracked_sections: Dictionary = _dock_instance.get_tracked_sections()["Today"]
 
-	var log: String = Time.get_date_string_from_system()
+	var log: String = _today
 	for section in tracked_sections:
 		log += " - " + section + ": " + Time.get_time_string_from_unix_time(tracked_sections[section])
 	

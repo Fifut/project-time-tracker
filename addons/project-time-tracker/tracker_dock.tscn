@@ -2,14 +2,18 @@
 
 [ext_resource type="Script" uid="uid://brkr6mirv6lcu" path="res://addons/project-time-tracker/tracker_dock.gd" id="1_7v1fu"]
 [ext_resource type="Script" uid="uid://b4k026cqprqn" path="res://addons/project-time-tracker/section_graph.gd" id="2_0xje5"]
+[ext_resource type="Texture2D" uid="uid://wj45h2m4ajex" path="res://addons/project-time-tracker/timer.svg" id="2_n8100"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_uwii8"]
+[ext_resource type="FontFile" uid="uid://eseqrprd66dp" path="res://addons/project-time-tracker/NotoSans-Bold.ttf" id="3_8a8dy"]
+[ext_resource type="Texture2D" uid="uid://txdq5roqf1mo" path="res://addons/project-time-tracker/bar_chart.svg" id="3_lf1wf"]
+[ext_resource type="Texture2D" uid="uid://duacmh0e2mvmp" path="res://addons/project-time-tracker/calendar.svg" id="4_n8100"]
 [ext_resource type="PackedScene" uid="uid://ci6snvwnkwvrt" path="res://addons/project-time-tracker/tracker_calendar.tscn" id="4_tglpr"]
 
 [sub_resource type="DPITexture" id="DPITexture_3cuot"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
-[sub_resource type="DPITexture" id="DPITexture_ha0to"]
+[sub_resource type="DPITexture" id="DPITexture_n8100"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -19,88 +23,159 @@ anchors_preset = 0
 script = ExtResource("1_7v1fu")
 
 [node name="Margin" type="MarginContainer" parent="." unique_id=1346490156]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Layout" type="VBoxContainer" parent="Margin" unique_id=827595057]
 layout_mode = 2
 
-[node name="Status" type="HBoxContainer" parent="Margin/Layout" unique_id=822005780]
+[node name="Buttons" type="HBoxContainer" parent="Margin/Layout" unique_id=2117258287]
 layout_mode = 2
 
-[node name="IconTexture" type="TextureRect" parent="Margin/Layout/Status" unique_id=2081503847]
+[node name="IconTexture" type="TextureRect" parent="Margin/Layout/Buttons" unique_id=2081503847]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("DPITexture_3cuot")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="DHMSValue" type="Label" parent="Margin/Layout/Status" unique_id=296369054]
+[node name="HoursValue" type="Label" parent="Margin/Layout/Buttons" unique_id=280971930]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_8a8dy")
+text = "0h"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SectionsButton" type="Button" parent="Margin/Layout/Buttons" unique_id=658588739]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("2_n8100")
+flat = true
+
+[node name="GraphsButton" type="Button" parent="Margin/Layout/Buttons" unique_id=2009904259]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("3_lf1wf")
+flat = true
+
+[node name="CalendarButton" type="Button" parent="Margin/Layout/Buttons" unique_id=2024511426]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("4_n8100")
+flat = true
+
+[node name="ResumeButton" type="Button" parent="Margin/Layout/Buttons" unique_id=1922396438]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
 theme_override_fonts/font = ExtResource("2_uwii8")
+icon = SubResource("DPITexture_n8100")
+icon_alignment = 1
+
+[node name="EditButton" type="Button" parent="Margin/Layout/Buttons" unique_id=212571990]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+icon = SubResource("DPITexture_n8100")
+flat = true
+
+[node name="PauseButton" type="Button" parent="Margin/Layout/Buttons" unique_id=2078160439]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_uwii8")
+icon = SubResource("DPITexture_n8100")
+icon_alignment = 1
+
+[node name="HSeparator1" type="HSeparator" parent="Margin/Layout" unique_id=508973525]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GlobalStatus" type="HBoxContainer" parent="Margin/Layout" unique_id=822005780]
+layout_mode = 2
+
+[node name="GlobalLabel" type="Label" parent="Margin/Layout/GlobalStatus" unique_id=2055594649]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8a8dy")
+text = "GLOBAL"
+
+[node name="DHMSValue" type="Label" parent="Margin/Layout/GlobalStatus" unique_id=296369054]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_8a8dy")
 text = "0d - 00:00:00"
 horizontal_alignment = 2
 
-[node name="HoursValue" type="Label" parent="Margin/Layout/Status" unique_id=280971930]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_uwii8")
-text = "(0h)"
-horizontal_alignment = 2
-
-[node name="ResumeButton" type="Button" parent="Margin/Layout/Status" unique_id=1922396438]
-visible = false
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_uwii8")
-icon = SubResource("DPITexture_ha0to")
-icon_alignment = 1
-
-[node name="PauseButton" type="Button" parent="Margin/Layout/Status" unique_id=2078160439]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_uwii8")
-icon = SubResource("DPITexture_ha0to")
-icon_alignment = 1
-
-[node name="CalendarButton" type="Button" parent="Margin/Layout/Status" unique_id=2024511426]
-layout_mode = 2
-icon = SubResource("DPITexture_ha0to")
-flat = true
-
-[node name="ClearButton" type="Button" parent="Margin/Layout/Status" unique_id=1572265573]
+[node name="ClearButton" type="Button" parent="Margin/Layout/GlobalStatus" unique_id=1572265573]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_ha0to")
+icon = SubResource("DPITexture_n8100")
 flat = true
-
-[node name="EditButton" type="Button" parent="Margin/Layout/Status" unique_id=212571990]
-layout_mode = 2
-toggle_mode = true
-icon = SubResource("DPITexture_ha0to")
-flat = true
-
-[node name="HSeparator" type="HSeparator" parent="Margin/Layout" unique_id=508973525]
-layout_mode = 2
 
 [node name="SectionList" type="VBoxContainer" parent="Margin/Layout" unique_id=132359488]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Padding" type="Control" parent="Margin/Layout" unique_id=908196514]
 layout_mode = 2
 
 [node name="SectionGraph" type="HBoxContainer" parent="Margin/Layout" unique_id=2028078613]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("2_0xje5")
+
+[node name="HSeparator2" type="HSeparator" parent="Margin/Layout" unique_id=1350990475]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DayStatus" type="HBoxContainer" parent="Margin/Layout" unique_id=1109768155]
+layout_mode = 2
+
+[node name="DayLabel" type="Label" parent="Margin/Layout/DayStatus" unique_id=1573766314]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8a8dy")
+text = "TODAY"
+
+[node name="DayValue" type="Label" parent="Margin/Layout/DayStatus" unique_id=1818143859]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_8a8dy")
+text = "00:00:00"
+horizontal_alignment = 2
+
+[node name="SectionDayList" type="VBoxContainer" parent="Margin/Layout" unique_id=1430913784]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SectionDayGraph" type="HBoxContainer" parent="Margin/Layout" unique_id=1625403582]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("2_0xje5")
 
 [node name="LogLabel" type="Label" parent="Margin/Layout" unique_id=1344365217]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
 [node name="ClearAllConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2094966054]
+unique_name_in_owner = true
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(400, 210)
@@ -110,10 +185,14 @@ Do you want to continue?"
 dialog_autowrap = true
 
 [node name="TrackerCalendar" parent="." unique_id=271998635 instance=ExtResource("4_tglpr")]
+unique_name_in_owner = true
+visible = false
 
-[connection signal="pressed" from="Margin/Layout/Status/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Margin/Layout/Status/PauseButton" to="." method="_on_pause_button_pressed"]
-[connection signal="toggled" from="Margin/Layout/Status/CalendarButton" to="." method="_on_calendar_button_toggled"]
-[connection signal="pressed" from="Margin/Layout/Status/ClearButton" to="." method="_on_clear_button_pressed"]
-[connection signal="toggled" from="Margin/Layout/Status/EditButton" to="." method="_on_edit_button_toggled"]
+[connection signal="toggled" from="Margin/Layout/Buttons/SectionsButton" to="." method="_on_sections_button_toggled"]
+[connection signal="toggled" from="Margin/Layout/Buttons/GraphsButton" to="." method="_on_graphs_button_toggled"]
+[connection signal="toggled" from="Margin/Layout/Buttons/CalendarButton" to="." method="_on_calendar_button_toggled"]
+[connection signal="pressed" from="Margin/Layout/Buttons/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="toggled" from="Margin/Layout/Buttons/EditButton" to="." method="_on_edit_button_toggled"]
+[connection signal="pressed" from="Margin/Layout/Buttons/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/GlobalStatus/ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="confirmed" from="ClearAllConfirmDialog" to="." method="_on_clear_all_confirm_dialog_confirmed"]

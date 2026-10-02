@@ -1,11 +1,11 @@
 @tool
 extends Window
 
-@onready var back_start_button: Button = $PanelContainer/VBoxContainer/ButtonsContainer/BackStartButton
-@onready var back_button: Button = $PanelContainer/VBoxContainer/ButtonsContainer/BackButton
-@onready var date_button: Button = $PanelContainer/VBoxContainer/ButtonsContainer/DateButton
-@onready var forward_button: Button = $PanelContainer/VBoxContainer/ButtonsContainer/ForwardButton
-@onready var forward_end_button: Button = $PanelContainer/VBoxContainer/ButtonsContainer/ForwardEndButton
+@onready var back_start_button: Button = %BackStartButton
+@onready var back_button: Button = %BackButton
+@onready var date_button: Button = %DateButton
+@onready var forward_button: Button = %ForwardButton
+@onready var forward_end_button: Button = %ForwardEndButton
 
 
 var _index: int = 0
