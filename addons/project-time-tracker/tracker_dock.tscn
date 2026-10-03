@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://brkr6mirv6lcu" path="res://addons/project-time-tracker/tracker_dock.gd" id="1_7v1fu"]
 [ext_resource type="Script" uid="uid://b4k026cqprqn" path="res://addons/project-time-tracker/section_graph.gd" id="2_0xje5"]
-[ext_resource type="Texture2D" uid="uid://wj45h2m4ajex" path="res://addons/project-time-tracker/timer.svg" id="2_n8100"]
-[ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_uwii8"]
-[ext_resource type="FontFile" uid="uid://eseqrprd66dp" path="res://addons/project-time-tracker/NotoSans-Bold.ttf" id="3_8a8dy"]
-[ext_resource type="Texture2D" uid="uid://txdq5roqf1mo" path="res://addons/project-time-tracker/bar_chart.svg" id="3_lf1wf"]
-[ext_resource type="Texture2D" uid="uid://duacmh0e2mvmp" path="res://addons/project-time-tracker/calendar.svg" id="4_n8100"]
+[ext_resource type="Texture2D" uid="uid://wj45h2m4ajex" path="res://addons/project-time-tracker/icons/timer.svg" id="2_n8100"]
+[ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/fonts/NotoSans-Regular.ttf" id="2_uwii8"]
+[ext_resource type="FontFile" uid="uid://eseqrprd66dp" path="res://addons/project-time-tracker/fonts/NotoSans-Bold.ttf" id="3_8a8dy"]
+[ext_resource type="Texture2D" uid="uid://txdq5roqf1mo" path="res://addons/project-time-tracker/icons/bar_chart.svg" id="3_lf1wf"]
+[ext_resource type="Texture2D" uid="uid://duacmh0e2mvmp" path="res://addons/project-time-tracker/icons/calendar.svg" id="4_n8100"]
 [ext_resource type="PackedScene" uid="uid://ci6snvwnkwvrt" path="res://addons/project-time-tracker/tracker_calendar.tscn" id="4_tglpr"]
 
 [sub_resource type="DPITexture" id="DPITexture_3cuot"]
@@ -27,6 +27,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Layout" type="VBoxContainer" parent="Margin" unique_id=827595057]
 layout_mode = 2
@@ -73,6 +75,13 @@ layout_mode = 2
 icon = ExtResource("4_n8100")
 flat = true
 
+[node name="EditButton" type="Button" parent="Margin/Layout/Buttons" unique_id=212571990]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+icon = SubResource("DPITexture_n8100")
+flat = true
+
 [node name="ResumeButton" type="Button" parent="Margin/Layout/Buttons" unique_id=1922396438]
 unique_name_in_owner = true
 visible = false
@@ -81,13 +90,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_uwii8")
 icon = SubResource("DPITexture_n8100")
 icon_alignment = 1
-
-[node name="EditButton" type="Button" parent="Margin/Layout/Buttons" unique_id=212571990]
-unique_name_in_owner = true
-layout_mode = 2
-toggle_mode = true
-icon = SubResource("DPITexture_n8100")
-flat = true
 
 [node name="PauseButton" type="Button" parent="Margin/Layout/Buttons" unique_id=2078160439]
 unique_name_in_owner = true
@@ -177,7 +179,7 @@ layout_mode = 2
 [node name="ClearAllConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2094966054]
 unique_name_in_owner = true
 oversampling_override = 1.0
-initial_position = 2
+initial_position = 4
 size = Vector2i(400, 210)
 dialog_text = "This action will clear all recorded sections from memory.
 
@@ -186,13 +188,12 @@ dialog_autowrap = true
 
 [node name="TrackerCalendar" parent="." unique_id=271998635 instance=ExtResource("4_tglpr")]
 unique_name_in_owner = true
-visible = false
 
 [connection signal="toggled" from="Margin/Layout/Buttons/SectionsButton" to="." method="_on_sections_button_toggled"]
 [connection signal="toggled" from="Margin/Layout/Buttons/GraphsButton" to="." method="_on_graphs_button_toggled"]
-[connection signal="toggled" from="Margin/Layout/Buttons/CalendarButton" to="." method="_on_calendar_button_toggled"]
-[connection signal="pressed" from="Margin/Layout/Buttons/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/Buttons/CalendarButton" to="." method="_on_calendar_button_pressed"]
 [connection signal="toggled" from="Margin/Layout/Buttons/EditButton" to="." method="_on_edit_button_toggled"]
+[connection signal="pressed" from="Margin/Layout/Buttons/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Margin/Layout/Buttons/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="pressed" from="Margin/Layout/GlobalStatus/ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="confirmed" from="ClearAllConfirmDialog" to="." method="_on_clear_all_confirm_dialog_confirmed"]

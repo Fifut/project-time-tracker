@@ -1,6 +1,10 @@
 @tool
 extends Control
 
+
+@onready var background_color: ColorRect = %BackgroundColor
+
+
 # #######################################
 # Signals
 # #######################################
@@ -79,7 +83,13 @@ func _process(delta: float) -> void:
 		return
 	
 	if enabled:
+		background_color.color.a = 0.075
 		_update_ui(_get_current_elapsed_time())
+	else:
+		background_color.color.a = 0.0
+		
+		# If enabled, memo actual ticks
+		_started_ticks_msec = Time.get_ticks_msec()
 
 
 

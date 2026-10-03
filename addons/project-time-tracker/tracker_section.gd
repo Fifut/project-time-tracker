@@ -19,12 +19,13 @@ signal on_clear_section(section_name)
 @export var enabled: bool = false:
 	set(value):
 		
-		# If enabled, memo actual ticks
-		if value:
-			_started_ticks_msec = Time.get_ticks_msec()
-			
+		## If enabled, memo actual ticks
+		#if value:
+			#_started_ticks_msec = Time.get_ticks_msec()
+			#
 		# If not yet disabled, calculate and save elapsed time
-		elif not value and enabled:
+		#elif not value and enabled:
+		if not value and enabled:
 			_elapsed_time = _get_current_elapsed_time()	
 
 		enabled = value
@@ -86,6 +87,9 @@ func _process(delta: float) -> void:
 		_update_ui(_get_current_elapsed_time())
 	else:
 		background_color.color.a = 0.0
+		
+		# If enabled, memo actual ticks
+		_started_ticks_msec = Time.get_ticks_msec()
 
 
 
@@ -181,6 +185,10 @@ func _on_edit_section_ok_button_pressed() -> void:
 
 
 func _on_edit_section_cancel_button_pressed() -> void:
+	edit_section_window.hide()
+	
+	
+func _on_edit_section_window_close_requested() -> void:
 	edit_section_window.hide()
 	
 	

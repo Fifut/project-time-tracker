@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://ci6snvwnkwvrt"]
 
-[ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="1_6ju00"]
 [ext_resource type="Script" uid="uid://dv01g5h5w5m74" path="res://addons/project-time-tracker/tracker_calendar.gd" id="1_uh828"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg74j"]
@@ -10,15 +9,7 @@ content_margin_right = 10.0
 content_margin_bottom = 10.0
 bg_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
 
-[sub_resource type="DPITexture" id="DPITexture_uh828"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
-"
-
-[sub_resource type="DPITexture" id="DPITexture_60a21"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
-"
-
-[sub_resource type="DPITexture" id="DPITexture_syjou"]
+[sub_resource type="DPITexture" id="DPITexture_6ju00"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -26,8 +17,9 @@ _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\">
 oversampling_override = 1.0
 title = "Project Time Tracker - Calendar"
 initial_position = 4
-size = Vector2i(600, 300)
-always_on_top = true
+size = Vector2i(620, 370)
+visible = false
+transient = true
 script = ExtResource("1_uh828")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1041566326]
@@ -42,340 +34,172 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lg74j")
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=1379167649]
+[node name="CalendarContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=1379167649]
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer2" unique_id=1180520428]
+[node name="ButtonsContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/CalendarContainer" unique_id=1180520428]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="BackStartButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/ButtonsContainer" unique_id=857386827]
+[node name="BackYearButton" type="Button" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=857386827]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-icon = SubResource("DPITexture_uh828")
+size_flags_vertical = 4
+icon = SubResource("DPITexture_6ju00")
+icon_alignment = 1
 
-[node name="BackButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/ButtonsContainer" unique_id=640793726]
+[node name="BackMonthButton" type="Button" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=640793726]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-icon = SubResource("DPITexture_uh828")
+size_flags_horizontal = 2
+size_flags_vertical = 4
+icon = SubResource("DPITexture_6ju00")
+icon_alignment = 1
 
-[node name="MonthButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/ButtonsContainer" unique_id=649040048]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=1753227665]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MonthLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/VBoxContainer" unique_id=897485529]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-text = "January"
+text = "October"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ForwardButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/ButtonsContainer" unique_id=1238826790]
+[node name="YearLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/VBoxContainer" unique_id=397373511]
+unique_name_in_owner = true
 layout_mode = 2
-icon = SubResource("DPITexture_uh828")
+text = "2026"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ForwardEndButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/ButtonsContainer" unique_id=786909639]
+[node name="ForwardMonthButton" type="Button" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=1238826790]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-icon = SubResource("DPITexture_uh828")
+size_flags_horizontal = 10
+size_flags_vertical = 4
+icon = SubResource("DPITexture_6ju00")
+icon_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer2" unique_id=145551475]
+[node name="ForwardYearButton" type="Button" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=786909639]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 4
+icon = SubResource("DPITexture_6ju00")
+icon_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/CalendarContainer" unique_id=145551475]
 layout_mode = 2
 
-[node name="Label1" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=769890254]
+[node name="SundayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=1372829527]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "M"
+text = "Su"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=477766694]
+[node name="MondayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=769890254]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "T"
+text = "Mo"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1110156937]
+[node name="TuesdayLabel2" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=477766694]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "W"
+text = "Tu"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label4" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=886054262]
+[node name="WednesdayLabel3" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=1110156937]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "T"
+text = "We"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label5" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1620833560]
+[node name="ThursdayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=886054262]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "F"
+text = "Th"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label6" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=906450291]
+[node name="FridayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=1620833560]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "S"
+text = "Fr"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label7" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1372829527]
+[node name="SaturdayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=906450291]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "S"
+text = "Sa"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/HBoxContainer/VBoxContainer2" unique_id=571274978]
+[node name="DayContainer" type="GridContainer" parent="PanelContainer/HBoxContainer/CalendarContainer" unique_id=571274978]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 7
 
-[node name="Button1" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=45142668]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=721036890]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button3" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1458700289]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button4" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=333170359]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button5" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=2079767057]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button6" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=249218878]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button7" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1421191528]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button8" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1862558839]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button9" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=988726902]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button10" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1509840042]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button11" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1542618098]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button12" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=428012289]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button13" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1090612808]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button14" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=940751788]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button15" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=879165469]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button16" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=995537677]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button17" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1168509524]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button18" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=674393239]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button19" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1965704424]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button20" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1479619836]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button21" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=936716893]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button22" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=182718968]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button23" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1187314711]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button24" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=945231371]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button25" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1454517783]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button26" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1499181752]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button27" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1634994774]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button28" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1138940579]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button29" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1068302727]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button30" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=930654341]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Button31" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/GridContainer" unique_id=1411902012]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "31"
-
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/HBoxContainer" unique_id=1799686380]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=490674907]
+[node name="SectionsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer" unique_id=490674907]
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 10
-
-[node name="ButtonsContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=1825257868]
-layout_mode = 2
-theme_override_constants/separation = 8
 alignment = 1
 
-[node name="BackStartButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=455495925]
+[node name="SectionsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/SectionsContainer" unique_id=1851404720]
 unique_name_in_owner = true
-layout_mode = 2
-icon = SubResource("DPITexture_60a21")
-
-[node name="BackButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=1146306381]
-unique_name_in_owner = true
-layout_mode = 2
-icon = SubResource("DPITexture_60a21")
-
-[node name="DateButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=1599181239]
-unique_name_in_owner = true
-layout_mode = 2
-text = "01.01.1970"
-
-[node name="ForwardButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=598186334]
-unique_name_in_owner = true
-layout_mode = 2
-icon = SubResource("DPITexture_60a21")
-
-[node name="ForwardEndButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer" unique_id=112465638]
-unique_name_in_owner = true
-layout_mode = 2
-icon = SubResource("DPITexture_60a21")
-
-[node name="SectionsHandler" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=1851404720]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TrackerSection" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer/SectionsHandler" unique_id=537906448]
-custom_minimum_size = Vector2(200, 23)
+[node name="BottomContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/SectionsContainer" unique_id=1294846581]
 layout_mode = 2
 
-[node name="TrackerSection" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/SectionsHandler/TrackerSection" unique_id=769703437]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -11.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="IconContainer" type="CenterContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/SectionsHandler/TrackerSection/TrackerSection" unique_id=1415010488]
-layout_mode = 2
-
-[node name="IconTexture" type="TextureRect" parent="PanelContainer/HBoxContainer/VBoxContainer/SectionsHandler/TrackerSection/TrackerSection/IconContainer" unique_id=860228874]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-texture = SubResource("DPITexture_syjou")
-expand_mode = 1
-
-[node name="NameLabel" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/SectionsHandler/TrackerSection/TrackerSection" unique_id=675759225]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("1_6ju00")
-text = "TrackerSection"
-text_overrun_behavior = 5
-
-[node name="ElapsedTimeLabel" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/SectionsHandler/TrackerSection/TrackerSection" unique_id=282073019]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_6ju00")
-text = "00:00:00"
-horizontal_alignment = 2
-
-[node name="BottomContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer" unique_id=1294846581]
-layout_mode = 2
-
-[node name="TotalTitleLabel" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/BottomContainer" unique_id=223468472]
+[node name="TotalTitleLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/BottomContainer" unique_id=223468472]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
 text = "Total"
 horizontal_alignment = 2
 
-[node name="TotalLabel" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/BottomContainer" unique_id=610856227]
+[node name="TotalLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/BottomContainer" unique_id=610856227]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-text = "00:00:00"
+text = "04:00:12"
 horizontal_alignment = 2
 
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer/BackStartButton" to="." method="_on_back_start_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer/DateButton" to="." method="_on_date_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer/ForwardButton" to="." method="_on_forward_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/ButtonsContainer/ForwardEndButton" to="." method="_on_forward_end_button_pressed"]
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/BackYearButton" to="." method="_on_back_year_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/BackMonthButton" to="." method="_on_back_month_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/ForwardMonthButton" to="." method="_on_forward_month_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/ForwardYearButton" to="." method="_on_forward_year_button_pressed"]

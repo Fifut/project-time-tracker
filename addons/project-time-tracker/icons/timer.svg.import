@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wj45h2m4ajex"
-path="res://.godot/imported/timer.svg-3a715f40dab8df83b525b6333409a0b0.ctex"
+path="res://.godot/imported/timer.svg-a4d79af5df7f43f7206e6fec70d30b92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/project-time-tracker/timer.svg"
-dest_files=["res://.godot/imported/timer.svg-3a715f40dab8df83b525b6333409a0b0.ctex"]
+source_file="res://addons/project-time-tracker/icons/timer.svg"
+dest_files=["res://.godot/imported/timer.svg-a4d79af5df7f43f7206e6fec70d30b92.ctex"]
 
 [params]
 

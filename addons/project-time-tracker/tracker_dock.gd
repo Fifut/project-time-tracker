@@ -384,7 +384,7 @@ func _on_pause_button_pressed() -> void:
 	_pause_tracking()
 
 		
-func _on_calendar_button_toggled(toggled_on: bool) -> void:
+func _on_calendar_button_pressed() -> void:
 	tracker_calendar.show()
 	
 

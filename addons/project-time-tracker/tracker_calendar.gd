@@ -1,23 +1,56 @@
 @tool
 extends Window
 
-@onready var back_start_button: Button = %BackStartButton
-@onready var back_button: Button = %BackButton
-@onready var date_button: Button = %DateButton
-@onready var forward_button: Button = %ForwardButton
-@onready var forward_end_button: Button = %ForwardEndButton
 
+@onready var day_container: GridContainer = %DayContainer
+@onready var sections_container: VBoxContainer = %SectionsContainer
 
-var _index: int = 0
-var _journal_entries: Array[Dictionary] = []
+@onready var back_year_button: Button = %BackYearButton
+@onready var back_month_button: Button = %BackMonthButton
+@onready var forward_month_button: Button = %ForwardMonthButton
+@onready var forward_year_button: Button = %ForwardYearButton
+@onready var month_label: Label = %MonthLabel
+@onready var year_label: Label = %YearLabel
+@onready var total_label: Label = %TotalLabel
+
+const TRACKER_DAY_SECTION = preload("res://addons/project-time-tracker/tracker_day_section.tscn")
+const MONTH: Array[String] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+const SECTION_ICONS: Dictionary = {
+	"2D": "2D",
+	"3D": "3D",
+	"Script": "Script",
+	"Game": "Game",
+	"Asset Store": "AssetStore",
+	"External": "Window",
+	"AFK": "ViewportSpeed",
+	"Documentation" : "Help"
+}
+
+var _month: int = 1
+var _year: int = 1970
+var _sections: Dictionary = {}
 
 
 func _ready() -> void:
-	back_start_button.icon = get_theme_icon("BackStart", "EditorIcons")
-	back_button.icon = get_theme_icon("Back", "EditorIcons")
-	forward_button.icon = get_theme_icon("Forward", "EditorIcons")
-	forward_end_button.icon = get_theme_icon("ForwardEnd", "EditorIcons")
-
+	hide()
+		
+	back_year_button.icon = get_theme_icon("BackStart", "EditorIcons")
+	back_month_button.icon = get_theme_icon("Back", "EditorIcons")
+	forward_month_button.icon = get_theme_icon("Forward", "EditorIcons")
+	forward_year_button.icon = get_theme_icon("ForwardEnd", "EditorIcons")
+	
+	var day = Time.get_date_dict_from_system()["day"]
+	_month = Time.get_date_dict_from_system()["month"]
+	_year = Time.get_date_dict_from_system()["year"]
+	
+	month_label.text = MONTH[_month - 1]
+	year_label.text = str(_year)
+	
+	_load_sections()
+	_build_calendar(_year,_month, day)
+	_build_sections(_year, _month, day)
+	
 
 func _process(delta: float) -> void:
 	pass
@@ -27,8 +60,107 @@ func _process(delta: float) -> void:
 # #######################################
 # Private
 # #######################################
-func _load_log_journal() -> void:
-	var path = _log_journal_file_path()
+func _day_selected(day: int):
+	for child in day_container.get_children():
+		if not child is Button:
+			continue
+		
+		if int(child.name) != day:
+			child.button_pressed = false
+	
+	_build_sections(_year, _month, day)
+
+
+func _build_sections(year: int, month: int, day: int):
+	for child in sections_container.get_children():
+		sections_container.remove_child(child)
+		child.queue_free()
+	
+	var string_date: String = str(year) + "-" + str(month) +  "-"
+	string_date += str(day) if day >= 10 else "0" + str(day)
+	
+	var total: float = 0.0
+	for section in _sections[string_date]:
+		var day_section = TRACKER_DAY_SECTION.instantiate()
+		day_section.name = section
+		if SECTION_ICONS.has(section):
+			day_section.icon = SECTION_ICONS[section]
+		else:
+			day_section.icon = "Node"
+		day_section.restore_elapsed_time(_sections[string_date][section])
+		sections_container.add_child(day_section)
+		
+		total += _sections[string_date][section]
+		total_label.text = Time.get_time_string_from_unix_time(total)
+	
+
+	
+func _build_calendar(year: int, month: int, day: int = -1):
+	# Clear calendar
+	for child in day_container.get_children():
+		day_container.remove_child(child)
+		child.queue_free()
+		
+
+	# Empty before first weekend
+	var first_weekday = _get_first_weekday_of_month(year, month)
+	for i in first_weekday:
+		var control: Control = Control.new()
+		day_container.add_child(control)
+
+
+	var days_in_month = _get_days_in_month(year, month)
+	for d in range(1, days_in_month + 1):
+		var button: Button = Button.new()
+		button.name = "Day" + str(d)
+		button.toggle_mode = true
+		button.text = str(d)
+		button.pressed.connect(_day_selected.bind(d))
+		
+		var string_day: String = str(d) if d >= 10 else "0" + str(d)
+		button.disabled = not _sections.has(str(year) + "-" + str(month) + "-" + string_day)
+			
+		if d == day:
+			button.set_pressed_no_signal(true)
+			
+		day_container.add_child(button, true)
+
+	
+func _is_leap_year(year: int) -> bool:
+	if year % 4 == 0 and year % 100 != 0:
+		return true
+	
+	if year % 400 == 0:
+		return true
+	
+	return false
+
+
+func _get_days_in_month(year: int, month: int) -> int:
+	var days_by_month := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	
+	if month == 2 and _is_leap_year(year):
+		return 29
+		
+	return days_by_month[month - 1]
+
+
+func _get_first_weekday_of_month(year: int, month: int) -> int:
+	var unix_time: int = Time.get_unix_time_from_datetime_dict({
+		"year": year,
+		"month": month,
+		"day": 1,
+		"hour": 0,
+		"minute": 0,
+		"second": 0
+	})
+	
+	var dt: Dictionary = Time.get_datetime_dict_from_unix_time(unix_time)
+	return dt["weekday"]
+
+
+func _load_sections() -> void:
+	var path = _file_path()
 	
 	if (!FileAccess.file_exists(path)):
 		return
@@ -39,65 +171,70 @@ func _load_log_journal() -> void:
 		printerr("Project Time Tracker : Failed to open file '" + path + "' for reading (Error " + str(error) + ")")
 		return
 	
-	var lines: PackedStringArray = []
-	lines = file.get_as_text().split("\n")
+	var json = JSON.new()
+	_sections = json.parse_string(file.get_as_text())
+	var parse_error = json.get_error_message()
 	file.close()
 	
-	#2026-09-22 - 2D: 08:34:49 - 3D: 17:46:44 - AFK: 00:08:26 - Asset Store: 01:43:53 - External: 20:03:16 - Game: 06:26:16 - LimboAI: 00:00:17 - Script: 10:33:27
-	for line in lines:
-		var journal_entry: PackedStringArray = line.strip_edges().split("-")
-		
-		var dict: Dictionary = {}
-		dict["Year"] = journal_entry[0]
-		dict["Month"] = journal_entry[1]
-		dict["Day"] = journal_entry[2]
-		
-		for i in range(3, journal_entry.size()):
-			var section: PackedStringArray = journal_entry[i].split(":", true, 1)
-			if section[0] == "AFK":
-				continue
-			dict[section[0]] = section[1]
-			
-		_journal_entries.append(dict)
+	if (parse_error != ""):
+		printerr("Project Time Tracker : Failed to parse tracked sections (Error " + parse_error + ")")
+		return
+	
+	_sections.erase("Global")
 
-		
-func _log_journal_file_path() -> String:
+
+func _file_path() -> String:
 	var path: String
-	match ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_LOCATION):
+	match ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_LOCATION):
 		"Project (res://)":
 			path = "res://"
 		"User data (user://)":
 			path = "user://"
 		"Custom":
-			path = ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_CUSTOM_LOCATION) + "/"
+			path = ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_CUSTOM_LOCATION) + "/"
 			
-	path += ProjectSettings.get_setting(PTTSettingsManager.LOG_JOURNAL_FILE_NAME)
-	path += ".txt"
-	
-	return path
+	path += ProjectSettings.get_setting(PTTSettingsManager.SAVE_FILE_NAME)
+	path += ".json"
 
+	return path
 
 
 # #######################################
 # Signals
 # #######################################
-func _on_back_start_button_pressed() -> void:
-	# LEcture 1er migne fichier
-	pass
+func _on_back_year_button_pressed() -> void:
+	_year -= 1
+	year_label.text = str(_year)
+	_build_calendar(_year, _month)
 
 
-func _on_back_button_pressed() -> void:
-	pass # Replace with function body.
+func _on_forward_year_button_pressed() -> void:
+	_year += 1
+	year_label.text = str(_year)
+	_build_calendar(_year, _month)
 
 
-func _on_date_button_pressed() -> void:
-	pass # Replace with function body.
+func _on_back_month_button_pressed() -> void:
+	_month -= 1
+	if _month < 1:
+		_month = 12
+		_on_back_year_button_pressed()
+	else:
+		_build_calendar(_year, _month)
 
+	month_label.text = MONTH[_month - 1]
+	
+	
+func _on_forward_month_button_pressed() -> void:
+	_month += 1
+	if _month > 12:
+		_month = 1
+		_on_forward_year_button_pressed
+	else:
+		_build_calendar(_year, _month)
+		
+	month_label.text = MONTH[_month - 1]
+	
 
-func _on_forward_button_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_forward_end_button_pressed() -> void:
-	# LEcture dernière ligne du fichier
-	pass
+func _on_close_requested() -> void:
+	hide()

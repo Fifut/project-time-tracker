@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://eseqrprd66dp"
-path="res://.godot/imported/NotoSans-Bold.ttf-3dfcb09858788d43ab6b1b042bd550fd.fontdata"
+uid="uid://ojqgt2hcmgi6"
+path="res://.godot/imported/NotoSans-Regular.ttf-8b6bf47ac2b85edcff951bcd3f910ad4.fontdata"
 
 [deps]
 
-source_file="res://addons/project-time-tracker/NotoSans-Bold.ttf"
-dest_files=["res://.godot/imported/NotoSans-Bold.ttf-3dfcb09858788d43ab6b1b042bd550fd.fontdata"]
+source_file="res://addons/project-time-tracker/fonts/NotoSans-Regular.ttf"
+dest_files=["res://.godot/imported/NotoSans-Regular.ttf-8b6bf47ac2b85edcff951bcd3f910ad4.fontdata"]
 
 [params]
 
@@ -22,7 +22,7 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 modulate_color_glyphs=false
-hinting=3
+hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0

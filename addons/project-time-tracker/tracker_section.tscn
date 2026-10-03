@@ -1,11 +1,18 @@
 [gd_scene format=3 uid="uid://rmi3joaeeoc"]
 
 [ext_resource type="Script" uid="uid://ccryqsjpws1pe" path="res://addons/project-time-tracker/tracker_section.gd" id="1_syjou"]
-[ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/NotoSans-Regular.ttf" id="2_7abe0"]
+[ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/fonts/NotoSans-Regular.ttf" id="2_7abe0"]
 
 [sub_resource type="DPITexture" id="DPITexture_syjou"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syjou"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
 
 [node name="TrackerSection" type="Control" unique_id=1936297948]
 custom_minimum_size = Vector2(0, 25)
@@ -86,14 +93,11 @@ flat = true
 [node name="EditSectionWindow" type="Window" parent="." unique_id=109804704]
 unique_name_in_owner = true
 oversampling_override = 1.0
-title = "Project Time Tracker"
+title = "Project Time Tracker - Section edit"
 initial_position = 4
-size = Vector2i(700, 200)
+size = Vector2i(400, 200)
 visible = false
-exclusive = true
-unresizable = true
-always_on_top = true
-popup_window = true
+transient = true
 
 [node name="PanelContainer" type="PanelContainer" parent="EditSectionWindow" unique_id=1638791245]
 anchors_preset = 15
@@ -101,6 +105,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_syjou")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EditSectionWindow/PanelContainer" unique_id=1508772729]
 layout_mode = 2
@@ -113,60 +118,52 @@ layout_mode = 2
 text = "TrackerSection"
 horizontal_alignment = 1
 
-[node name="SpinBoxHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=11730349]
+[node name="SpinBoxHBoxContainer" type="GridContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=201344448]
 layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
+theme_override_constants/h_separation = 10
+columns = 4
 
-[node name="DaysHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1878936737]
-layout_mode = 2
-
-[node name="DaysLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer" unique_id=182002038]
+[node name="DaysLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=182002038]
 layout_mode = 2
 text = "Days"
 
-[node name="DaysSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/DaysHBoxContainer" unique_id=676753090]
-unique_name_in_owner = true
-layout_mode = 2
-max_value = 999999.0
-alignment = 2
-
-[node name="HoursHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1289038452]
-layout_mode = 2
-
-[node name="HoursLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer" unique_id=1219121720]
+[node name="HoursLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1219121720]
 layout_mode = 2
 text = "Hours"
 
-[node name="HourSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/HoursHBoxContainer" unique_id=102352091]
-unique_name_in_owner = true
-layout_mode = 2
-max_value = 999999.0
-alignment = 2
-
-[node name="MinutesHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=2059958251]
-layout_mode = 2
-
-[node name="MinutesLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer" unique_id=1109588040]
+[node name="MinutesLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1109588040]
 layout_mode = 2
 text = "Minutes"
 
-[node name="MinutesSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/MinutesHBoxContainer" unique_id=331118167]
-unique_name_in_owner = true
-layout_mode = 2
-max_value = 59.0
-alignment = 2
-
-[node name="SecondsHBoxContainer2" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=36690097]
-layout_mode = 2
-
-[node name="SecondsLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2" unique_id=1778067892]
+[node name="SecondsLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=1778067892]
 layout_mode = 2
 text = "Seconds"
 
-[node name="SecondsSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer/SecondsHBoxContainer2" unique_id=671218619]
+[node name="DaysSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=676753090]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+max_value = 999999.0
+alignment = 2
+
+[node name="HourSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=102352091]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 999999.0
+alignment = 2
+
+[node name="MinutesSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=331118167]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 59.0
+alignment = 2
+
+[node name="SecondsSpinBox" type="SpinBox" parent="EditSectionWindow/PanelContainer/VBoxContainer/SpinBoxHBoxContainer" unique_id=671218619]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 max_value = 59.0
 alignment = 2
 
@@ -190,7 +187,8 @@ text = "Cancel"
 [node name="ClearSectionConfirmDialog" type="ConfirmationDialog" parent="." unique_id=1528317254]
 unique_name_in_owner = true
 oversampling_override = 1.0
-initial_position = 2
+title = "Delete section"
+initial_position = 4
 size = Vector2i(400, 210)
 dialog_text = "This action will clear TrackerSection session from memory.
  Do you want to continue?"
@@ -198,6 +196,7 @@ dialog_autowrap = true
 
 [connection signal="pressed" from="TrackerSection/EditButton" to="." method="_on_edit_button_pressed"]
 [connection signal="pressed" from="TrackerSection/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="close_requested" from="EditSectionWindow" to="." method="_on_edit_section_window_close_requested"]
 [connection signal="pressed" from="EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer/OKButton" to="." method="_on_edit_section_ok_button_pressed"]
 [connection signal="pressed" from="EditSectionWindow/PanelContainer/VBoxContainer/ButtonsHBoxContainer/CancelButton" to="." method="_on_edit_section_cancel_button_pressed"]
 [connection signal="confirmed" from="ClearSectionConfirmDialog" to="." method="_on_clear_section_confirm_dialog_confirmed"]

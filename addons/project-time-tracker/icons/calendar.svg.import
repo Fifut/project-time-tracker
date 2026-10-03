@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://duacmh0e2mvmp"
-path="res://.godot/imported/calendar.svg-b3b071a6323399e409f354d47b4e5420.ctex"
+path="res://.godot/imported/calendar.svg-e2d9f69465ac256f9dcbf3bda0d11179.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/project-time-tracker/calendar.svg"
-dest_files=["res://.godot/imported/calendar.svg-b3b071a6323399e409f354d47b4e5420.ctex"]
+source_file="res://addons/project-time-tracker/icons/calendar.svg"
+dest_files=["res://.godot/imported/calendar.svg-e2d9f69465ac256f9dcbf3bda0d11179.ctex"]
 
 [params]
 
