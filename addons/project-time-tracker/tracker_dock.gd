@@ -276,7 +276,7 @@ func set_tracked_section(section: String) -> void:
 	# Display section icon
 	if SECTION_ICONS.has(section):
 		icon_texture.texture = get_theme_icon(SECTION_ICONS[section], "EditorIcons")
-		icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + section)
+		icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + section, Color.BLACK)
 	else:
 		icon_texture.texture = get_theme_icon("Node", "EditorIcons")
 		icon_texture.modulate = Color.WHITE

@@ -69,7 +69,7 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():
-			icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name)
+			icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name, Color.BLACK)
 	)
 	
 	_update_theme()
@@ -138,7 +138,7 @@ func _update_icon() -> void:
 		return
 	
 	icon_texture.texture = get_theme_icon(icon, "EditorIcons")
-	icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name)
+	icon_texture.modulate = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name, Color.BLACK)
 
 func _update_name() -> void:
 	if (!is_inside_tree()):

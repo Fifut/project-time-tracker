@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://384q58lif510" path="res://addons/project-time-tracker/tracker_day_section.gd" id="1_8mtrj"]
 [ext_resource type="FontFile" uid="uid://ojqgt2hcmgi6" path="res://addons/project-time-tracker/fonts/NotoSans-Regular.ttf" id="2_fkxp5"]
 
-[sub_resource type="DPITexture" id="DPITexture_syjou"]
+[sub_resource type="DPITexture" id="DPITexture_8mtrj"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -41,9 +41,10 @@ layout_mode = 2
 
 [node name="IconTexture" type="TextureRect" parent="TrackerSection/IconContainer" unique_id=917653221]
 unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-texture = SubResource("DPITexture_syjou")
+texture = SubResource("DPITexture_8mtrj")
 expand_mode = 1
 
 [node name="NameLabel" type="Label" parent="TrackerSection" unique_id=955903737]
@@ -51,7 +52,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_fkxp5")
-text = "TrackerSection"
+text = "TrackerDaySection"
 text_overrun_behavior = 5
 
 [node name="ElapsedTimeLabel" type="Label" parent="TrackerSection" unique_id=1284424922]
@@ -65,14 +66,14 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_syjou")
+icon = SubResource("DPITexture_8mtrj")
 flat = true
 
 [node name="ClearButton" type="Button" parent="TrackerSection" unique_id=1304414658]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-icon = SubResource("DPITexture_syjou")
+icon = SubResource("DPITexture_8mtrj")
 flat = true
 
 [node name="EditSectionWindow" type="Window" parent="." unique_id=109804704]
@@ -102,7 +103,7 @@ alignment = 1
 [node name="TitleLabel" type="Label" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=191849624]
 unique_name_in_owner = true
 layout_mode = 2
-text = "TrackerSection"
+text = "TrackerDaySection"
 horizontal_alignment = 1
 
 [node name="SpinBoxHBoxContainer" type="HBoxContainer" parent="EditSectionWindow/PanelContainer/VBoxContainer" unique_id=11730349]
@@ -171,7 +172,7 @@ unique_name_in_owner = true
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(400, 210)
-dialog_text = "This action will clear TrackerSection session from memory.
+dialog_text = "This action will clear TrackerDaySection session from memory.
  Do you want to continue?"
 dialog_autowrap = true
 

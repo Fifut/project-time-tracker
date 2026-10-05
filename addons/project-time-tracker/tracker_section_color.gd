@@ -8,7 +8,7 @@ func _ready() -> void:
 	# If project parameters have changed maybe they're ours.
 	ProjectSettings.settings_changed.connect(
 		func():
-			color = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name)
+			color = ProjectSettings.get_setting(PTTSettingsManager.SECTIONS_COLOR + name, Color.BLACK)
 	)
 
 

@@ -108,8 +108,16 @@ layout_mode = 2
 
 [node name="GlobalLabel" type="Label" parent="Margin/Layout/GlobalStatus" unique_id=2055594649]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("3_8a8dy")
-text = "GLOBAL"
+text = "ALL TIME"
+
+[node name="ClearButton" type="Button" parent="Margin/Layout/GlobalStatus" unique_id=1572265573]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+icon = SubResource("DPITexture_n8100")
+flat = true
 
 [node name="DHMSValue" type="Label" parent="Margin/Layout/GlobalStatus" unique_id=296369054]
 unique_name_in_owner = true
@@ -119,12 +127,12 @@ theme_override_fonts/font = ExtResource("3_8a8dy")
 text = "0d - 00:00:00"
 horizontal_alignment = 2
 
-[node name="ClearButton" type="Button" parent="Margin/Layout/GlobalStatus" unique_id=1572265573]
-unique_name_in_owner = true
-visible = false
+[node name="HValue" type="Label" parent="Margin/Layout/GlobalStatus" unique_id=94616626]
+custom_minimum_size = Vector2(57, 0)
 layout_mode = 2
-icon = SubResource("DPITexture_n8100")
-flat = true
+theme_override_fonts/font = ExtResource("3_8a8dy")
+text = "(0h)"
+horizontal_alignment = 2
 
 [node name="SectionList" type="VBoxContainer" parent="Margin/Layout" unique_id=132359488]
 unique_name_in_owner = true
@@ -151,6 +159,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_8a8dy")
 text = "TODAY"
+horizontal_alignment = 1
 
 [node name="DayValue" type="Label" parent="Margin/Layout/DayStatus" unique_id=1818143859]
 unique_name_in_owner = true

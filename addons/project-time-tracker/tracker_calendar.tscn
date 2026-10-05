@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ci6snvwnkwvrt"]
 
 [ext_resource type="Script" uid="uid://dv01g5h5w5m74" path="res://addons/project-time-tracker/tracker_calendar.gd" id="1_uh828"]
+[ext_resource type="FontFile" uid="uid://eseqrprd66dp" path="res://addons/project-time-tracker/fonts/NotoSans-Bold.ttf" id="2_uh828"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg74j"]
 content_margin_left = 10.0
@@ -18,7 +19,6 @@ oversampling_override = 1.0
 title = "Project Time Tracker - Calendar"
 initial_position = 4
 size = Vector2i(620, 370)
-visible = false
 transient = true
 script = ExtResource("1_uh828")
 
@@ -86,6 +86,7 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
+disabled = true
 icon = SubResource("DPITexture_6ju00")
 icon_alignment = 1
 
@@ -94,19 +95,12 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_vertical = 4
+disabled = true
 icon = SubResource("DPITexture_6ju00")
 icon_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/CalendarContainer" unique_id=145551475]
 layout_mode = 2
-
-[node name="SundayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=1372829527]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Su"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="MondayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=769890254]
 custom_minimum_size = Vector2(30, 0)
@@ -156,6 +150,14 @@ text = "Sa"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SundayLabel" type="Label" parent="PanelContainer/HBoxContainer/CalendarContainer/HBoxContainer" unique_id=1372829527]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Su"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DayContainer" type="GridContainer" parent="PanelContainer/HBoxContainer/CalendarContainer" unique_id=571274978]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 200)
@@ -174,29 +176,37 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="SectionsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/SectionsContainer" unique_id=1851404720]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/SectionsContainer" unique_id=1196807389]
+layout_mode = 2
+
+[node name="DateLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/HBoxContainer" unique_id=608676514]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_uh828")
+text = "05-10-2026"
+horizontal_alignment = 1
 
-[node name="BottomContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/SectionsContainer" unique_id=1294846581]
-layout_mode = 2
-
-[node name="TotalTitleLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/BottomContainer" unique_id=223468472]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 0
-text = "Total"
-horizontal_alignment = 2
-
-[node name="TotalLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/BottomContainer" unique_id=610856227]
+[node name="TotalLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/HBoxContainer" unique_id=610856227]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-text = "04:00:12"
+theme_override_fonts/font = ExtResource("2_uh828")
+text = "01:34:03"
 horizontal_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/SectionsContainer" unique_id=1425751092]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SectionsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/SectionsContainer/ScrollContainer" unique_id=1851404720]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer/BackYearButton" to="." method="_on_back_year_button_pressed"]
