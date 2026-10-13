@@ -10,7 +10,7 @@ content_margin_right = 10.0
 content_margin_bottom = 10.0
 bg_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
 
-[sub_resource type="DPITexture" id="DPITexture_6ju00"]
+[sub_resource type="DPITexture" id="DPITexture_uh828"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
 
@@ -49,7 +49,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_vertical = 4
-icon = SubResource("DPITexture_6ju00")
+icon = SubResource("DPITexture_uh828")
 icon_alignment = 1
 
 [node name="BackMonthButton" type="Button" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=640793726]
@@ -58,7 +58,7 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 4
-icon = SubResource("DPITexture_6ju00")
+icon = SubResource("DPITexture_uh828")
 icon_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=1753227665]
@@ -87,7 +87,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 disabled = true
-icon = SubResource("DPITexture_6ju00")
+icon = SubResource("DPITexture_uh828")
 icon_alignment = 1
 
 [node name="ForwardYearButton" type="Button" parent="PanelContainer/HBoxContainer/CalendarContainer/ButtonsContainer" unique_id=786909639]
@@ -96,7 +96,7 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_vertical = 4
 disabled = true
-icon = SubResource("DPITexture_6ju00")
+icon = SubResource("DPITexture_uh828")
 icon_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/CalendarContainer" unique_id=145551475]
@@ -184,7 +184,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_uh828")
-text = "05-10-2026"
+text = "12-10-2026"
 horizontal_alignment = 1
 
 [node name="TotalLabel" type="Label" parent="PanelContainer/HBoxContainer/SectionsContainer/HBoxContainer" unique_id=610856227]

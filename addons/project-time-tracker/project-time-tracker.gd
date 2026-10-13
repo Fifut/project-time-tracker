@@ -169,12 +169,14 @@ func _load_sections() -> void:
 		_sections["Asset Store"] = _sections["AssetLib"]
 		_sections.erase("AssetLib")
 	
+	_today = Time.get_date_string_from_system()
+	
 	# Update v3.0.X -> v3.1.X
 	if not _sections.has("Global"):
-		_dock_instance.restore_tracked_sections({"Global": _sections})
+		_dock_instance.restore_tracked_sections(_sections)
+		_sections.clear()
 		return
 	
-	_today = Time.get_date_string_from_system()
 	# Same day
 	if _sections.has(_today):
 		_dock_instance.restore_tracked_sections(_sections["Global"], _sections[_today])
